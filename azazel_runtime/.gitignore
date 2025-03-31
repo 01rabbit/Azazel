@@ -1,0 +1,3 @@
+# Exclude runtime logs and persistent data
+logs/
+data/
