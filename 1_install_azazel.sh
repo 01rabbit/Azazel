@@ -38,12 +38,30 @@ echo "[INFO] DockerとSuricataを有効化..." | tee -a "$ERROR_LOG"
 systemctl enable docker --now
 systemctl enable suricata --now
 
-# Fluent Bit インストール（/opt配下に入る）
+# Fluent Bit インストール（APT経由）
 echo "[INFO] Fluent Bit をインストール中..." | tee -a "$ERROR_LOG"
-if ! curl -fsSL https://fluentbit.io/install.sh | sh; then
-    log_and_exit "Fluent Bit のインストールに失敗しました。" "公式サイトの手順を参照してください（https://fluentbit.io/）"
+
+# APTレポジトリ追加（Fluent Bit公式）
+if ! curl -fsSL https://packages.fluentbit.io/fluentbit.key | sudo gpg --dearmor -o /usr/share/keyrings/fluentbit.gpg; then
+    log_and_exit "Fluent Bit GPGキーの取得に失敗しました。" "https://docs.fluentbit.io/manual/installation/linux/debian"
 fi
-systemctl enable fluent-bit --now
+
+echo "deb [signed-by=/usr/share/keyrings/fluentbit.gpg] https://packages.fluentbit.io/debian/ bookworm main" | \
+    sudo tee /etc/apt/sources.list.d/fluentbit.list > /dev/null
+
+# パッケージインストール
+if ! sudo apt update >> "$ERROR_LOG" 2>&1; then
+    log_and_exit "apt update に失敗しました。" "ネットワーク設定を確認してください"
+fi
+
+if ! sudo apt install td-agent-bit -y >> "$ERROR_LOG" 2>&1; then
+    log_and_exit "td-agent-bit のインストールに失敗しました。" "Fluent Bit パッケージ取得を確認してください"
+fi
+
+# サービス起動・自動起動設定
+if ! sudo systemctl enable td-agent-bit --now >> "$ERROR_LOG" 2>&1; then
+    log_and_exit "td-agent-bit のサービス起動に失敗しました。" "systemd 状態を確認してください"
+fi
 
 # Azazelディレクトリ作成
 echo "[INFO] ディレクトリを作成中..." | tee -a "$ERROR_LOG"
