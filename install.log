@@ -1,0 +1,44 @@
+[INFO] Starting Azazel installation
+[INFO] Running STEP 1 - Base Setup...
+[INFO] Azazelインストール開始 Wed  2 Apr 23:04:40 JST 2025
+[INFO] システム更新中...
+
+WARNING: apt does not have a stable CLI interface. Use with caution in scripts.
+
+Hit:1 http://deb.debian.org/debian bookworm InRelease
+Hit:2 http://deb.debian.org/debian-security bookworm-security InRelease
+Hit:3 http://deb.debian.org/debian bookworm-updates InRelease
+Hit:4 http://archive.raspberrypi.com/debian bookworm InRelease
+Reading package lists...
+Building dependency tree...
+Reading state information...
+7 packages can be upgraded. Run 'apt list --upgradable' to see them.
+[INFO] パッケージインストール中...
+
+WARNING: apt does not have a stable CLI interface. Use with caution in scripts.
+
+Reading package lists...
+Building dependency tree...
+Reading state information...
+curl is already the newest version (7.88.1-10+deb12u12).
+wget is already the newest version (1.21.3-1+deb12u1).
+git is already the newest version (1:2.39.5-0+deb12u2).
+docker.io is already the newest version (20.10.24+dfsg1-1+deb12u1).
+docker-compose is already the newest version (1.29.2-3).
+python3 is already the newest version (3.11.2-1+b1).
+python3-pip is already the newest version (23.0.1+dfsg-1+rpt1).
+suricata is already the newest version (1:6.0.10-1).
+iptables-persistent is already the newest version (1.0.20).
+The following package was automatically installed and is no longer required:
+  libcamera0.3
+Use 'sudo apt autoremove' to remove it.
+0 upgraded, 0 newly installed, 0 to remove and 7 not upgraded.
+[INFO] DockerとSuricataを有効化...
+Synchronizing state of docker.service with SysV service script with /lib/systemd/systemd-sysv-install.
+Executing: /lib/systemd/systemd-sysv-install enable docker
+Synchronizing state of suricata.service with SysV service script with /lib/systemd/systemd-sysv-install.
+Executing: /lib/systemd/systemd-sysv-install enable suricata
+[INFO] Fluent Bit をインストール中...
+curl: (22) The requested URL returned error: 404
+Failed to enable unit: Unit file fluent-bit.service does not exist.
+[ERROR] スクリプトの実行中にエラーが発生しました。詳細は /opt/azazel/logs/install_errors.log を確認してください。
