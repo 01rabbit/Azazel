@@ -4,7 +4,11 @@
 
 **御調子門 -AZAZEL system-** は、攻撃をあえて受け止め、**遅滞**させることを目的とした新たなアクティブサイバーディフェンスツールです。Raspberry Pi 5上で動作する本システムは、スケープゴート型デコイを活用し、攻撃者を欺き、行動を遅らせ、防御側に対応時間を確保します。
 
+また本ツールは、**外出先のホテルやフリーWi-Fiなど、安全が確認できないネットワーク環境においても、潜在的な脅威からユーザーを守る防壁**として機能します。安全でないネットワークに接続せざるを得ない場面でも、攻撃を直接受けずにリスクを緩和できます。
+
 **AZAZEL system** is an active cyber defense tool designed to **delay and disrupt adversaries** rather than simply block them. Operating as a portable gateway on Raspberry Pi 5, it uses a cyber **scapegoat-style decoy** to mislead and slow down attackers, providing defenders with critical time to respond.
+
+Additionally, the system acts as a **protective barrier when connecting to untrusted networks**, such as free Wi-Fi in hotels or public spaces—helping shield users from direct threats lurking within insecure environments.
 
 ---
 
