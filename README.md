@@ -2,16 +2,21 @@
 
 ## 概要 / Overview
 
-**御調子門 -AZAZEL system-** は、攻撃をあえて受け止め、**遅滞**させることを目的とした新たなアクティブサイバーディフェンスツールです。Raspberry Pi 5上で動作する本システムは、スケープゴート型デコイを活用し、攻撃者を欺き、行動を遅らせ、防御側に対応時間を確保します。
+**御調子門 -AZAZEL system-** は、攻撃をあえて受け止め、**遅滞**させることを目的とした、新たなアクティブサイバーディフェンスツールです。**持ち運び可能な小型ゲートウェイとして、社外でのネットワーク展開時や外出先での一時的な接続環境に**おいて活用されます。Raspberry Pi 5上で動作する本システムは、スケープゴート型デコイを活用し、攻撃者を欺き、行動を遅らせ、防御側に対応時間を確保します。
 
-また本ツールは、**外出先のホテルやフリーWi-Fiなど、安全が確認できないネットワーク環境においても、潜在的な脅威からユーザーを守る防壁**として機能します。安全でないネットワークに接続せざるを得ない場面でも、攻撃を直接受けずにリスクを緩和できます。
+このツールは、**ホテルのフリーWi-Fiや検証されていない外部ネットワークへの接続時に、ユーザーを潜在的な脅威から守るための携行型セキュリティ境界装置**として機能します。
 
-**AZAZEL system** is an active cyber defense tool designed to **delay and disrupt adversaries** rather than simply block them. Operating as a portable gateway on Raspberry Pi 5, it uses a cyber **scapegoat-style decoy** to mislead and slow down attackers, providing defenders with critical time to respond.
-
-Additionally, the system acts as a **protective barrier when connecting to untrusted networks**, such as free Wi-Fi in hotels or public spaces—helping shield users from direct threats lurking within insecure environments.
+**AZAZEL system** is a portable active cyber defense tool designed to **delay and mislead attackers** during temporary and external network connections. Deployed on a compact Raspberry Pi 5, it is ideal for off-site system deployments, hotel Wi-Fi access, or other untrusted network environments. The system employs a **scapegoat-style decoy** to slow attackers down, giving defenders critical time to respond.
 
 ---
 
+## 可搬型設計 / Portable Deployment
+
+- **軽量・省電力な構成により、外出先や現場などの一時的なネットワーク接続環境でも容易に導入可能です。**
+- **出張時、イベント会場、外部検証ネットワークなど、セキュリティが保証されない場所での利用に最適です。**
+
+- **Lightweight and energy-efficient**, enabling quick deployment in temporary and mobile environments.
+- **Perfect for use during business trips, field operations, or in untrusted networks outside your primary infrastructure.**
 ## 特徴 / Features
 
 - **遅滞戦術の実装 / Tactical Delaying**  
