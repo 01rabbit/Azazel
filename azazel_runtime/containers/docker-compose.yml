@@ -1,0 +1,39 @@
+version: '3.8'
+services:
+  postgres:
+    image: postgres:15
+    container_name: azazel_postgres
+    restart: always
+    environment:
+      POSTGRES_DB: mattermost
+      POSTGRES_USER: mmuser
+      POSTGRES_PASSWORD: securepassword
+    volumes:
+      - /opt/azazel/data/postgres:/var/lib/postgresql/data
+    ports:
+      - "5432:5432"
+    networks:
+      - azazel_net
+
+  vector:
+    image: timberio/vector:0.37.0-alpine
+    container_name: azazel_vector
+    restart: always
+    volumes:
+      - /opt/azazel/config/vector.toml:/etc/vector/vector.toml
+      - /opt/azazel/logs:/logs
+    networks:
+      - azazel_net
+
+  opencanary:
+    image: thinkst/opencanary:latest
+    container_name: azazel_opencanary
+    restart: always
+    volumes:
+      - /opt/azazel/config/opencanary.conf:/root/.opencanary.conf
+    networks:
+      - azazel_net
+
+networks:
+  azazel_net:
+    driver: bridge
