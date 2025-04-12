@@ -38,16 +38,37 @@ echo "[INFO] DockerとSuricataを有効化..." | tee -a "$ERROR_LOG"
 systemctl enable docker --now
 systemctl enable suricata --now
 
-# Fluent Bit インストール（/opt配下に入る）
+# Fluent Bit インストール（APT経由）
 echo "[INFO] Fluent Bit をインストール中..." | tee -a "$ERROR_LOG"
-if ! curl -fsSL https://fluentbit.io/install.sh | sh; then
-    log_and_exit "Fluent Bit のインストールに失敗しました。" "公式サイトの手順を参照してください（https://fluentbit.io/）"
+
+# APTレポジトリ追加（Fluent Bit公式 for Raspbian）
+if ! curl -fsSL https://packages.fluentbit.io/fluentbit.key | sudo apt-key add -; then
+    log_and_exit "Fluent Bit GPGキーの取得に失敗しました。" "https://docs.fluentbit.io/manual/installation/linux/debian"
 fi
-systemctl enable fluent-bit --now
+
+# sources.list に直接追記（Raspbian向け）
+if ! grep -q "packages.fluentbit.io/raspbian/bullseye" /etc/apt/sources.list; then
+    echo "deb https://packages.fluentbit.io/raspbian/bullseye bullseye main" | \
+        sudo tee -a /etc/apt/sources.list > /dev/null
+fi
+
+# パッケージインストール
+if ! sudo apt-get update >> "$ERROR_LOG" 2>&1; then
+    log_and_exit "apt update に失敗しました。" "ネットワーク設定を確認してください"
+fi
+
+if ! sudo apt-get install fluent-bit -y >> "$ERROR_LOG" 2>&1; then
+    log_and_exit "fluent-bit のインストールに失敗しました。" "Fluent Bit パッケージ取得を確認してください"
+fi
+
+# サービス起動・自動起動設定
+if ! sudo systemctl enable fluent-bit --now >> "$ERROR_LOG" 2>&1; then
+    log_and_exit "fluent-bit のサービス起動に失敗しました。" "systemd 状態を確認してください"
+fi
 
 # Azazelディレクトリ作成
 echo "[INFO] ディレクトリを作成中..." | tee -a "$ERROR_LOG"
 mkdir -p /opt/azazel/{bin,config,logs,data,containers}
 chown -R "$(whoami)":"$(whoami)" /opt/azazel
 
-echo "[SUCCESS] インストール完了！次に ./setup_containers.sh を実行してください。" | tee -a "$ERROR_LOG"
+echo "[SUCCESS] インストール完了！次に ./2_setup_containers.sh を実行してください。" | tee -a "$ERROR_LOG"

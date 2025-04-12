@@ -1,0 +1,13 @@
+[sources.fluentbit]
+  type = "socket"
+  address = "0.0.0.0:24224"
+  mode = "udp"
+
+[transforms.json_parse]
+  type = "json_parser"
+  inputs = ["fluentbit"]
+
+[sinks.file]
+  type = "file"
+  inputs = ["json_parse"]
+  path = "/logs/azazel.log"

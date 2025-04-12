@@ -118,10 +118,16 @@ systemctl enable mattermost --now
 
 # Firewall 設定
 echo "[INFO] iptables によるファイアウォールルールを適用..." | tee -a "$ERROR_LOG"
+# まずループバックと確立済み通信を許可
+iptables -A INPUT -i lo -j ACCEPT
+iptables -A INPUT -m conntrack --ctstate RELATED,ESTABLISHED -j ACCEPT
+# SSHとMattermostを明示的に許可
 iptables -A INPUT -p tcp --dport 22 -j ACCEPT
 iptables -A INPUT -p tcp --dport 8065 -j ACCEPT
+# その他はDROP
 iptables -A INPUT -j DROP
-iptables-save > /etc/iptables/rules.v4
+
+iptables-save | tee /etc/iptables/rules.v4 > /dev/null
 
 # 通信遅延（攻撃者遅滞用）
 echo "[INFO] 攻撃者向け遅延動作を適用 (100ms delay)..." | tee -a "$ERROR_LOG"
@@ -135,6 +141,7 @@ rsync -avz /opt/azazel/logs/ user@backup-server:/remote/logs/
 EOF
 chmod +x /opt/azazel/bin/backup_logs.sh
 
-(crontab -l 2>/dev/null; echo "0 * * * * /opt/azazel/bin/backup_logs.sh") | crontab -
+( sudo crontab -l 2>/dev/null | grep -v '/opt/azazel/bin/backup_logs.sh' ; echo "0 * * * * /opt/azazel/bin/backup_logs.sh" ) | sudo crontab -
+sudo crontab -l | grep backup_logs.sh && echo "[INFO] crontab登録成功" || echo "[ERROR] crontab登録失敗"
 
 echo "[SUCCESS] Azazel 構成完了！すべてのコンポーネントが動作準備できました。" | tee -a "$ERROR_LOG"
