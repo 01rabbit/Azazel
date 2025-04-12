@@ -45,7 +45,7 @@ services:
       - azazel_net
 
   vector:
-    image: timberio/vector:latest
+    image: timberio/vector:0.37.0-alpine
     container_name: azazel_vector
     restart: always
     volumes:
@@ -74,4 +74,25 @@ if ! docker-compose up -d; then
     log_and_exit "Dockerコンテナの起動に失敗しました。" "docker logs azazel_postgres などでログを確認してください。"
 fi
 
-echo "[SUCCESS] Dockerコンテナのセットアップ完了！次に ./configure_services.sh を実行してください。" | tee -a "$ERROR_LOG"
+
+# 現在のユーザーを docker グループに追加（未所属の場合のみ）
+CURRENT_USER="${SUDO_USER:-$USER}"
+
+if id -nG "$CURRENT_USER" | grep -qw docker; then
+    echo "[INFO] $CURRENT_USER はすでに docker グループに所属しています。"
+else
+    echo "[INFO] $CURRENT_USER を docker グループに追加します。"
+    sudo usermod -aG docker "$CURRENT_USER"
+    echo "[SUCCESS] docker グループに追加しました。"
+
+    echo ""
+    echo "⚠️  変更を反映させるには、以下を実行してください："
+    echo ""
+    echo "   newgrp docker"
+    echo "     または"
+    echo "   一度ログアウトして再ログイン"
+    echo ""
+    echo "[INFO] 処理はここで終了します。以降の操作は新しいセッションで実行してください。"
+    exit 0
+fi
+echo "[INFO] Dockerコンテナのセットアップ完了！次に ./3_configure_services.sh を実行してください。" | tee -a "$ERROR_LOG"
