@@ -71,4 +71,4 @@ echo "[INFO] ディレクトリを作成中..." | tee -a "$ERROR_LOG"
 mkdir -p /opt/azazel/{bin,config,logs,data,containers}
 chown -R "$(whoami)":"$(whoami)" /opt/azazel
 
-echo "[SUCCESS] インストール完了！次に ./setup_containers.sh を実行してください。" | tee -a "$ERROR_LOG"
+echo "[SUCCESS] インストール完了！次に ./2_setup_containers.sh を実行してください。" | tee -a "$ERROR_LOG"
