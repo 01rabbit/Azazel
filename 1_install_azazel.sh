@@ -27,7 +27,7 @@ if ! apt update && apt upgrade -y; then
     log_and_exit "システム更新に失敗しました。" "インターネット接続を確認してください。"
 fi
 
-# 必要パッケージのインストール（sqlite3 は不要のため除外）
+# 必要パッケージのインストール
 echo "[INFO] パッケージインストール中..." | tee -a "$ERROR_LOG"
 if ! apt install -y curl wget git docker.io docker-compose python3 python3-pip suricata iptables-persistent; then
     log_and_exit "パッケージのインストールに失敗しました。" "apt install を個別に試してみてください。"
@@ -37,6 +37,17 @@ fi
 echo "[INFO] DockerとSuricataを有効化..." | tee -a "$ERROR_LOG"
 systemctl enable docker --now
 systemctl enable suricata --now
+
+# === Suricata ルール初期取得 ===
+echo "[INFO] Suricataルールを初回取得中..." | tee -a "$ERROR_LOG"
+
+if ! sudo suricata-update >> "$ERROR_LOG" 2>&1; then
+    echo "[ERROR] Suricataルールの取得に失敗しました。" | tee -a "$ERROR_LOG"
+    echo "[INFO] 解決策: ネットワーク接続や suricata-update のインストールを確認してください。" | tee -a "$ERROR_LOG"
+    exit 1
+fi
+
+echo "[SUCCESS] Suricataルールの初期取得が完了しました。" | tee -a "$ERROR_LOG"
 
 # Fluent Bit インストール（APT経由）
 echo "[INFO] Fluent Bit をインストール中..." | tee -a "$ERROR_LOG"
