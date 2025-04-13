@@ -31,6 +31,11 @@ services:
     restart: always
     volumes:
       - /opt/azazel/config/opencanary.conf:/root/.opencanary.conf
+      - /opt/azazel/logs:/logs
+    ports:
+      - "21:21"       # FTP
+      - "80:80"       # HTTP
+      - "2222:2222"   # SSH (HoneyPot)
     networks:
       - azazel_net
 
