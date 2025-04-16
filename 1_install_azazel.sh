@@ -49,33 +49,6 @@ fi
 
 echo "[SUCCESS] Suricataルールの初期取得が完了しました。" | tee -a "$ERROR_LOG"
 
-# Fluent Bit インストール（APT経由）
-echo "[INFO] Fluent Bit をインストール中..." | tee -a "$ERROR_LOG"
-
-# APTレポジトリ追加（Fluent Bit公式 for Raspbian）
-if ! curl -fsSL https://packages.fluentbit.io/fluentbit.key | sudo apt-key add -; then
-    log_and_exit "Fluent Bit GPGキーの取得に失敗しました。" "https://docs.fluentbit.io/manual/installation/linux/debian"
-fi
-
-# sources.list に直接追記（Raspbian向け）
-if ! grep -q "packages.fluentbit.io/raspbian/bullseye" /etc/apt/sources.list; then
-    echo "deb https://packages.fluentbit.io/raspbian/bullseye bullseye main" | \
-        sudo tee -a /etc/apt/sources.list > /dev/null
-fi
-
-# パッケージインストール
-if ! sudo apt-get update >> "$ERROR_LOG" 2>&1; then
-    log_and_exit "apt update に失敗しました。" "ネットワーク設定を確認してください"
-fi
-
-if ! sudo apt-get install fluent-bit -y >> "$ERROR_LOG" 2>&1; then
-    log_and_exit "fluent-bit のインストールに失敗しました。" "Fluent Bit パッケージ取得を確認してください"
-fi
-
-# サービス起動・自動起動設定
-if ! sudo systemctl enable fluent-bit --now >> "$ERROR_LOG" 2>&1; then
-    log_and_exit "fluent-bit のサービス起動に失敗しました。" "systemd 状態を確認してください"
-fi
 
 # Azazelディレクトリ作成
 echo "[INFO] ディレクトリを作成中..." | tee -a "$ERROR_LOG"
