@@ -1,13 +1,36 @@
-[sources.fluentbit]
-  type = "socket"
-  address = "0.0.0.0:24224"
-  mode = "udp"
+##### SOURCE: Suricata #####
+[sources.suricata]
+  type = "file"
+  include = ["/var/log/suricata/eve.json"]
+  read_from = "end"
+  ignore_older_secs = 86400
+  fingerprinting.strategy = "device_and_inode"
 
-[transforms.json_parse]
-  type = "json_parser"
-  inputs = ["fluentbit"]
+##### SOURCE: OpenCanary #####
+[sources.opencanary]
+  type = "file"
+  include = ["/opt/azazel/logs/opencanary.log"]
+  read_from = "end"
+  ignore_older_secs = 86400
+  fingerprinting.strategy = "device_and_inode"
 
+##### TRANSFORM: OpenCanaryだけを正規JSONにする #####
+[transforms.clean_opencanary]
+  type = "remap"
+  inputs = ["opencanary"]
+  source = '''
+  .log = encode_json(.)
+  '''
+
+##### SINK: ファイル出力 #####
 [sinks.file]
   type = "file"
-  inputs = ["json_parse"]
+  inputs = ["suricata", "clean_opencanary"]
   path = "/logs/azazel.log"
+  encoding.codec = "json"
+
+[sinks.stdout_debug]
+  type = "console"
+  inputs = ["clean_opencanary"]
+  target = "stdout"
+  encoding.codec = "json"

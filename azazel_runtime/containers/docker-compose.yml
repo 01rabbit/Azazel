@@ -22,6 +22,9 @@ services:
     volumes:
       - /opt/azazel/config/vector.toml:/etc/vector/vector.toml
       - /opt/azazel/logs:/logs
+      - /var/log/suricata:/var/log/suricata  # Suricataのログディレクトリをマウント
+      - /opt/azazel/logs:/opt/azazel/logs    # OpenCanaryのログディレクトリをマウント      
+    command: --config /etc/vector/vector.toml
     networks:
       - azazel_net
 
@@ -38,7 +41,7 @@ services:
       - "2222:2222"   # SSH (HoneyPot)
     networks:
       - azazel_net
-
+  
 networks:
   azazel_net:
     driver: bridge
