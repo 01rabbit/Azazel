@@ -1,36 +1,79 @@
-##### SOURCE: Suricata #####
-[sources.suricata]
-  type = "file"
-  include = ["/var/log/suricata/eve.json"]
-  read_from = "end"
-  ignore_older_secs = 86400
-  fingerprinting.strategy = "device_and_inode"
+# OpenCanaryのログを取り込むためのソース設定
+[sources.opencanary_logs]
+type = "file"
+include = ["/opt/azazel/logs/opencanary.log"]  # 実際のパスに変更してください
+read_from = "beginning"
 
-##### SOURCE: OpenCanary #####
-[sources.opencanary]
-  type = "file"
-  include = ["/opt/azazel/logs/opencanary.log"]
-  read_from = "end"
-  ignore_older_secs = 86400
-  fingerprinting.strategy = "device_and_inode"
-
-##### TRANSFORM: OpenCanaryだけを正規JSONにする #####
+# OpenCanaryログのパース - エラー処理を修正
 [transforms.clean_opencanary]
-  type = "remap"
-  inputs = ["opencanary"]
-  source = '''
-  .log = encode_json(.)
-  '''
+type = "remap"
+inputs = ["opencanary_logs"]
+source = '''
+# メッセージがあるか確認
+if exists(.message) {
+  # 型変換を明示的に行う
+  message_str = string!(.message)
+  
+  # 安全にJSON部分を抽出
+  parts = split(message_str, "{", limit: 2)
+  if length(parts) < 2 {
+    # 分割に失敗した場合は元のメッセージを保持
+    .parsed = false
+    .error_msg = "Failed to split JSON data"
+  } else {
+    # JSONパートを作成して解析 - 配列アクセスのエラー処理を追加
+    json_part, err = "{" + parts[1]
+    if err != null {
+      .parsed = false
+      .error_msg = "Failed to concatenate JSON parts"
+    } else {
+      parsed_obj, err = parse_json(json_part)
+      if err != null {
+        .parsed = false
+        .error_msg = "Failed to parse JSON: " + err
+      } else {
+        # 成功した場合、オブジェクトをイベントにマージ - エラー処理を追加
+        merged, err = merge(., parsed_obj)
+        if err != null {
+          .parsed = false
+          .error_msg = "Failed to merge objects: " + err
+        } else {
+          . = merged
+          .parsed = true
+        }
+      }
+    }
+  }
+} else {
+  .parsed = false
+  .error_msg = "No message field"
+}
+'''
 
-##### SINK: ファイル出力 #####
-[sinks.file]
-  type = "file"
-  inputs = ["suricata", "clean_opencanary"]
-  path = "/logs/azazel.log"
-  encoding.codec = "json"
+# 重要度の高いアラートをフィルタリング - エラー処理を追加
+[transforms.opencanary_alerts]
+type = "remap"
+inputs = ["clean_opencanary"]
+source = '''
+# フィールドが存在するか確認してから比較
+if exists(.logtype_int) {
+  # 安全に型変換
+  logtype_str = string!(.logtype_int)
+  logtype, err = to_int(logtype_str)
+  if err == null && logtype >= 2000 {
+    .is_important_alert = true
+  } else {
+    .is_important_alert = false
+  }
+} else {
+  .is_important_alert = false
+  .error_msg = "logtype_int field missing"
+}
+'''
 
-[sinks.stdout_debug]
-  type = "console"
-  inputs = ["clean_opencanary"]
-  target = "stdout"
-  encoding.codec = "json"
+# ファイルへの出力設定
+[sinks.file_output]
+type = "file"
+inputs = ["opencanary_alerts"]
+path = "/opt/azazel/logs/azazel.log"
+encoding.codec = "json"

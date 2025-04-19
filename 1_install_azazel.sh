@@ -29,7 +29,7 @@ fi
 
 # 必要パッケージのインストール
 echo "[INFO] パッケージインストール中..." | tee -a "$ERROR_LOG"
-if ! apt install -y curl wget git docker.io docker-compose python3 python3-pip suricata iptables-persistent; then
+if ! apt install -y curl wget git docker.io docker-compose python3 python3-pip suricata iptables-persistent jq; then
     log_and_exit "パッケージのインストールに失敗しました。" "apt install を個別に試してみてください。"
 fi
 
