@@ -86,7 +86,7 @@ cat <<EOF > /opt/azazel/config/opencanary.conf
 }
 EOF
 
-# Mattermost を /opt に展開
+# === Mattermost を /opt に展開 ===
 echo "[INFO] Mattermost をダウンロードして /opt に展開..." | tee -a "$ERROR_LOG"
 cd /opt
 wget https://releases.mattermost.com/9.0.0/mattermost-9.0.0-linux-arm64.tar.gz
@@ -94,18 +94,48 @@ tar -xzf mattermost-9.0.0-linux-arm64.tar.gz
 rm mattermost-9.0.0-linux-arm64.tar.gz
 mkdir -p /opt/mattermost/data
 
-# Mattermost systemd ユニット作成
-echo "[INFO] Mattermost systemd サービスを作成..." | tee -a "$ERROR_LOG"
+# === mattermost ユーザー・グループ作成 ===
+if ! id mattermost &>/dev/null; then
+    useradd --system --user-group mattermost
+    echo "[INFO] mattermost ユーザーを作成しました。" | tee -a "$ERROR_LOG"
+fi
+
+# === ディレクトリの所有権とパーミッション調整 ===
+chown -R mattermost:mattermost /opt/mattermost
+chmod 750 /opt/mattermost/config
+chmod 640 /opt/mattermost/config/config.json
+
+# === jq が未インストールなら導入 ===
+if ! command -v jq &>/dev/null; then
+    echo "[INFO] jq をインストール..." | tee -a "$ERROR_LOG"
+    apt update && apt install -y jq
+fi
+
+# === config.json の SiteURL および DataSource を自動設定 ===
+echo "[INFO] config.json に SiteURL / DataSource を自動設定..." | tee -a "$ERROR_LOG"
+IPADDR=$(hostname -I | awk '{print $1}')
+SITEURL="http://${IPADDR}:8065"
+DATASOURCE="postgres://mmuser:securepassword@localhost:5432/mattermost?sslmode=disable"
+CONFIG_JSON="/opt/mattermost/config/config.json"
+
+jq ".ServiceSettings.SiteURL = \"${SITEURL}\" | .SqlSettings.DataSource = \"${DATASOURCE}\"" \
+    "$CONFIG_JSON" > /tmp/config.tmp && mv /tmp/config.tmp "$CONFIG_JSON"
+
+echo "[SUCCESS] config.json に反映完了: SiteURL=${SITEURL}" | tee -a "$ERROR_LOG"
+
+# === Mattermost systemd ユニット作成 ===
+echo "[INFO] systemd ユニットファイルを作成..." | tee -a "$ERROR_LOG"
 cat <<EOF > /etc/systemd/system/mattermost.service
 [Unit]
 Description=Mattermost
-After=network.target docker.service
+After=network.target
 
 [Service]
 Type=simple
-ExecStart=/opt/mattermost/bin/mattermost server
+ExecStart=/opt/mattermost/bin/mattermost
 WorkingDirectory=/opt/mattermost
-User=pi
+User=mattermost
+Group=mattermost
 Restart=always
 LimitNOFILE=49152
 
@@ -113,8 +143,16 @@ LimitNOFILE=49152
 WantedBy=multi-user.target
 EOF
 
+# === systemd サービス有効化と起動 ===
 systemctl daemon-reload
-systemctl enable mattermost --now
+systemctl enable mattermost
+systemctl start mattermost
+systemctl status mattermost | tee -a "$ERROR_LOG"
+if systemctl is-active --quiet mattermost; then
+    echo "[SUCCESS] Mattermost サービスが起動しました。" | tee -a "$ERROR_LOG"
+else
+    log_and_exit "Mattermost サービスの起動に失敗しました。" "systemctl status mattermost を確認してください。"
+fi
 
 # Firewall 設定
 echo "[INFO] iptables によるファイアウォールルールを適用..." | tee -a "$ERROR_LOG"
