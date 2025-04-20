@@ -76,7 +76,7 @@ These principles converge in Azazel’s design: **defense is not about passive p
 - OpenCanary (Decoy Services)
 - Vector (Log Collection)
 - iptables / nftables + tc (Traffic Control)
-- Mattermost / Signal (Alerting)
+- Mattermost (Alerting)
 - Python + Scapy (Custom Response Logic)
 - rsync + SSH (Optional Log Export)
 
