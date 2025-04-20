@@ -1,36 +1,73 @@
-##### SOURCE: Suricata #####
-[sources.suricata]
-  type = "file"
-  include = ["/var/log/suricata/eve.json"]
-  read_from = "end"
-  ignore_older_secs = 86400
-  fingerprinting.strategy = "device_and_inode"
+###############################################################################
+#                               Azazel Vector                                 #
+###############################################################################
 
-##### SOURCE: OpenCanary #####
-[sources.opencanary]
-  type = "file"
-  include = ["/opt/azazel/logs/opencanary.log"]
-  read_from = "end"
-  ignore_older_secs = 86400
-  fingerprinting.strategy = "device_and_inode"
+##### SOURCE: OpenCanary ######################################################
+[sources.opencanary_raw]
+type = "file"
+include = ["/opt/azazel/logs/opencanary.log"]
+read_from = "end"
+ignore_older_secs = 86400
+fingerprinting.strategy = "device_and_inode"
 
-##### TRANSFORM: OpenCanaryだけを正規JSONにする #####
-[transforms.clean_opencanary]
-  type = "remap"
-  inputs = ["opencanary"]
-  source = '''
-  .log = encode_json(.)
-  '''
+##### TRANSFORM: OpenCanary パース + 整形 #####################################
+[transforms.opencanary_parsed]
+type = "remap"
+inputs = ["opencanary_raw"]
+source = '''
+.message = string!(.message)
+parts = split(.message, " ", limit: 2)
 
-##### SINK: ファイル出力 #####
-[sinks.file]
-  type = "file"
-  inputs = ["suricata", "clean_opencanary"]
-  path = "/logs/azazel.log"
-  encoding.codec = "json"
+if length(parts) == 2 {
+  .log = parse_json!(parts[1])
+  .logtype_int = to_int(.log.logtype) ?? 0
+  .parsed = true
+  .source_type = "opencanary"
+  .timestamp = .log.utc_time
+  .node_id = .log.node_id
+  .src_host = .log.src_host
+  .src_port = .log.src_port
+  .dst_host = .log.dst_host
+  .dst_port = .log.dst_port
+  .local_time = .log.local_time
+  .local_time_adjusted = .log.local_time_adjusted
+  .utc_time = .log.utc_time
+  .is_important_alert = (.logtype_int >= 2000)
+} else {
+  .parsed = false
+  .error_msg = "Unrecognized format"
+}
+'''
 
-[sinks.stdout_debug]
-  type = "console"
-  inputs = ["clean_opencanary"]
-  target = "stdout"
-  encoding.codec = "json"
+##### SINK: OpenCanary ログ保存先 #############################################
+[sinks.opencanary_file]
+type = "file"
+inputs = ["opencanary_parsed"]
+path = "/opt/azazel/logs/opencanary_parsed.log"
+encoding.codec = "json"
+
+##### SOURCE: Suricata EVE ####################################################
+[sources.suricata_eve]
+type = "file"
+include = ["/var/log/suricata/eve.json"]
+read_from = "end"
+ignore_older_secs = 86400
+fingerprinting.strategy = "device_and_inode"
+
+##### TRANSFORM: Suricata EVE 整形 ############################################
+[transforms.suricata_parsed]
+type = "remap"
+inputs = ["suricata_eve"]
+source = '''
+.log = parse_json!(string!(.message))
+.parsed = true
+.source_type = "suricata"
+.timestamp = .log.timestamp
+'''
+
+##### SINK: Suricata EVEログ保存先 ############################################
+[sinks.suricata_file]
+type = "file"
+inputs = ["suricata_parsed"]
+path = "/opt/azazel/logs/suricata.log"
+encoding.codec = "json"

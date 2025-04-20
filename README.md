@@ -43,11 +43,11 @@ These principles converge in Azazel’s design: **defense is not about passive p
 
 ## 可搬型設計 / Portable Deployment
 
-- **軽量・省電力な構成により、外出先や現場などの一時的なネットワーク接続環境でも容易に導入可能です。**
-- **出張時、イベント会場、外部検証ネットワークなど、セキュリティが保証されない場所での利用に最適です。**
+- **軽量・省電力な構成により、外出先や現場などの一時的なネットワーク接続環境でも容易に導入可能です。**  
+*Lightweight and energy-efficient, enabling quick deployment in temporary and mobile environments.*
 
-- **Lightweight and energy-efficient**, enabling quick deployment in temporary and mobile environments.
-- **Perfect for use during business trips, field operations, or in untrusted networks outside your primary infrastructure.**
+- **出張時、イベント会場、外部検証ネットワークなど、セキュリティが保証されない場所での利用に最適です。**  
+*Perfect for use during business trips, field operations, or in untrusted networks outside your primary infrastructure.*
 
 ## 特徴 / Features
 
@@ -74,7 +74,7 @@ These principles converge in Azazel’s design: **defense is not about passive p
 - Raspberry Pi OS (64bit Lite)
 - Suricata (IDS/IPS)
 - OpenCanary (Decoy Services)
-- Fluent Bit (Log Collection)
+- Vector (Log Collection)
 - iptables / nftables + tc (Traffic Control)
 - Mattermost / Signal (Alerting)
 - Python + Scapy (Custom Response Logic)
