@@ -1,10 +1,9 @@
 import time
 import json
-import os
-import requests
-from datetime import datetime, timedelta
+from datetime import datetime
 from collections import defaultdict
 from config import notice
+from utils.mattermost import send_alert_to_mattermost
 
 FILTER_SIG_CATEGORY = [
     "Attack Response", "DNS", "DOS", "Exploit", "FTP", 
@@ -14,17 +13,14 @@ FILTER_SIG_CATEGORY = [
     "Web Specific Apps", "WORM"
 ]
 
-# 重複通知制御
 last_alert_times = {}
-cooldown_seconds = 60  # 同一シグネチャの通知間隔
-
-# 集約用バッファ
+cooldown_seconds = 60
 suppressed_alerts = defaultdict(int)
 last_summary_time = time.time()
-summary_interval = 60  # 秒
+summary_interval = 60
 
 def follow(file):
-    file.seek(0, os.SEEK_END)
+    file.seek(0, 2)
     while True:
         line = file.readline()
         if not line:
@@ -67,47 +63,32 @@ def should_notify(signature):
         return True
     return False
 
-def severity_label(severity):
-    return {
-        "1": "🟥",
-        "2": "🟧",
-        "3": "🟩"
-    }.get(str(severity), "⬜")
-
-def send_mattermost(alert_data):
-    label = severity_label(alert_data["severity"])
-    msg = (
-        f"**{label} [Suricata Alert]**\n"
-        f"Time: {alert_data['timestamp']}\n"
-        f"Signature: {alert_data['signature']}\n"
-        f"Severity: {alert_data['severity']}\n"
-        f"Source: {alert_data['src_ip']}\n"
-        f"Destination: {alert_data['dest_ip']}\n"
-        f"Protocol: {alert_data['proto']}"
-    )
-
-    # Severityが1のときのみ @all を付ける
-    if str(alert_data["severity"]) == "1":
-        msg = "@all\n\n" + msg
-
-    requests.post(notice.MATTERMOST_WEBHOOK_URL, json={"text": msg})
-
 def send_summary():
     if not suppressed_alerts:
         return
     now_str = datetime.now().strftime("%Y-%m-%d %H:%M")
-    msg_lines = [f"**📦 [Suricata Alert Summary - {now_str}]**", "", "🔁 Repeated (suppressed) alerts:"]
-    for signature, count in suppressed_alerts.items():
-        msg_lines.append(f"- {signature}: {count} times")
-    message = "\n".join(msg_lines)
-    requests.post(notice.MATTERMOST_WEBHOOK_URL, json={"text": message})
+    details = "\n".join(f"- {sig}: {count} times" for sig, count in suppressed_alerts.items())
+    send_alert_to_mattermost("Suricata", {
+        "timestamp": now_str,
+        "signature": "Summary",
+        "severity": 3,
+        "src_ip": "-",
+        "dest_ip": "-",
+        "proto": "-",
+        "details": details
+    })
     suppressed_alerts.clear()
 
 def test_mattermost():
-    msg = "**[TEST ALERT]**\nThis is a test message from the Suricata notifier script."
-    response = requests.post(notice.MATTERMOST_WEBHOOK_URL, json={"text": msg})
-    print(f"Test message sent. Response: {response.status_code}")
-    return response
+    send_alert_to_mattermost("Suricata", {
+        "timestamp": datetime.now().isoformat(),
+        "signature": "Test Alert",
+        "severity": 2,
+        "src_ip": "127.0.0.1",
+        "dest_ip": "127.0.0.1",
+        "proto": "TEST",
+        "details": "This is a test message from the Suricata notifier script."
+    })
 
 def main():
     global last_summary_time
@@ -115,14 +96,13 @@ def main():
         for line in follow(f):
             alert_data = parse_alert(line)
             if alert_data:
-                signature = alert_data["signature"]
-                if should_notify(signature):
-                    print(f"Detected alert: {signature}")
-                    send_mattermost(alert_data)
+                sig = alert_data["signature"]
+                if should_notify(sig):
+                    print(f"Detected alert: {sig}")
+                    send_alert_to_mattermost("Suricata", alert_data)
                 else:
-                    suppressed_alerts[signature] += 1
+                    suppressed_alerts[sig] += 1
 
-            # 一定時間ごとにサマリーを送信
             now = time.time()
             if now - last_summary_time > summary_interval:
                 send_summary()
