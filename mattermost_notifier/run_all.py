@@ -2,10 +2,10 @@ import threading
 import subprocess
 
 def run_suricata():
-    subprocess.run(["python3", "main_suricata.py"])
+    subprocess.run(["python3", "mattermost_notifier/main_suricata.py"])
 
 def run_opencanary():
-    subprocess.run(["python3", "main_opencanary.py"])
+    subprocess.run(["python3", "mattermost_notifier/main_opencanary.py"])
 
 if __name__ == "__main__":
     print("🚀 Starting unified monitor...")
