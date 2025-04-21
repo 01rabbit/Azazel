@@ -39,6 +39,10 @@ services:
       - "21:21"       # FTP
       - "80:80"       # HTTP
       - "2222:2222"   # SSH (HoneyPot)
+      - "23:23"       # Telnet
+      - "3306:3306"   # MySQL
+      - "445:445"     # SMB
+      - "3389:3389"   # RDP
     networks:
       - azazel_net
   
