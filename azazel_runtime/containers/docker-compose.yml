@@ -36,9 +36,13 @@ services:
     volumes:
       - /opt/azazel/config/opencanary.conf:/root/.opencanary.conf
       - /opt/azazel/logs:/logs
-    network_mode: host
-    # ポートはhostモードでは無視される
+    networks:
+      azazel_net:
+        ipv4_address: 172.16.10.10
 
 networks:
   azazel_net:
     driver: bridge
+    ipam:
+      config:
+        - subnet: 172.16.10.0/24
