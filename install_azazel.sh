@@ -78,6 +78,11 @@ apt install -y curl wget git docker.io docker-compose python3 python3-pip surica
 echo -e "\e[96m$MSG_SURICATA_RULES\e[0m" | tee -a "$ERROR_LOG"
 suricata-update || log_and_exit "Suricataルールの取得に失敗" "インターネット接続と suricata-update を確認"
 
+# === Suricata設定ファイルのバックアップとminimal構成への置き換え ===
+echo -e "\e[96m[INFO]\e[0m Suricata設定をminimal構成に切り替えます..." | tee -a "$ERROR_LOG"
+cp /etc/suricata/suricata.yaml /etc/suricata/suricata.yaml.bak
+cp "$PROJECT_ROOT/config/suricata_minimal.yaml" /etc/suricata/suricata.yaml
+
 # === Azazel ディレクトリ構成作成 ===
 echo -e "\e[96m$MSG_CREATE_DIRS\e[0m" | tee -a "$ERROR_LOG"
 mkdir -p /opt/azazel/{bin,config,logs,data,containers}
@@ -111,7 +116,7 @@ chmod 750 /opt/mattermost/config
 
 IPADDR=$(hostname -I | awk '{print $1}')
 SITEURL="http://${IPADDR}:8065"
-DATASOURCE="postgres://mmuser:securepassword@azazel_postgres:5432/mattermost?sslmode=disable"
+DATASOURCE="postgres://mmuser:securepassword@localhost:5432/mattermost?sslmode=disable"
 CONFIG_JSON="/opt/mattermost/config/config.json"
 
 jq ".ServiceSettings.SiteURL = \"${SITEURL}\" | .SqlSettings.DataSource = \"${DATASOURCE}\"" \
