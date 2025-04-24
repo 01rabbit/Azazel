@@ -84,14 +84,54 @@ These principles converge in Azazel’s design: **defense is not about passive p
 
 ## インストール / Installation
 
+### 🔧 必要条件 / Requirements
+- Raspberry Pi OS (64bit Lite)
+- インターネット接続 / Internet connection
+- 管理者権限（sudo） / Administrator privileges (sudo)
+
+### 🛠️ 導入手順 / Setup Instructions
+
 ```bash
 git clone https://github.com/01rabbit/Azazel.git azazel
 cd azazel
-./install.sh
+sudo bash install_azazel.sh          # 日本語出力（デフォルト）
+sudo bash install_azazel.sh --lang=en # 英語出力
 ```
 
-※ 詳細は `docs/setup.md` を参照してください。  
-See `docs/setup.md` for full setup instructions.
+※ `--lang=en` オプションを付けると、出力メッセージが英語になります。  
+Use `--lang=en` for English log/output.
+
+- スクリプトは以下を自動で実行します：  
+  *The script automatically performs the following:*
+  - パッケージのインストールとシステム更新 / Install packages and update system
+  - Suricataのルール初期化 / Initialize Suricata rules
+  - 必要な設定ファイルのコピー（Vector, OpenCanaryなど） / Copy required config files (Vector, OpenCanary, etc.)
+  - Dockerコンテナ（PostgreSQL, Vector, OpenCanary）の起動 / Start Docker containers (PostgreSQL, Vector, OpenCanary)
+  - Mattermostの展開、設定（config.json自動編集）、systemd起動登録 / Deploy Mattermost, auto-configure `config.json`, and register with systemd
+
+ログは `/opt/azazel/logs/install_errors.log` に保存されます。  
+*Installation logs are saved to `/opt/azazel/logs/install_errors.log`.*
+
+### ✅ 導入後確認 / Post-Install Check
+- Mattermost にブラウザでアクセス：  
+  *Access Mattermost in your browser:*
+  ```
+  http://<your Raspberry Pi's IP address>:8065
+  ```
+- コンテナの状態を確認：  
+  *Check container status:*
+  ```bash
+  cd /opt/azazel/containers
+  docker-compose ps
+  ```
+- サービス状態：  
+  *Check Mattermost service status:*
+  ```bash
+  systemctl status mattermost
+  ```
+
+詳細な構成内容や設定ファイルの説明は `docs/setup.md` を参照してください。  
+See `docs/setup.md` for full setup instructions and configuration details.
 
 ---
 

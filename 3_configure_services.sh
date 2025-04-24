@@ -47,7 +47,6 @@ fi
 # === ディレクトリの所有権とパーミッション調整 ===
 chown -R mattermost:mattermost /opt/mattermost
 chmod 750 /opt/mattermost/config
-chmod 640 /opt/mattermost/config/config.json
 
 # === jq が未インストールなら導入 ===
 if ! command -v jq &>/dev/null; then
@@ -59,11 +58,15 @@ fi
 echo "[INFO] config.json に SiteURL / DataSource を自動設定..." | tee -a "$ERROR_LOG"
 IPADDR=$(hostname -I | awk '{print $1}')
 SITEURL="http://${IPADDR}:8065"
-DATASOURCE="postgres://mmuser:securepassword@localhost:5432/mattermost?sslmode=disable"
+DATASOURCE="postgres://mmuser:securepassword@azazel_postgres:5432/mattermost?sslmode=disable"
 CONFIG_JSON="/opt/mattermost/config/config.json"
 
 jq ".ServiceSettings.SiteURL = \"${SITEURL}\" | .SqlSettings.DataSource = \"${DATASOURCE}\"" \
     "$CONFIG_JSON" > /tmp/config.tmp && mv /tmp/config.tmp "$CONFIG_JSON"
+
+# 所有権とパーミッション修正（重要）
+chown mattermost:mattermost "$CONFIG_JSON"
+chmod 640 "$CONFIG_JSON"
 
 echo "[SUCCESS] config.json に反映完了: SiteURL=${SITEURL}" | tee -a "$ERROR_LOG"
 
