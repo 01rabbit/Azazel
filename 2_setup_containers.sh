@@ -27,11 +27,10 @@ cd /opt/azazel/containers || log_and_exit "ディレクトリ移動に失敗し�
 
 # docker-compose.yml を配置（固定的なパス指定）
 echo "[INFO] docker-compose.yml を配置中..." | tee -a "$ERROR_LOG"
-
-SOURCE_YML="$PROJECT_ROOT/azazel_runtime/containers/docker-compose.yml"
+SOURCE_YML="$PROJECT_ROOT/config/docker-compose.yml"
 
 if [ ! -f "$SOURCE_YML" ]; then
-    log_and_exit "docker-compose.yml が $SOURCE_YML に見つかりません。" "$PROJECT_ROOT/azazel_runtime/containers に正しく配置されているか確認してください。"
+    log_and_exit "docker-compose.yml が $SOURCE_YML に見つかりません。" "$PROJECT_ROOT/config/ に正しく配置されているか確認してください。"
 fi
 
 cp "$SOURCE_YML" ./docker-compose.yml
