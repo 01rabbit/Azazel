@@ -130,8 +130,8 @@ Use `--lang=en` for English log/output.
   systemctl status mattermost
   ```
 
-詳細な構成内容や設定ファイルの説明は `docs/setup.md` を参照してください。  
-See `docs/setup.md` for full setup instructions and configuration details.
+詳細な構成内容や設定ファイルの説明は [`docs/setup.md`](docs/setup.md) を参照してください。  
+See [`docs/setup.md`](docs/setup.md) for full setup instructions and configuration details.
 
 ---
 
