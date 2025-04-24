@@ -24,11 +24,11 @@ PROJECT_ROOT="$(cd "$(dirname "$0")" && pwd)"
 
 # Vector 設定
 echo "[INFO] Vector 設定をコピー..." | tee -a "$ERROR_LOG"
-cp "$PROJECT_ROOT/config/vector.toml" /opt/azazel/config/vector.toml
+cp "$PROJECT_ROOT/config/vector.toml" /opt/azazel/config/
 
 # OpenCanary 設定
 echo "[INFO] OpenCanary 設定をコピー..." | tee -a "$ERROR_LOG"
-cp "$PROJECT_ROOT/config/opencanary.conf" /opt/azazel/config/opencanary.conf
+cp "$PROJECT_ROOT/config/opencanary.conf" /opt/azazel/config/
 
 # === Mattermost を /opt に展開 ===
 echo "[INFO] Mattermost をダウンロードして /opt に展開..." | tee -a "$ERROR_LOG"
