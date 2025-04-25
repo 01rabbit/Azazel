@@ -39,9 +39,10 @@ EOF
 echo "[5/9] wlan1のIPを172.16.0.254に固定..."
 tee -a /etc/dhcpcd.conf > /dev/null <<EOF
 
-interface wlan1
-    static ip_address=172.16.0.254/24
-    nohook wpa_supplicant
+interface wlan0
+  static ip_address=172.16.0.254/24
+  static routers=172.16.0.254
+  nogateway
 EOF
 
 echo "[6/9] DHCP範囲を172.16.0.100-200に変更..."

@@ -1,5 +1,5 @@
 # 御調子門 -AZAZEL system- : The Cyber Scapegoat Gateway
-
+![御調子門_logo](images/御調子門_logo.png)
 ## 概要 / Overview
 
 **Delaying Action（遅滞行動）** という言葉をご存知でしょうか？
