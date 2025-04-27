@@ -89,49 +89,55 @@ These principles converge in Azazel’s design: **defense is not about passive p
 - インターネット接続 / Internet connection
 - 管理者権限（sudo） / Administrator privileges (sudo)
 
-### 🛠️ 導入手順 / Setup Instructions
+---
+
+### セットアップ手順 / Setup Instructions
+
+最初に **1_install_raspap.sh** を実行し、Wi-Fi APとネットワーク環境を構築します。
+First, run **1_install_raspap.sh** to set up the Wi-Fi AP and network environment.
 
 ```bash
 git clone https://github.com/01rabbit/Azazel.git azazel
 cd azazel
-sudo bash install_azazel.sh          # 日本語出力（デフォルト）
-sudo bash install_azazel.sh --lang=en # 英語出力
+sudo bash 1_install_raspap.sh          # 日本語モード (default)
+sudo bash 1_install_raspap.sh --lang=en # 英語モード (English)
 ```
 
-※ `--lang=en` オプションを付けると、出力メッセージが英語になります。  
-Use `--lang=en` for English log/output.
+---
 
-- スクリプトは以下を自動で実行します：  
-  *The script automatically performs the following:*
-  - パッケージのインストールとシステム更新 / Install packages and update system
-  - Suricataのルール初期化 / Initialize Suricata rules
-  - 必要な設定ファイルのコピー（Vector, OpenCanaryなど） / Copy required config files (Vector, OpenCanary, etc.)
-  - Dockerコンテナ（PostgreSQL, Vector, OpenCanary）の起動 / Start Docker containers (PostgreSQL, Vector, OpenCanary)
-  - Mattermostの展開、設定（config.json自動編集）、systemd起動登録 / Deploy Mattermost, auto-configure `config.json`, and register with systemd
+### ネットワーク構成 / Configure Network via WebGUI
 
-ログは `/opt/azazel/logs/install_errors.log` に保存されます。  
-*Installation logs are saved to `/opt/azazel/logs/install_errors.log`.*
+`docs/RaspAP_config.md`の内容に従い、WebUIで RaspAP の設定を完了させます。
+Follow `docs/RaspAP_config.md` and configure RaspAP settings via WebUI.
 
-### ✅ 導入後確認 / Post-Install Check
-- Mattermost にブラウザでアクセス：  
-  *Access Mattermost in your browser:*
-  ```
-  http://<your Raspberry Pi's IP address>:8065
-  ```
-- コンテナの状態を確認：  
-  *Check container status:*
-  ```bash
-  cd /opt/azazel/containers
-  docker-compose ps
-  ```
-- サービス状態：  
-  *Check Mattermost service status:*
-  ```bash
-  systemctl status mattermost
-  ```
+- IP固定設定 / Set static IP for wlan0
+- DHCP範囲設定 / Configure DHCP range
+- SSID/パスワードの設定 / Set SSID/Password
 
-詳細な構成内容や設定ファイルの説明は [`docs/setup.md`](docs/setup.md) を参照してください。  
-See [`docs/setup.md`](docs/setup.md) for full setup instructions and configuration details.
+
+WebUI URL: `http://172.16.0.254`
+
+---
+
+### Azazelシステムのインストール / Install Azazel System
+
+ネットワークが完成したら **2_install_azazel.sh** を実行します。
+Once the network is configured, run **2_install_azazel.sh**.
+
+```bash
+sudo bash 2_install_azazel.sh          # 日本語モード (default)
+sudo bash 2_install_azazel.sh --lang=en # 英語モード (English)
+```
+
+- Dockerコンテナ / Mattermost / OpenCanary 等が起動されます。
+- Docker containers / Mattermost / OpenCanary will be deployed and started.
+
+
+---
+
+詳細な構成は [`docs/setup.md`](docs/setup.md) を参照してください。
+For detailed configurations, refer to [`docs/setup.md`](docs/setup.md).
+
 
 ---
 
