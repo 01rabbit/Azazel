@@ -31,7 +31,7 @@ CONF_DIR=$AZ_DIR/config
 DATA_DIR=$AZ_DIR/data
 LOG_DIR=$AZ_DIR/logs
 LOG_FILE=$LOG_DIR/install.log
-MM_VER=9.2.2
+MM_VER=9.9.2
 ARCH=$(dpkg --print-architecture)
 SITEURL="http://$(hostname -I |awk '{print $1}'):8065"
 DB_STR="postgres://mmuser:securepassword@localhost:5432/mattermost?sslmode=disable"
@@ -121,7 +121,11 @@ if ! id mattermost &>/dev/null; then
   useradd --system --user-group mattermost
 fi
 chown -R mattermost:mattermost /opt/mattermost
+# Ensure correct permissions for Mattermost directories and files
+find /opt/mattermost -type d -exec chmod 750 {} \;
+find /opt/mattermost -type f -exec chmod 640 {} \;
 chmod 750 /opt/mattermost/config
+chmod 640 /opt/mattermost/config/config.json
 jq ".ServiceSettings.SiteURL=\"$SITEURL\" | .SqlSettings.DataSource=\"$DB_STR\"" \
   /opt/mattermost/config/config.json > /tmp/config.tmp
 mv /tmp/config.tmp /opt/mattermost/config/config.json

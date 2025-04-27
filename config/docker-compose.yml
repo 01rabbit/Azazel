@@ -39,6 +39,9 @@ services:
     networks:
       azazel_net:
         ipv4_address: 172.16.10.10
+    ports:
+      - "2222:22"  # ホストの2222番ポートをコンテナの22番にマッピング
+
 
 networks:
   azazel_net:
