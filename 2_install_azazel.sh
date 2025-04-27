@@ -1,4 +1,4 @@
-#!/usr/bin/bash
+#!/bin/bash
 ##############################################################################
 #  Azazel one-shot installer (JA/EN) - Final docker-compose version with embedded Mattermost service and resume shortcut
 ##############################################################################
