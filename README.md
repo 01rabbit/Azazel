@@ -1,5 +1,5 @@
 # 御調子門 -AZAZEL system- : The Cyber Scapegoat Gateway
-
+![御調子門_logo](images/御調子門_logo.png)
 ## 概要 / Overview
 
 **Delaying Action（遅滞行動）** という言葉をご存知でしょうか？
@@ -84,14 +84,60 @@ These principles converge in Azazel’s design: **defense is not about passive p
 
 ## インストール / Installation
 
+### 🔧 必要条件 / Requirements
+- Raspberry Pi OS (64bit Lite)
+- インターネット接続 / Internet connection
+- 管理者権限（sudo） / Administrator privileges (sudo)
+
+---
+
+### セットアップ手順 / Setup Instructions
+
+最初に **1_install_raspap.sh** を実行し、Wi-Fi APとネットワーク環境を構築します。
+First, run **1_install_raspap.sh** to set up the Wi-Fi AP and network environment.
+
 ```bash
 git clone https://github.com/01rabbit/Azazel.git azazel
 cd azazel
-./install.sh
+sudo bash 1_install_raspap.sh          # 日本語モード (default)
+sudo bash 1_install_raspap.sh --lang=en # 英語モード (English)
 ```
 
-※ 詳細は `docs/setup.md` を参照してください。  
-See `docs/setup.md` for full setup instructions.
+---
+
+### ネットワーク構成 / Configure Network via WebGUI
+
+`docs/RaspAP_config.md`の内容に従い、WebUIで RaspAP の設定を完了させます。
+Follow `docs/RaspAP_config.md` and configure RaspAP settings via WebUI.
+
+- IP固定設定 / Set static IP for wlan0
+- DHCP範囲設定 / Configure DHCP range
+- SSID/パスワードの設定 / Set SSID/Password
+
+
+WebUI URL: `http://172.16.0.254`
+
+---
+
+### Azazelシステムのインストール / Install Azazel System
+
+ネットワークが完成したら **2_install_azazel.sh** を実行します。
+Once the network is configured, run **2_install_azazel.sh**.
+
+```bash
+sudo bash 2_install_azazel.sh          # 日本語モード (default)
+sudo bash 2_install_azazel.sh --lang=en # 英語モード (English)
+```
+
+- Dockerコンテナ / Mattermost / OpenCanary 等が起動されます。
+- Docker containers / Mattermost / OpenCanary will be deployed and started.
+
+
+---
+
+詳細な構成は [`docs/setup.md`](docs/setup.md) を参照してください。
+For detailed configurations, refer to [`docs/setup.md`](docs/setup.md).
+
 
 ---
 

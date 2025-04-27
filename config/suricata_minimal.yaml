@@ -5,13 +5,14 @@ vars:
   address-groups:
     HOME_NET: "[192.168.0.0/16]"
     EXTERNAL_NET: "any"
+    HTTP_SERVERS: "$HOME_NET"
 
 default-rule-path: /var/lib/suricata/rules
 rule-files:
   - suricata.rules
 
 af-packet:
-  - interface: wlan0
+  - interface: wlan1
     cluster-id: 99
     cluster-type: cluster_flow
     defrag: yes
