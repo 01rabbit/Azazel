@@ -1,6 +1,6 @@
 #!/bin/bash
 ##############################################################################
-#  Azazel one-shot installer (JA/EN) - Final docker-compose version with embedded Mattermost service and resume shortcut
+#  Azazel one-shot installer (JA/EN) - Final docker-compose version with embedded Mattermost service and Suricata rules filter
 ##############################################################################
 set -e
 
@@ -31,7 +31,7 @@ CONF_DIR=$AZ_DIR/config
 DATA_DIR=$AZ_DIR/data
 LOG_DIR=$AZ_DIR/logs
 LOG_FILE=$LOG_DIR/install.log
-MM_VER=9.2.2
+MM_VER=9.9.2
 ARCH=$(dpkg --print-architecture)
 SITEURL="http://$(hostname -I |awk '{print $1}'):8065"
 DB_STR="postgres://mmuser:securepassword@localhost:5432/mattermost?sslmode=disable"
@@ -62,6 +62,7 @@ STEPS=(
   "Copy config files"
   "Docker-compose up"
   "Mattermost install"
+  "Suricata rules filtering (SSH/HTTP/PostgreSQL focus)"
 )
 TOTAL=${#STEPS[@]}
 STEP=0
@@ -121,12 +122,14 @@ if ! id mattermost &>/dev/null; then
   useradd --system --user-group mattermost
 fi
 chown -R mattermost:mattermost /opt/mattermost
+find /opt/mattermost -type d -exec chmod 750 {} \;
+find /opt/mattermost -type f -exec chmod 640 {} \;
 chmod 750 /opt/mattermost/config
+chmod 640 /opt/mattermost/config/config.json
 jq ".ServiceSettings.SiteURL=\"$SITEURL\" | .SqlSettings.DataSource=\"$DB_STR\"" \
   /opt/mattermost/config/config.json > /tmp/config.tmp
 mv /tmp/config.tmp /opt/mattermost/config/config.json
 
-# Create Mattermost systemd service directly
 cat > /etc/systemd/system/mattermost.service <<EOF
 [Unit]
 Description=Mattermost
@@ -152,6 +155,29 @@ if systemctl is-active --quiet mattermost; then
   success "Mattermost installed and running"
 else
   error "Mattermost service failed to start"
+fi
+
+# -- 7 -----------------------------------------------------------------------
+STEP=$((STEP+1))
+log "[Step $STEP/$TOTAL] ${STEPS[STEP-1]}"
+
+SRC_RULES="/var/lib/suricata/rules/suricata.rules"
+DST_RULES="/var/lib/suricata/rules/suricata.filtered.rules"
+BACKUP_RULES="/var/lib/suricata/rules/suricata.rules.bak"
+
+if [[ -f "$SRC_RULES" ]]; then
+  cp "$SRC_RULES" "$BACKUP_RULES"
+  log "[INFO] 元の suricata.rules をバックアップしました -> $BACKUP_RULES"
+
+  grep -E "port\\s*22|port\\s*80|port\\s*443|port\\s*5432|ssh|http|https|pgsql|postgresql" "$SRC_RULES" > "$DST_RULES"
+
+  RULE_COUNT=$(wc -l < "$DST_RULES")
+  success "[SUCCESS] 抽出完了。フィルタ済みルール数: $RULE_COUNT"
+
+  cp "$DST_RULES" "$SRC_RULES"
+  success "[SUCCESS] suricata.rules をフィルタ済みバージョンに置き換えました"
+else
+  error "[ERROR] $SRC_RULES が存在しないためフィルタ処理をスキップします"
 fi
 
 log "${M[${L}_DONE]}"

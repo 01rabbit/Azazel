@@ -1,90 +1,93 @@
-import time
-import json
+#!/usr/bin/env python3
+# coding: utf-8
+"""
+Suricata eve.json を監視し Mattermost へ通知、必要に応じ DNAT 遅滞行動を発動
+"""
+
+import json, time, logging, sys
 from datetime import datetime
 from collections import defaultdict
+from pathlib import Path
+
 from config import notice
-from utils.mattermost import send_alert_to_mattermost
+from utils.mattermost     import send_alert_to_mattermost
+from utils.delay_action   import divert_to_opencanary, OPENCANARY_IP
 
+EVE_FILE           = Path(notice.SURICATA_EVE_JSON_PATH)
 FILTER_SIG_CATEGORY = [
-    "Attack Response", "DNS", "DOS", "Exploit", "FTP",
-    "ICMP", "IMAP", "Malware", "NETBIOS", "Phishing",
-    "POP3", "RPC", "SCAN", "Shellcode", "SMTP", "SNMP",
-    "SQL", "TELNET", "TFTP", "Web Client", "Web Server",
-    "Web Specific Apps", "WORM"
+    "Attack Response","DNS","DOS","Exploit","FTP","ICMP","IMAP","Malware",
+    "NETBIOS","Phishing","POP3","RPC","SCAN","Shellcode","SMTP","SNMP",
+    "SQL","TELNET","TFTP","Web Client","Web Server","Web Specific Apps","WORM"
 ]
+NOTIFY_CALLBACK = None
 
-CATEGORY_EMOJIS = {
-    "SQL": "📂",
-    "SSH": "🔐",
-    "NMAP": "📁",
-    "VNC": "🖥️",
-    "FTP": "📂",
-    "HTTP": "🌐",
-    "DEFAULT": "📌"
-}
+cooldown_seconds   = 60          # 同一シグネチャ抑止時間
+summary_interval   = 60          # サマリ送信間隔
 
-last_alert_times = {}
-cooldown_seconds = 60
+last_alert_times  = {}
 suppressed_alerts = defaultdict(int)
 last_summary_time = time.time()
-summary_interval = 60
 
-def follow(file):
-    file.seek(0, 2)
-    while True:
-        line = file.readline()
-        if not line:
-            time.sleep(1)
-            continue
-        yield line
+# ────────────────────────────────────────────────────────────
+def follow(fp: Path, skip_existing=True):
+    pos = None
+    try:
+        while True:
+            if not fp.exists():
+                time.sleep(1)
+                continue
 
-def extract_et_category(signature):
-    if signature.startswith("ET "):
-        parts = signature.split(" ", 2)
-        if len(parts) >= 2:
-            return parts[1]
-    return None
+            size = fp.stat().st_size
+            with fp.open() as f:
+                if pos is None:
+                    if skip_existing:
+                        f.seek(0, 2)
+                    pos = f.tell()
 
-def get_confidence_level(alert):
-    meta = alert.get("metadata", {})
-    if isinstance(meta, dict):
-        conf = meta.get("confidence", ["Unknown"])
-        if isinstance(conf, list):
-            return conf[0]
-    return "Unknown"
+                if size < pos:
+                    pos = 0
+                f.seek(pos)
 
-def get_category_emoji(signature):
-    for keyword, emoji in CATEGORY_EMOJIS.items():
-        if keyword.lower() in signature.lower():
-            return emoji
-    return CATEGORY_EMOJIS["DEFAULT"]
+                for line in f:
+                    yield line.rstrip("\n")
+                pos = f.tell()
+            time.sleep(0.5)
+    except KeyboardInterrupt:
+        print("\n✋ Suricata monitor interrupted, exiting...")
+        sys.exit(0)
 
-def parse_alert(line):
+# ────────────────────────────────────────────────────────────
+def parse_alert(line: str):
     try:
         data = json.loads(line)
-        if data.get("event_type") == "alert":
-            alert = data.get("alert", {})
-            signature = alert.get("signature", "")
-            category = extract_et_category(signature)
-            if category and category in FILTER_SIG_CATEGORY:
-                return {
-                    "timestamp": data.get("timestamp", ""),
-                    "signature": signature,
-                    "severity": alert.get("severity", 3),
-                    "src_ip": data.get("src_ip", ""),
-                    "dest_ip": data.get("dest_ip", ""),
-                    "proto": data.get("proto", ""),
-                    "details": alert,
-                    "confidence": get_confidence_level(alert)
-                }
+        if data.get("event_type") != "alert":
+            return None
+
+        alert      = data["alert"]
+        signature  = alert["signature"]
+        category   = signature.split(" ", 2)[1] if signature.startswith("ET ") else None
+
+        if category and category in FILTER_SIG_CATEGORY:
+            return {
+                "timestamp" : data["timestamp"],
+                "signature" : signature,
+                "severity"  : alert.get("severity", 3),
+                "src_ip"    : data.get("src_ip",""),
+                "dest_ip"   : data.get("dest_ip",""),
+                "proto"     : data.get("proto",""),
+                "dest_port" : data.get("dest_port"),
+                "details"   : alert,
+                "confidence": alert.get("metadata",{}).get("confidence",["Unknown"])[0],
+            }
     except json.JSONDecodeError:
         pass
     return None
 
-def should_notify(key):
-    now = datetime.now()
+# ────────────────────────────────────────────────────────────
+def should_notify(key: str) -> bool:
+    now  = datetime.now(notice.TZ)
     last = last_alert_times.get(key)
-    if not last or (now - last).total_seconds() > cooldown_seconds:
+    if not last or (now-last).total_seconds() > cooldown_seconds:
         last_alert_times[key] = now
         return True
     return False
@@ -92,63 +95,82 @@ def should_notify(key):
 def send_summary():
     if not suppressed_alerts:
         return
-    now_str = datetime.now().strftime("%Y-%m-%d %H:%M")
-    details = "\n".join(f"- {sig}: {count} times" for sig, count in suppressed_alerts.items())
-    send_alert_to_mattermost("Suricata", {
+    now_str = datetime.now(notice.TZ).strftime("%Y-%m-%d %H:%M")
+    body = "\n".join(f"- {sig}: {cnt} times" for sig,cnt in suppressed_alerts.items())
+    send_alert_to_mattermost("Suricata",{
         "timestamp": now_str,
         "signature": "Summary",
-        "severity": 3,
-        "src_ip": "-",
-        "dest_ip": "-",
-        "proto": "-",
-        "details": f"📃 **[Suricata Summary - {now_str}]**\n\n{details}",
-        "confidence": "Low"  # ← 明示的に設定
+        "severity" : 3,
+        "src_ip": "-", "dest_ip": "-", "proto": "-",
+        "details": f"📃 **[Suricata Summary - {now_str}]**\n\n{body}",
+        "confidence": "Low"
     })
-    print("🖒 Summary sent.")
     suppressed_alerts.clear()
 
+# ────────────────────────────────────────────────────────────
 def main():
     global last_summary_time
-    print(f"🚀 Monitoring: {notice.SURICATA_EVE_JSON_PATH}")
-    with open(notice.SURICATA_EVE_JSON_PATH, "r") as f:
-        for line in follow(f):
-            alert_data = parse_alert(line)
-            if alert_data:
-                sig = alert_data["signature"]
-                key = f"{sig}:{alert_data['src_ip']}"
-                conf = alert_data.get("confidence", "Unknown")
-                emoji = get_category_emoji(sig)
+    logging.basicConfig(level=logging.INFO,
+        format="%(asctime)s [%(levelname)s] %(message)s")
 
-                if "nmap" in sig.lower():
-                    if should_notify(key):
-                        send_alert_to_mattermost("Suricata", {
-                            "timestamp": alert_data["timestamp"],
-                            "signature": "⚠️ 偵察行為（Nmap）を検知",
-                            "severity": 1,
-                            "src_ip": alert_data["src_ip"],
-                            "dest_ip": alert_data["dest_ip"],
-                            "proto": alert_data["proto"],
-                            "details": "この通信は偵察行為と判定されました。即時対応を推奨します。",
-                            "confidence": "High"
-                        })
-                        print(f"🚨 Notify Nmap once: {sig}")
-                    else:
-                        suppressed_alerts[sig] += 1
-                        print(f"⏸ Suppressed: {key}")
-                    continue
+    logging.info(f"🚀 Monitoring eve.json: {EVE_FILE}")
+    for line in follow(EVE_FILE):
+        alert = parse_alert(line)
+        if not alert:
+            continue
 
-                if should_notify(key):
-                    print(f"✅ Notify: {sig} (Confidence: {conf})")
-                    send_alert_to_mattermost("Suricata", alert_data)
-                else:
-                    suppressed_alerts[sig] += 1
-                    print(f"⏸ Suppressed: {key}")
+        sig, src_ip, dport = alert["signature"], alert["src_ip"], alert["dest_port"]
+        key = f"{sig}:{src_ip}"
 
-            now = time.time()
-            if now - last_summary_time > summary_interval:
-                print("🕒 Summary条件成立、送信開始")
-                send_summary()
-                last_summary_time = now
+        trigger = ("nmap" in sig.lower()) or (
+            alert["proto"] == "TCP" and dport in (22, 80, 5432)
+        )
+
+        # ── 遅滞行動 ──────────────────
+        if trigger:
+            if should_notify(key):
+                send_alert_to_mattermost("Suricata",{
+                    **alert,
+                    "signature":"⚠️ 偵察／攻撃を検知",
+                    "severity":1,
+                    "details":sig,
+                    "confidence":"High"
+                })
+                logging.info(f"Notify & DNAT: {sig}")
+
+                try:
+                    divert_to_opencanary(src_ip, dport)
+                    if 'NOTIFY_CALLBACK' in globals():
+                        NOTIFY_CALLBACK()
+
+                    send_alert_to_mattermost("Suricata",{
+                        "timestamp": alert["timestamp"],
+                        "signature": "🛡️ 遅滞行動発動（DNAT）",
+                        "severity": 2,
+                        "src_ip": src_ip,
+                        "dest_ip": f"{OPENCANARY_IP}:{dport}",
+                        "proto": alert["proto"],
+                        "details": "攻撃元の通信を OpenCanary へ転送しました。",
+                        "confidence": "High"
+                    })
+                    logging.info(f"[遅滞行動] {src_ip}:{dport} -> {OPENCANARY_IP}:{dport}")
+
+                except Exception as e:
+                    logging.error(f"DNAT error: {e}")
+            else:
+                suppressed_alerts[sig] += 1
+            continue
+
+        # ── 通常通知 ──────────────────
+        if should_notify(key):
+            send_alert_to_mattermost("Suricata", alert)
+        else:
+            suppressed_alerts[sig] += 1
+
+        # ── サマリ ────────────────────
+        if time.time() - last_summary_time >= summary_interval:
+            send_summary()
+            last_summary_time = time.time()
 
 if __name__ == "__main__":
     main()
