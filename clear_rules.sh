@@ -11,4 +11,7 @@ iptables -t nat -F PREROUTING
 # tcの遅延設定を削除
 tc qdisc del dev $IFACE root
 
+sudo truncate -s 0 /var/log/suricata/eve.json
+sudo truncate -s 0 /opt/azazel/logs/opencanary.log
+
 echo "[+] クリア完了！"

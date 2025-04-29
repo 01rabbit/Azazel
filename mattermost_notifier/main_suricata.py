@@ -1,95 +1,173 @@
-import os
-import json
-import time
-import datetime
+#!/usr/bin/env python3
+# coding: utf-8
+"""
+Suricata eve.json を監視し Mattermost へ通知、必要に応じ DNAT 遅滞行動を発動
+"""
+
+import json, time, logging
+from datetime import datetime
 from collections import defaultdict
+from pathlib import Path
 
-from config.notice import NOTICE_MATTERMOST
-from utils.mattermost import send_alert_to_mattermost
-from utils.iptables_control import redirect_and_delay_attacker
+from config import notice
+from utils.mattermost     import send_alert_to_mattermost
+from utils.delay_action   import divert_to_opencanary, OPENCANARY_IP
 
-# 自身のIPリスト（誤検知防止用）
-SELF_IPS = ["172.16.0.254"]  # このGWのIP（適宜追加・編集）
-
-# 新規検知した攻撃者IPの記録
-detected_attackers = set()
-
-# eve.jsonファイルパス（Suricataログ）
-EVE_JSON_PATH = "/var/log/suricata/eve.json"
-
-# 監視対象カテゴリフィルタ（必要なら調整）
+EVE_FILE           = Path(notice.SURICATA_EVE_JSON_PATH)
 FILTER_SIG_CATEGORY = [
-    "Attempted Administrator Privilege Gain",
-    "Attempted User Privilege Gain",
-    "Executable Code was Detected",
-    "Attempted Information Leak",
-    "Web Application Attack",
-    "Shellcode Detected",
-    "SQL Injection",
-    "Trojan Activity",
-    "Network Trojan",
+    "Attack Response","DNS","DOS","Exploit","FTP","ICMP","IMAP","Malware",
+    "NETBIOS","Phishing","POP3","RPC","SCAN","Shellcode","SMTP","SNMP",
+    "SQL","TELNET","TFTP","Web Client","Web Server","Web Specific Apps","WORM"
 ]
 
-def is_self_traffic(event):
-    """自身の通信か判定する関数"""
-    src_ip = event.get("src_ip")
-    dest_ip = event.get("dest_ip")
-    return src_ip in SELF_IPS or dest_ip in SELF_IPS
+cooldown_seconds   = 60          # 同一シグネチャ抑止時間
+summary_interval   = 60          # サマリ送信間隔
 
+last_alert_times  = {}
+suppressed_alerts = defaultdict(int)
+last_summary_time = time.time()
+
+# ────────────────────────────────────────────────────────────
+def follow(fp: Path, skip_existing=True):
+    """
+    tail -F 相当。
+    * skip_existing=True のとき起動前の既存行は読み飛ばす
+    * ローテーションでサイズが小さくなったら自動で先頭へ
+    """
+    pos = None
+    while True:
+        if not fp.exists():
+            time.sleep(1)
+            continue
+
+        size = fp.stat().st_size
+        with fp.open() as f:
+            if pos is None:
+                if skip_existing:
+                    f.seek(0, 2)      # 末尾へ
+                pos = f.tell()
+
+            # ローテーションで小さくなった
+            if size < pos:
+                pos = 0
+            f.seek(pos)
+
+            for line in f:
+                yield line.rstrip("\n")
+            pos = f.tell()
+        time.sleep(0.5)
+
+# ────────────────────────────────────────────────────────────
+def parse_alert(line: str):
+    try:
+        data = json.loads(line)
+        if data.get("event_type") != "alert":
+            return None
+
+        alert      = data["alert"]
+        signature  = alert["signature"]
+        category   = signature.split(" ", 2)[1] if signature.startswith("ET ") else None
+
+        if category and category in FILTER_SIG_CATEGORY:
+            return {
+                "timestamp" : data["timestamp"],
+                "signature" : signature,
+                "severity"  : alert.get("severity", 3),
+                "src_ip"    : data.get("src_ip",""),
+                "dest_ip"   : data.get("dest_ip",""),
+                "proto"     : data.get("proto",""),
+                "dest_port" : data.get("dest_port"),
+                "details"   : alert,
+                "confidence": alert.get("metadata",{}).get("confidence",["Unknown"])[0],
+            }
+    except json.JSONDecodeError:
+        pass
+    return None
+
+# ────────────────────────────────────────────────────────────
+def should_notify(key: str)->bool:
+    now  = datetime.utcnow()
+    last = last_alert_times.get(key)
+    if not last or (now-last).total_seconds() > cooldown_seconds:
+        last_alert_times[key] = now
+        return True
+    return False
+
+def send_summary():
+    if not suppressed_alerts:
+        return
+    now_str = datetime.utcnow().strftime("%Y-%m-%d %H:%M")
+    body = "\n".join(f"- {sig}: {cnt} times" for sig,cnt in suppressed_alerts.items())
+    send_alert_to_mattermost("Suricata",{
+        "timestamp":now_str,
+        "signature":"Summary",
+        "severity" :3,
+        "src_ip":"-","dest_ip":"-","proto":"-",
+        "details":f"📃 **[Suricata Summary - {now_str}]**\n\n{body}",
+        "confidence":"Low"
+    })
+    suppressed_alerts.clear()
+
+# ────────────────────────────────────────────────────────────
 def main():
-    print("[*] Suricataログ監視開始...")
-    
-    with open(EVE_JSON_PATH, "r") as f:
-        # ファイル末尾から監視開始
-        f.seek(0, os.SEEK_END)
+    global last_summary_time
+    logging.basicConfig(level=logging.INFO,
+        format="%(asctime)s [%(levelname)s] %(message)s")
 
-        while True:
-            line = f.readline()
-            if not line:
-                time.sleep(0.1)
-                continue
+    logging.info(f"🚀 Monitoring eve.json: {EVE_FILE}")
+    for line in follow(EVE_FILE):
+        alert = parse_alert(line)
+        if not alert:
+            continue
 
-            try:
-                event = json.loads(line)
-            except json.JSONDecodeError:
-                continue
+        sig,src_ip,dport = alert["signature"],alert["src_ip"],alert["dest_port"]
+        key = f"{sig}:{src_ip}"
 
-            if event.get("event_type") != "alert":
-                continue
+        trigger = ("nmap" in sig.lower()) or (
+            alert["proto"]=="TCP" and dport in (22,80,5432)
+        )
 
-            # カテゴリフィルタ
-            alert_category = event.get("alert", {}).get("category", "")
-            if alert_category not in FILTER_SIG_CATEGORY:
-                continue
+        # ── 遅滞行動 ──────────────────
+        if trigger:
+            if should_notify(key):
+                send_alert_to_mattermost("Suricata",{
+                    **alert,
+                    "signature":"⚠️ 偵察／攻撃を検知",
+                    "severity":1,
+                    "details":sig,
+                    "confidence":"High"
+                })
+                logging.info(f"Notify & DNAT: {sig}")
 
-            if is_self_traffic(event):
-                continue  # 自分通信は無視
+                try:
+                    divert_to_opencanary(src_ip,dport)
+                    send_alert_to_mattermost("Suricata",{
+                        "timestamp":alert["timestamp"],
+                        "signature":"🛡️ 遅滞行動発動（DNAT）",
+                        "severity":2,
+                        "src_ip":src_ip,
+                        "dest_ip":f"{OPENCANARY_IP}:{dport}",
+                        "proto":alert["proto"],
+                        "details":"攻撃元の通信を OpenCanary へ転送しました。",
+                        "confidence":"High"
+                    })
+                    logging.info(f"[遅滞行動] {src_ip}:{dport} -> {OPENCANARY_IP}:{dport}")
+                except Exception as e:
+                    logging.error(f"DNAT error: {e}")
+            else:
+                suppressed_alerts[sig]+=1
+            continue
 
-            # --- 通知本文作成 ---
-            src_ip = event.get("src_ip", "")
-            dest_ip = event.get("dest_ip", "")
-            proto = event.get("proto", "")
-            signature = event.get("alert", {}).get("signature", "")
-            severity = event.get("alert", {}).get("severity", 3)
+        # ── 通常通知 ──────────────────
+        if should_notify(key):
+            send_alert_to_mattermost("Suricata",alert)
+        else:
+            suppressed_alerts[sig]+=1
 
-            emoji = ":warning:"
-            if severity == 1:
-                emoji = ":rotating_light:"
-            elif severity == 2:
-                emoji = ":warning:"
+        # ── サマリ ────────────────────
+        if time.time()-last_summary_time >= summary_interval:
+            send_summary()
+            last_summary_time=time.time()
 
-            notice_text = f"{emoji} **Suricata Alert**\n- Signature: `{signature}`\n- Source: `{src_ip}`\n- Destination: `{dest_ip}`\n- Protocol: `{proto}`\n- Severity: `{severity}`\n@all"
-
-            send_alert_to_mattermost(notice_text)
-
-            # --- 自動防御処理 ---
-            if src_ip:
-                redirect_and_delay_attacker(src_ip)
-
-                if src_ip not in detected_attackers:
-                    battle_message = f":new: **新たな侵入者検知**\n- 攻撃元IP: `{src_ip}`"
-                    send_alert_to_mattermost(battle_message)
-                    detected_attackers.add(src_ip)
-
-if __name__ == "__main__":
+if __name__=="__main__":
     main()

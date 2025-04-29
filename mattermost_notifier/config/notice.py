@@ -1,5 +1,5 @@
 # Mattermost Webhook通知用
-MATTERMOST_WEBHOOK_URL = "http://172.16.0.254:8065/hooks/ij7twkik37ykmnjqfhtrwfy3bo"
+MATTERMOST_WEBHOOK_URL = "http://172.16.0.254:8065/hooks/qbkfzrte8i8uzfofsnynm49xme"
 
 # Suricataのeve.jsonログファイルパス
 SURICATA_EVE_JSON_PATH = "/var/log/suricata/eve.json"
