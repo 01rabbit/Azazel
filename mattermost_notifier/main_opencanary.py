@@ -2,7 +2,7 @@
 """
 OpenCanary の JSON ログを監視し Mattermost へ通知
 """
-import re, json, time, logging
+import re, json, time, logging, sys
 from datetime import datetime
 from collections import defaultdict
 from pathlib import Path
@@ -31,21 +31,31 @@ SENSOR_SEVERITY = {
 
 # ────────────────────────────────────────────────────────────
 def follow(fp: Path, skip_existing=True):
-    pos=None
-    while True:
-        if not fp.exists():
-            time.sleep(1); continue
-        size=fp.stat().st_size
-        with fp.open() as f:
-            if pos is None:
-                if skip_existing: f.seek(0,2)
-                pos=f.tell()
-            if size<pos: pos=0
-            f.seek(pos)
-            for line in f:
-                yield line.rstrip("\n")
-            pos=f.tell()
-        time.sleep(0.5)
+    pos = None
+    try:
+        while True:
+            if not fp.exists():
+                time.sleep(1)
+                continue
+
+            size = fp.stat().st_size
+            with fp.open() as f:
+                if pos is None:
+                    if skip_existing:
+                        f.seek(0, 2)
+                    pos = f.tell()
+
+                if size < pos:
+                    pos = 0
+                f.seek(pos)
+
+                for line in f:
+                    yield line.rstrip("\n")
+                pos = f.tell()
+            time.sleep(0.5)
+    except KeyboardInterrupt:
+        print("\n✋ OpenCanary monitor interrupted, exiting...")
+        sys.exit(0)
 
 # ------------------------------------------------------------------
 def generate_key(alert)->str:
@@ -59,7 +69,7 @@ def generate_key(alert)->str:
     else: return f"{sig}:{ip}"
 
 def should_notify(key):
-    now=datetime.utcnow()
+    now=datetime.now(notice.TZ)
     last=last_alert_times.get(key)
     if not last or (now-last).total_seconds()>cooldown_seconds:
         last_alert_times[key]=now; return True
@@ -98,7 +108,7 @@ def parse_oc_line(line:str):
 # ------------------------------------------------------------------
 def send_summary():
     if not suppressed_alerts: return
-    now=datetime.utcnow().strftime("%Y-%m-%d %H:%M")
+    now=datetime.now(notice.TZ).strftime("%Y-%m-%d %H:%M")
     body="\n".join(f"- `{sig}`: {cnt} times" for sig,cnt in suppressed_alerts.items())
     send_alert_to_mattermost("OpenCanary",{
         "timestamp":now,"signature":"Summary","severity":3,
