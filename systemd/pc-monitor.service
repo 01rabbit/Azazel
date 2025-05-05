@@ -1,0 +1,6 @@
+[Unit]
+Description=Detect MacBook and (re)start Vector sink
+
+[Service]
+Type=oneshot
+ExecStart=/opt/azazel/scripts/pc_monitor.sh
