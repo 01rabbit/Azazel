@@ -1,0 +1,41 @@
+sources:
+  from_pi:
+    type: vector
+    address: 0.0.0.0:6000
+    version: "2"
+
+transforms:
+  tag_dataset:
+    type: remap
+    inputs: ["from_pi"]
+    source: |
+      .type = if exists(.source_type) { .source_type } else { "unknown" }
+
+      if .type == "suricata" {
+        .dataset = "suricata"
+      } else if .type == "opencanary" {
+        .dataset = "opencanary"
+      } else {
+        .dataset = "misc"
+      }
+
+sinks:
+  raw_file:
+    type: file
+    inputs: ["from_pi"]
+    path: "/data/received_%Y-%m-%d.log"
+    encoding:
+      codec: json
+
+  to_elastic:
+    type: elasticsearch
+    inputs: ["tag_dataset"]
+    endpoints: ["http://elasticsearch:9200"]
+    mode: data_stream
+    compression: gzip
+    healthcheck: true
+    data_stream:
+      type: logs
+      dataset: "{{ dataset }}"
+      namespace: default
+
