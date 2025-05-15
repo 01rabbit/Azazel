@@ -1,0 +1,10 @@
+# Kibana の設定
+server.name: kibana
+server.host: "0"
+elasticsearch.hosts: ["http://elasticsearch:9200"]
+# Enrollment Token を使って自動ログイン
+elasticsearch.enrollmentToken: "${ELASTIC_ENROLLMENT_TOKEN}"
+# 保存系の暗号化キー
+xpack.encryptedSavedObjects.encryptionKey: "${KIBANA_ENCRYPTION_KEY}"
+# セッションキー（32文字以上）
+xpack.security.encryptionKey: "${KIBANA_ENCRYPTION_KEY}"
