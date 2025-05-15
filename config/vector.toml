@@ -4,70 +4,131 @@
 
 ##### SOURCE: OpenCanary ######################################################
 [sources.opencanary_raw]
-type = "file"
-include = ["/opt/azazel/logs/opencanary.log"]
-read_from = "end"
-ignore_older_secs = 86400
+type        = "file"
+include     = ["/logs/opencanary.log"]
+read_from   = "end"
 fingerprinting.strategy = "device_and_inode"
 
-##### TRANSFORM: OpenCanary パース + 整形 #####################################
 [transforms.opencanary_parsed]
-type = "remap"
+type   = "remap"
 inputs = ["opencanary_raw"]
 source = '''
 .message = string!(.message)
-parts = split(.message, " ", limit: 2)
 
-if length(parts) == 2 {
-  .log = parse_json!(parts[1])
-  .logtype_int = to_int(.log.logtype) ?? 0
-  .parsed = true
+# 空白でスプリットするのではなく、正規表現を使って日付部分とJSON部分を分離
+pattern = r'^(?P<timestamp>\d{4}-\d{2}-\d{2} \d{2}:\d{2}:\d{2},\d{3}) (?P<json_data>\{.*\})'
+parsed = parse_regex!(.message, pattern)
+
+if exists(parsed.json_data) {
+  # JSON部分をパース
+  .log = parse_json!(parsed.json_data)
+  
+  # タイムスタンプと他のフィールドを設定
   .source_type = "opencanary"
   .timestamp = .log.utc_time
-  .node_id = .log.node_id
-  .src_host = .log.src_host
-  .src_port = .log.src_port
-  .dst_host = .log.dst_host
-  .dst_port = .log.dst_port
-  .local_time = .log.local_time
-  .local_time_adjusted = .log.local_time_adjusted
-  .utc_time = .log.utc_time
-  .is_important_alert = (.logtype_int >= 2000)
+  .logtype_int = to_int(.log.logtype) ?? 0
+  .is_important = (.logtype_int >= 2000)
 } else {
-  .parsed = false
-  .error_msg = "Unrecognized format"
+  .parse_error = true
 }
 '''
 
-##### SINK: OpenCanary ログ保存先 #############################################
-[sinks.opencanary_file]
-type = "file"
-inputs = ["opencanary_parsed"]
-path = "/opt/azazel/logs/opencanary_parsed.log"
-encoding.codec = "json"
-
-##### SOURCE: Suricata EVE ####################################################
+##### SOURCE: Suricata ########################################################
 [sources.suricata_eve]
-type = "file"
-include = ["/var/log/suricata/eve.json"]
-read_from = "end"
-ignore_older_secs = 86400
+type        = "file"
+include     = ["/var/log/suricata/eve.json"]
+read_from   = "end"
 fingerprinting.strategy = "device_and_inode"
 
-##### TRANSFORM: Suricata EVE 整形 ############################################
 [transforms.suricata_parsed]
-type = "remap"
+type   = "remap"
 inputs = ["suricata_eve"]
 source = '''
-.log = parse_json!(string!(.message))
-.parsed = true
+.log         = parse_json!(string!(.message))
 .source_type = "suricata"
-.timestamp = .log.timestamp
+.timestamp   = .log.timestamp
+
+if exists(.log.alert) {
+  .alert = .log.alert
+}
+if exists(.log.alert.signature) {
+  .signature = .log.alert.signature
+}
+if exists(.log.src_ip) {
+  .src_ip = .log.src_ip
+}
+if exists(.log.dest_ip) {
+  .dest_ip = .log.dest_ip
+}
+if exists(.log.dest_port) {
+  .dest_port = .log.dest_port
+}
+if exists(.log.proto) {
+  .proto = .log.proto
+}
+if exists(.log.event_type) {
+  .event_type = .log.event_type
+}
 '''
 
-##### SINK: Suricata EVEログ保存先 ############################################
+##### SINK: OpenCanary ファイル保存 ###########################################
+[sinks.opencanary_file]
+type   = "file"
+inputs = ["opencanary_parsed"]
+path   = "/opt/azazel/logs/opencanary_%Y-%m-%d.log"
+
+  [sinks.opencanary_file.encoding]
+  codec = "json"
+
+##### SINK: Suricata ファイル保存 ##############################################
 [sinks.suricata_file]
-type = "file"
+type   = "file"
 inputs = ["suricata_parsed"]
-path = "/opt/azazel/logs/suricata.log"
-encoding.codec = "json"
+path   = "/opt/azazel/logs/suricata_%Y-%m-%d.log"
+
+  [sinks.suricata_file.encoding]
+  codec = "json"
+
+##### SINK: Laptop 送信用（Vector→Vector） ####################################
+[sinks.to_laptop]
+type    = "vector"
+inputs  = ["opencanary_parsed", "suricata_parsed"]
+address = "192.168.40.83:6000"
+version = "2"
+compression = true               
+
+  # [sinks.to_laptop.encoding]  
+  # codec = "json_gzip"
+
+  [sinks.to_laptop.buffer]
+  type      = "disk"
+  max_size  = 5_000_000_000
+  when_full = "block"
+
+##### SINK: Elasticsearch（Suricata） #########################################
+[sinks.elasticsearch_suricata]
+type        = "elasticsearch"
+inputs      = ["suricata_parsed"]
+endpoints   = ["http://192.168.40.83:9200"]
+mode        = "data_stream"
+compression = "gzip"
+healthcheck = true
+
+  [sinks.elasticsearch_suricata.auth]
+  strategy = "basic"
+  user     = "elastic"
+  password = "elastic"
+
+##### SINK: Elasticsearch（OpenCanary） #######################################
+[sinks.elasticsearch_opencanary]
+type        = "elasticsearch"
+inputs      = ["opencanary_parsed"]
+endpoints   = ["http://192.168.40.83:9200"]
+mode        = "data_stream"
+compression = "gzip"
+healthcheck = true
+
+  [sinks.elasticsearch_opencanary.auth]
+  strategy = "basic"
+  user     = "elastic"
+  password = "elastic"
