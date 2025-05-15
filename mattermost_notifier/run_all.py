@@ -40,10 +40,18 @@ def notify_attack_detected():
     is_normal_mode = False
 
 def reset_network_config():
-    logging.info("Resetting iptables and tc settings...")
+    logging.info("Flushing NAT rules and resetting basic network config...")
 
+    # ① NATテーブルの全ルールを一旦削除
     subprocess.run(["iptables", "-t", "nat", "-F"], check=False)
 
+    # ② 内部LAN(172.16.0.0/24)からWAN出口(wlan1)へのMASQUERADEを再設定
+    subprocess.run(["iptables", "-t", "nat", "-A", "POSTROUTING",
+                    "-s", "172.16.0.0/24", "-o", "wlan1", "-j", "MASQUERADE"], check=True)
+
+    logging.info("Internal LAN to WAN routing re-established.")
+
+    # ③ tc設定削除 (遅滞制御は個別にリセット)
     result = subprocess.run(["tc", "qdisc", "show", "dev", "wlan1"], capture_output=True, text=True)
     if "prio" in result.stdout or "netem" in result.stdout:
         subprocess.run(["tc", "qdisc", "del", "dev", "wlan1", "root"], check=False)
@@ -51,6 +59,8 @@ def reset_network_config():
     else:
         logging.info("No tc qdisc to delete.")
 
+    logging.info("Network reset completed.")
+    
     now_str = datetime.now(notice.TZ).strftime("%Y-%m-%d %H:%M:%S")
     send_alert_to_mattermost("Suricata", {
         "timestamp": now_str,
