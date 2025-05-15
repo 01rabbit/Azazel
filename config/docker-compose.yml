@@ -26,7 +26,7 @@ services:
       - /var/log/suricata:/var/log/suricata
       - /opt/azazel/logs:/opt/azazel/logs
     environment:
-      - SINK_TARGET=192.168.40.82:6000     # PC の IP:ポート
+      - SINK_TARGET=192.168.40.83:6000     # PC の IP:ポート
     command: --config /etc/vector/vector.toml
     networks:
       - azazel_net

@@ -5,7 +5,7 @@
 ##### SOURCE: OpenCanary ######################################################
 [sources.opencanary_raw]
 type        = "file"
-include     = ["/opt/azazel/logs/opencanary.log"]
+include     = ["/logs/opencanary.log"]
 read_from   = "end"
 fingerprinting.strategy = "device_and_inode"
 
@@ -14,14 +14,20 @@ type   = "remap"
 inputs = ["opencanary_raw"]
 source = '''
 .message = string!(.message)
-parts    = split(.message, " ", limit: 2)
 
-if length(parts) == 2 {
-  .log              = parse_json!(parts[1])
-  .source_type      = "opencanary"
-  .timestamp        = .log.utc_time
-  .logtype_int      = to_int(.log.logtype) ?? 0
-  .is_important     = (.logtype_int >= 2000)
+# 空白でスプリットするのではなく、正規表現を使って日付部分とJSON部分を分離
+pattern = r'^(?P<timestamp>\d{4}-\d{2}-\d{2} \d{2}:\d{2}:\d{2},\d{3}) (?P<json_data>\{.*\})'
+parsed = parse_regex!(.message, pattern)
+
+if exists(parsed.json_data) {
+  # JSON部分をパース
+  .log = parse_json!(parsed.json_data)
+  
+  # タイムスタンプと他のフィールドを設定
+  .source_type = "opencanary"
+  .timestamp = .log.utc_time
+  .logtype_int = to_int(.log.logtype) ?? 0
+  .is_important = (.logtype_int >= 2000)
 } else {
   .parse_error = true
 }
@@ -87,7 +93,7 @@ path   = "/opt/azazel/logs/suricata_%Y-%m-%d.log"
 [sinks.to_laptop]
 type    = "vector"
 inputs  = ["opencanary_parsed", "suricata_parsed"]
-address = "192.168.40.82:6000"
+address = "192.168.40.83:6000"
 version = "2"
 compression = true               
 
@@ -103,7 +109,7 @@ compression = true
 [sinks.elasticsearch_suricata]
 type        = "elasticsearch"
 inputs      = ["suricata_parsed"]
-endpoints   = ["http://192.168.40.82:9200"]
+endpoints   = ["http://192.168.40.83:9200"]
 mode        = "data_stream"
 compression = "gzip"
 healthcheck = true
@@ -117,7 +123,7 @@ healthcheck = true
 [sinks.elasticsearch_opencanary]
 type        = "elasticsearch"
 inputs      = ["opencanary_parsed"]
-endpoints   = ["http://192.168.40.82:9200"]
+endpoints   = ["http://192.168.40.83:9200"]
 mode        = "data_stream"
 compression = "gzip"
 healthcheck = true
