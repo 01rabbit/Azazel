@@ -23,7 +23,7 @@ services:
     ports:
       - "9200:9200"
     volumes:
-      - ./data/esdata:/usr/share/elasticsearch/data
+      - esdata:/usr/share/elasticsearch/data
     networks:
       - siem-network
 
@@ -44,3 +44,6 @@ services:
 networks:
   siem-network:
     driver: bridge
+
+volumes:
+  esdata:
