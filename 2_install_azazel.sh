@@ -186,6 +186,29 @@ fi
 
 
 # ------------------------------
+# Suricata Luaスクリプト（delay.lua, ja3.lua）の配置・権限セットアップ関数
+setup_suricata_lua_scripts() {
+  LUA_SRC_DIR="$CONF_DIR/suricata/lua"
+  DEST_DIR="/etc/suricata/lua"
+
+  echo "[INFO] Installing Suricata Lua scripts: delay.lua, ja3.lua"
+  sudo mkdir -p "$DEST_DIR"
+  sudo chown suricata:suricata "$DEST_DIR"
+  sudo chmod 750 "$DEST_DIR"
+
+  for lua_file in delay.lua ja3.lua; do
+    SRC="$LUA_SRC_DIR/$lua_file"
+    if [[ ! -f "$SRC" ]]; then
+      echo "[ERROR] $lua_file not found in $LUA_SRC_DIR" >&2
+      exit 1
+    fi
+    sudo install -m 640 -o suricata -g suricata "$SRC" "$DEST_DIR/$lua_file"
+  done
+
+  echo "[SUCCESS] Lua scripts installed to $DEST_DIR."
+}
+
+# ------------------------------
 # Suricataルールの有効・無効設定＆アップデート実行関数
 update_suricata_rules() {
   echo "[INFO] Suricataルールのenable/disable.confとルール更新を実施"
@@ -234,6 +257,9 @@ EOL
   sudo systemctl restart suricata
   echo "[SUCCESS] Suricataルールの更新と再起動が完了"
 }
+
+# 主要セットアップ後にSuricata Luaスクリプト配置を実行
+setup_suricata_lua_scripts
 
 # 主要セットアップ後にSuricataルール更新を実行
 update_suricata_rules
