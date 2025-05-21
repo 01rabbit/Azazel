@@ -31,9 +31,9 @@ CONF_DIR=$AZ_DIR/config
 DATA_DIR=$AZ_DIR/data
 LOG_DIR=$AZ_DIR/logs
 LOG_FILE=$LOG_DIR/install.log
-MM_VER=9.9.2
+MM_VER=9.10.2
 ARCH=$(dpkg --print-architecture)
-SITEURL="http://$(hostname -I |awk '{print $1}'):8065"
+SITEURL="http://$(hostname -I |awk '{print $1}'):8080"
 DB_STR="postgres://mmuser:securepassword@localhost:5432/mattermost?sslmode=disable"
 
 # Prepare directories
@@ -100,6 +100,10 @@ cp "$(dirname "$0")/config/vector.toml" "$CONF_DIR/"
 cp "$(dirname "$0")/config/opencanary.conf" "$CONF_DIR/"
 cp "$(dirname "$0")/config/docker-compose.yml" "$AZ_DIR/containers/"
 success "Config files copied"
+cp "$(dirname "$0")/config/nginx.conf" "$CONF_DIR/nginx.conf"
+chown root:root "$CONF_DIR/nginx.conf"
+chmod 644 "$CONF_DIR/nginx.conf"
+success "nginx.conf copied and permission set"
 
 # -- 5 -----------------------------------------------------------------------
 STEP=$((STEP+1))
@@ -179,5 +183,59 @@ if [[ -f "$SRC_RULES" ]]; then
 else
   error "[ERROR] $SRC_RULES が存在しないためフィルタ処理をスキップします"
 fi
+
+
+# ------------------------------
+# Suricataルールの有効・無効設定＆アップデート実行関数
+update_suricata_rules() {
+  echo "[INFO] Suricataルールのenable/disable.confとルール更新を実施"
+  ENABLE_CONF="/etc/suricata/enable.conf"
+  DISABLE_CONF="/etc/suricata/disable.conf"
+  SURICATA_CONF="/etc/suricata/suricata.yaml"
+
+  # enable.conf テンプレ生成
+  cat > "$ENABLE_CONF" <<'EOL'
+enable classification:attempted-admin
+enable classification:attempted-user
+enable classification:shellcode-detect
+enable classification:trojan-activity
+enable classification:protocol-command-decode
+enable classification:web-application-attack
+enable classification:bad-unknown
+
+enable group:ja3-fingerprints
+enable group:tls-events
+enable group:ssh
+enable group:postgres
+
+enable sid:2027750   # SSH brute-force 5 in 60 s
+enable sid:2030342   # PostgreSQL auth failed > n
+EOL
+
+  # disable.conf テンプレ生成
+  cat > "$DISABLE_CONF" <<'EOL'
+disable classification:policy-violation
+disable classification:icmp-event
+disable classification:non-standard-protocol
+
+disable group:oracle
+disable group:telnet
+disable group:scada
+disable group:voip
+disable group:activex
+
+disable sid:2100367  # TLS certificate expired
+disable sid:2210051  # TCP timestamp option missing
+EOL
+
+  # suricata-updateで更新し、テスト＆再起動
+  sudo suricata-update --no-test --enable-conf="$ENABLE_CONF" --disable-conf="$DISABLE_CONF" -f
+  sudo suricata -T -c "$SURICATA_CONF"
+  sudo systemctl restart suricata
+  echo "[SUCCESS] Suricataルールの更新と再起動が完了"
+}
+
+# 主要セットアップ後にSuricataルール更新を実行
+update_suricata_rules
 
 log "${M[${L}_DONE]}"
