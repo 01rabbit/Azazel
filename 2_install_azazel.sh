@@ -206,6 +206,8 @@ chmod 640 /opt/mattermost/config/config.json
 jq ".ServiceSettings.SiteURL=\"$SITEURL\" | .SqlSettings.DataSource=\"$DB_STR\"" \
   /opt/mattermost/config/config.json > /tmp/config.tmp
 mv /tmp/config.tmp /opt/mattermost/config/config.json
+jq ".ServiceSettings.ListenAddress=\":8065\"" /opt/mattermost/config/config.json > /tmp/config.tmp
+mv /tmp/config.tmp /opt/mattermost/config/config.json
 
 cat > /etc/systemd/system/mattermost.service <<EOF
 [Unit]
