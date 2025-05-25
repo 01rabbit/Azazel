@@ -97,7 +97,13 @@ EOL
 
   # suricata-updateで更新し、テスト＆再起動
   sudo suricata-update --no-test --enable-conf="$ENABLE_CONF" --disable-conf="$DISABLE_CONF" -f
-  sudo suricata -T -c "$SURICATA_CONF"
+
+  # Suricata設定テスト
+  if ! sudo suricata -T -c /etc/suricata/suricata.yaml; then
+    echo "[ERROR] Suricataの設定テストに失敗しました。ログを確認してください。"
+    exit 1
+  fi
+
   sudo systemctl restart suricata
   echo "[SUCCESS] Suricataルールの更新と再起動が完了"
 }
@@ -131,7 +137,6 @@ fi
 # ---------- installation steps ----------
 STEPS=(
   "System update & package install"
-  "Suricata minimal config"
   "Directory setup"
   "Copy config files"
   "Docker-compose up"
@@ -152,13 +157,21 @@ apt-get -yqq install --no-install-recommends \
   suricata suricata-update python3 python3-pip
 success "Packages installed"
 
+# ----- Suricata初期設定: git管理のsuricata.yamlを/etcへコピー -----
+SURICATA_SRC_YAML="$(dirname "$0")/config/suricata/suricata.yaml"
+if [ -f "$SURICATA_SRC_YAML" ]; then
+  cp "$SURICATA_SRC_YAML" /etc/suricata/suricata.yaml
+  chown suricata:suricata /etc/suricata/suricata.yaml
+  chmod 644 /etc/suricata/suricata.yaml
+  log "[INFO] Suricata初期設定: config/suricata/suricata.yaml → /etc/suricata/suricata.yaml にコピー"
+else
+  log "[WARN] $SURICATA_SRC_YAML が見つかりません。Suricata設定コピーをスキップ"
+fi
+
 # -- 2 -----------------------------------------------------------------------
 STEP=$((STEP+1))
 log "[Step $STEP/$TOTAL] ${STEPS[STEP-1]}"
-suricata-update || true
-cp /etc/suricata/suricata.yaml{,.bak}
-install -Dm644 "$(dirname "$0")/config/suricata_minimal.yaml" /etc/suricata/suricata.yaml
-success "Suricata minimal config applied"
+# (suricata.yaml copy logic moved to earlier step)
 
 # -- 3 -----------------------------------------------------------------------
 STEP=$((STEP+1))
@@ -198,11 +211,16 @@ tar -xzf "$MM_TAR" && rm "$MM_TAR"
 if ! id mattermost &>/dev/null; then
   useradd --system --user-group mattermost
 fi
-chown -R mattermost:mattermost /opt/mattermost
+jchown -R mattermost:mattermost /opt/mattermost
 find /opt/mattermost -type d -exec chmod 750 {} \;
 find /opt/mattermost -type f -exec chmod 640 {} \;
 chmod 750 /opt/mattermost/config
 chmod 640 /opt/mattermost/config/config.json
+
+# 明示的に Mattermost 設定ディレクトリとファイルの権限・所有者を再設定（再発防止）
+chown -R mattermost:mattermost /opt/mattermost/config
+chmod 750 /opt/mattermost/config
+chmod 660 /opt/mattermost/config/config.json
 jq ".ServiceSettings.SiteURL=\"$SITEURL\" | .SqlSettings.DataSource=\"$DB_STR\"" \
   /opt/mattermost/config/config.json > /tmp/config.tmp
 mv /tmp/config.tmp /opt/mattermost/config/config.json
@@ -236,10 +254,12 @@ else
   error "Mattermost service failed to start"
 fi
 
+
 # 主要セットアップ後にSuricata Luaスクリプト配置を実行
 setup_suricata_lua_scripts
 
 # 主要セットアップ後にSuricataルール更新を実行
 update_suricata_rules
+
 
 log "${M[${L}_DONE]}"
