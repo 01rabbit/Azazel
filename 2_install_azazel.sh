@@ -3,6 +3,8 @@
 #  Azazel one-shot installer (JA/EN) - Final docker-compose version with embedded Mattermost service and Suricata rules filter
 ##############################################################################
 
+SCRIPT_BASE="$(cd "$(dirname "${BASH_SOURCE[0]:-$0}")" && pwd)"
+
 # ---------- variables ----------
 AZ_DIR=/opt/azazel
 CONF_DIR=$AZ_DIR/config
@@ -36,9 +38,9 @@ setup_suricata_lua_scripts() {
   DEST_DIR="/etc/suricata/lua"
 
   echo "[INFO] Installing Suricata Lua scripts: delay.lua, ja3.lua"
-  sudo mkdir -p "$DEST_DIR"
-  sudo chown suricata:suricata "$DEST_DIR"
-  sudo chmod 750 "$DEST_DIR"
+  mkdir -p "$DEST_DIR"
+  chown suricata:suricata "$DEST_DIR"
+  chmod 750 "$DEST_DIR"
 
   for lua_file in delay.lua ja3.lua; do
     SRC="$LUA_SRC_DIR/$lua_file"
@@ -46,7 +48,7 @@ setup_suricata_lua_scripts() {
       echo "[ERROR] $lua_file not found in $LUA_SRC_DIR" >&2
       exit 1
     fi
-    sudo install -m 640 -o suricata -g suricata "$SRC" "$DEST_DIR/$lua_file"
+    install -m 640 -o suricata -g suricata "$SRC" "$DEST_DIR/$lua_file"
   done
 
   echo "[SUCCESS] Lua scripts installed to $DEST_DIR."
@@ -96,15 +98,20 @@ disable sid:2210051  # TCP timestamp option missing
 EOL
 
   # suricata-updateで更新し、テスト＆再起動
-  sudo suricata-update --no-test --enable-conf="$ENABLE_CONF" --disable-conf="$DISABLE_CONF" -f
-
-  # Suricata設定テスト
-  if ! sudo suricata -T -c /etc/suricata/suricata.yaml; then
-    echo "[ERROR] Suricataの設定テストに失敗しました。ログを確認してください。"
+  set +e
+  suricata-update --no-test --enable-conf="$ENABLE_CONF" --disable-conf="$DISABLE_CONF" -f
+  SURICATA_UPDATE_RC=$?
+  suricata -T -c /etc/suricata/suricata.yaml
+  SURICATA_T_RC=$?
+  set -e
+  if [[ $SURICATA_UPDATE_RC -ge 2 || $SURICATA_T_RC -ge 2 ]]; then
+    echo "[ERROR] Suricataの設定テストに失敗しました（update: $SURICATA_UPDATE_RC, test: $SURICATA_T_RC）。ログを確認してください。"
     exit 1
+  else
+    echo "[SUCCESS] Suricataの設定テストは重大エラーなく完了しました。"
   fi
 
-  sudo systemctl restart suricata
+  systemctl restart suricata
   echo "[SUCCESS] Suricataルールの更新と再起動が完了"
 }
 
@@ -121,18 +128,6 @@ mkdir -p "$CONF_DIR" "$DATA_DIR" "$LOG_DIR"
 : > "$LOG_FILE"
 exec > >(tee -a "$LOG_FILE") 2>&1
 
-# Ensure current user is in docker group
-if ! groups $(logname) | grep -q docker; then
-  usermod -aG docker $(logname)
-  log "${M[${L}_DOCKER_GROUP]}"
-  cat > /usr/local/bin/azazel-resume-install.sh <<EOF
-#!/bin/bash
-sudo $(realpath "$0")
-EOF
-  chmod +x /usr/local/bin/azazel-resume-install.sh
-  log "[INFO] 再ログイン後、'azazel-resume-install.sh' を実行してください / After re-login, run 'azazel-resume-install.sh'"
-  exit 0
-fi
 
 # ---------- installation steps ----------
 STEPS=(
@@ -141,6 +136,9 @@ STEPS=(
   "Copy config files"
   "Docker-compose up"
   "Mattermost install"
+  "Suricata Lua script setup"
+  "Suricata rules update"
+  "Finish"
 )
 TOTAL=${#STEPS[@]}
 STEP=0
@@ -157,8 +155,46 @@ apt-get -yqq install --no-install-recommends \
   suricata suricata-update python3 python3-pip
 success "Packages installed"
 
+# Ensure current user is in docker group (after docker is installed)
+if ! groups $(logname) | grep -q docker; then
+  usermod -aG docker $(logname)
+  log "${M[${L}_DOCKER_GROUP]}"
+  cat > /usr/local/bin/azazel-resume-install.sh <<EOF
+#!/bin/bash
+sudo $(realpath "$0")
+EOF
+  chmod +x /usr/local/bin/azazel-resume-install.sh
+  if [[ $L == "ja" ]]; then
+    log "[INFO] この変更を反映するため、一度ログアウトし再ログインしてください。"
+    log "[操作手順]"
+    log "  1. 今のセッションを終了（exit等でログアウト）"
+    log "  2. もう一度ターミナル等でログイン"
+    log "  3. 以下のコマンドでインストールを再開"
+    log "     \$ azazel-resume-install.sh"
+  else
+    log "[INFO] To apply this change, please log out and log in again."
+    log "[Steps]"
+    log "  1. Log out from the current session (exit)"
+    log "  2. Log in again via terminal/SSH"
+    log "  3. Resume the installer by running:"
+    log "     \$ azazel-resume-install.sh"
+  fi
+  exit 0
+fi
+
+
+# Suricataユーザー・グループの有無をチェックし、なければ作成
+if ! id suricata &>/dev/null; then
+  useradd --system --user-group suricata
+fi
+
+# Suricataのログディレクトリ作成とパーミッション設定
+mkdir -p /var/log/suricata
+chown suricata:suricata /var/log/suricata
+chmod 750 /var/log/suricata
+
 # ----- Suricata初期設定: git管理のsuricata.yamlを/etcへコピー -----
-SURICATA_SRC_YAML="$(dirname "$0")/config/suricata/suricata.yaml"
+SURICATA_SRC_YAML="$SCRIPT_BASE/config/suricata/suricata.yaml"
 if [ -f "$SURICATA_SRC_YAML" ]; then
   cp "$SURICATA_SRC_YAML" /etc/suricata/suricata.yaml
   chown suricata:suricata /etc/suricata/suricata.yaml
@@ -182,14 +218,26 @@ success "Directory structure prepared"
 # -- 4 -----------------------------------------------------------------------
 STEP=$((STEP+1))
 log "[Step $STEP/$TOTAL] ${STEPS[STEP-1]}"
-cp "$(dirname "$0")/config/vector.toml" "$CONF_DIR/"
-cp "$(dirname "$0")/config/opencanary.conf" "$CONF_DIR/"
-cp "$(dirname "$0")/config/docker-compose.yml" "$AZ_DIR/containers/"
+cp "$SCRIPT_BASE/config/vector.toml" "$CONF_DIR/"
+cp "$SCRIPT_BASE/config/opencanary.conf" "$CONF_DIR/"
+cp "$SCRIPT_BASE/config/docker-compose.yml" "$AZ_DIR/containers/"
 success "Config files copied"
-cp "$(dirname "$0")/config/nginx.conf" "$CONF_DIR/nginx.conf"
+cp "$SCRIPT_BASE/config/nginx.conf" "$CONF_DIR/nginx.conf"
 chown root:root "$CONF_DIR/nginx.conf"
 chmod 644 "$CONF_DIR/nginx.conf"
 success "nginx.conf copied and permission set"
+
+# Suricata Lua スクリプトを /opt/azazel/config/suricata/lua にコピー
+install -d "$CONF_DIR/suricata/lua"
+for lua_file in delay.lua ja3.lua; do
+  SRC_LUA="$SCRIPT_BASE/config/suricata/lua/$lua_file"
+  if [[ ! -f "$SRC_LUA" ]]; then
+    echo "[ERROR] $SRC_LUA not found. Check your project structure." >&2
+    exit 1
+  fi
+  cp "$SRC_LUA" "$CONF_DIR/suricata/lua/"
+done
+success "Suricata Lua scripts copied to $CONF_DIR/suricata/lua/"
 
 # -- 5 -----------------------------------------------------------------------
 STEP=$((STEP+1))
@@ -211,9 +259,10 @@ tar -xzf "$MM_TAR" && rm "$MM_TAR"
 if ! id mattermost &>/dev/null; then
   useradd --system --user-group mattermost
 fi
-jchown -R mattermost:mattermost /opt/mattermost
+chown -R mattermost:mattermost /opt/mattermost
 find /opt/mattermost -type d -exec chmod 750 {} \;
 find /opt/mattermost -type f -exec chmod 640 {} \;
+chmod +x /opt/mattermost/bin/mattermost
 chmod 750 /opt/mattermost/config
 chmod 640 /opt/mattermost/config/config.json
 
@@ -221,10 +270,8 @@ chmod 640 /opt/mattermost/config/config.json
 chown -R mattermost:mattermost /opt/mattermost/config
 chmod 750 /opt/mattermost/config
 chmod 660 /opt/mattermost/config/config.json
-jq ".ServiceSettings.SiteURL=\"$SITEURL\" | .SqlSettings.DataSource=\"$DB_STR\"" \
+jq ".ServiceSettings.SiteURL=\"$SITEURL\" | .SqlSettings.DataSource=\"$DB_STR\" | .ServiceSettings.ListenAddress=\":8065\"" \
   /opt/mattermost/config/config.json > /tmp/config.tmp
-mv /tmp/config.tmp /opt/mattermost/config/config.json
-jq ".ServiceSettings.ListenAddress=\":8065\"" /opt/mattermost/config/config.json > /tmp/config.tmp
 mv /tmp/config.tmp /opt/mattermost/config/config.json
 
 cat > /etc/systemd/system/mattermost.service <<EOF
@@ -255,11 +302,26 @@ else
 fi
 
 
-# 主要セットアップ後にSuricata Luaスクリプト配置を実行
+# -- 7 -----------------------------------------------------------------------
+STEP=$((STEP+1))
+log "[Step $STEP/$TOTAL] ${STEPS[STEP-1]}"
 setup_suricata_lua_scripts
 
-# 主要セットアップ後にSuricataルール更新を実行
+# -- 8 -----------------------------------------------------------------------
+STEP=$((STEP+1))
+log "[Step $STEP/$TOTAL] ${STEPS[STEP-1]}"
 update_suricata_rules
+
+# -- 9 -----------------------------------------------------------------------
+STEP=$((STEP+1))
+log "[Step $STEP/$TOTAL] ${STEPS[STEP-1]}"
 
 
 log "${M[${L}_DONE]}"
+
+# --- Final completion message (JA/EN) ---
+if [[ $L == "ja" ]]; then
+  echo -e "\e[92m[COMPLETE]\e[0m すべてのインストール工程が正常に完了しました。\nシステムは完全にセットアップされています。ご利用を開始できます。"
+else
+  echo -e "\e[92m[COMPLETE]\e[0m All installation steps are complete. Your system is fully set up and ready to use."
+fi
