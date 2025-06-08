@@ -47,7 +47,7 @@ Start RaspAP related services
 
 ```bash
 sudo systemctl enable hostapd
-dudo systemctl enable dnsmasq
+sudo systemctl enable dnsmasq
 sudo systemctl restart lighttpd
 ```
 
