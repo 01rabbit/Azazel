@@ -156,6 +156,10 @@ As cyber attacks become faster and more automated, traditional honeypots fall sh
 
 ---
 
+## 特別謝辞 / Special Thanks
+
+- @k
+
 ## ライセンス / License
 
 MIT License
