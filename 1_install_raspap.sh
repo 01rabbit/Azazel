@@ -14,8 +14,8 @@ declare -A M=(
   [en_REQUIRE_ROOT]="Please run this script with sudo"
   [ja_START]="RaspAP セットアップ開始"
   [en_START]="Starting RaspAP Setup"
-  [ja_DONE]="基本セットアップが完了しました（固定 IP・DHCP 範囲は未設定）"
-  [en_DONE]="Basic setup complete (Static IP & DHCP range not configured)"
+  [ja_DONE]="基本セットアップが完了しました（設定状況はWebGUIで確認できます）"
+  [en_DONE]="Basic setup complete (You can check the configuration from the WebGUI)"
   [ja_REBOOT]="設定を有効にするには再起動: sudo reboot"
   [en_REBOOT]="Reboot to apply changes: sudo reboot"
 )
@@ -58,7 +58,6 @@ fi
 bash /opt/azazel/raspap-webgui/installers/raspbian.sh --yes
 
 cat > /etc/raspap/networking/interfaces <<EOF
-RASPI_WIFI_CLIENT_INTERFACE=wlan1
 RASPI_WIFI_AP_INTERFACE=wlan0
 EOF
 
@@ -81,6 +80,12 @@ wpa_key_mgmt=WPA-PSK
 wpa_pairwise=CCMP
 EOF
 
+cat > /etc/dnsmasq.d/090_wlan0.conf <<EOF
+# RaspAP wlan0 configuration
+interface=wlan0
+dhcp-range=172.16.0.100,172.16.0.200,255.255.255.0,12h
+EOF
+
 systemctl unmask hostapd
 systemctl enable --now hostapd
 
@@ -89,8 +94,8 @@ net.ipv4.ip_forward=1
 EOF
 
 sysctl -p /etc/sysctl.d/90-azazel-ipforward.conf
-iptables -t nat -C POSTROUTING -s 172.16.0.0/24 -o wlan1 -j MASQUERADE 2>/dev/null || \
-iptables -t nat -A POSTROUTING -s 172.16.0.0/24 -o wlan1 -j MASQUERADE
+iptables -t nat -C POSTROUTING -s 172.16.0.0/24 -o eth0 -j MASQUERADE 2>/dev/null || \
+iptables -t nat -A POSTROUTING -s 172.16.0.0/24 -o eth0 -j MASQUERADE
 iptables-save > /etc/iptables/rules.v4
 systemctl enable netfilter-persistent
 
@@ -103,4 +108,3 @@ log "RaspAP UI    : http://${AP_IP%/*}"
 log "${M[${L}_REBOOT]}"
 
 success "スクリプト完了 / Script Completed"
-
