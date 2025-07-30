@@ -132,12 +132,3 @@ healthcheck = true
   strategy = "basic"
   user     = "elastic"
   password = "elastic"
-
-##### SINK: 統合ログ（Suricata＋OpenCanary） #########################
-[sinks.events_file]
-type   = "file"
-inputs = ["opencanary_parsed", "suricata_parsed"]
-path   = "/opt/azazel/logs/events.json"
-
-  [sinks.events_file.encoding]
-  codec = "json"

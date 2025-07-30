@@ -1,22 +1,33 @@
 %YAML 1.1
 ---
 
+# ========================
+#  Suricata Configuration
+# ========================
+
 vars:
   address-groups:
     HOME_NET: "[192.168.0.0/16]"
-    EXTERNAL_NET: "any"
-    SSH_SERVERS: "$HOME_NET"
+    EXTERNAL_NET: "!$HOME_NET"  # 'any' から自ネット以外に変更
     HTTP_SERVERS: "$HOME_NET"
+    SSH_SERVERS: "$HOME_NET"
     SQL_SERVERS: "$HOME_NET"
+    SMTP_SERVERS: "[192.168.1.0/24]"
+    DNS_SERVERS: "[8.8.8.8, 8.8.4.4]"
+    TELNET_SERVERS: "$HOME_NET"
 
   port-groups:
+    SHELLCODE_PORTS: "0:1024"
+    ORACLE_PORTS: "1521"
+    HTTP_PORTS: "80,443"
     SSH_PORTS: "22"
-    HTTP_PORTS: "80,8080,8000,8888,443"
-    SQL_PORTS: "5432"  # PostgreSQL
+    SQL_PORTS: "5432"
+
 
 default-rule-path: /var/lib/suricata/rules
+
 rule-files:
-  - suricata.rules
+  - suricata.rules  # カスタムルールファイル
 
 af-packet:
   - interface: wlan1
@@ -43,7 +54,7 @@ outputs:
         - stats
 
 logging:
-  default-log-level: notice
+  default-log-level: info
   outputs:
     - console:
         enabled: no
@@ -51,6 +62,13 @@ logging:
         enabled: yes
         level: info
         filename: /var/log/suricata/suricata.log
+        
+app-layer:
+  protocols:
+    dnp3:
+      enabled: yes
+    modbus:
+      enabled: yes
 
 classification-file: /etc/suricata/classification.config
 reference-config-file: /etc/suricata/reference.config

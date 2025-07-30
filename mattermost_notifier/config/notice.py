@@ -6,9 +6,11 @@ TZ = timezone(timedelta(hours=9))
 # Mattermost Webhook通知用
 MATTERMOST_WEBHOOK_URL = "http://192.168.40.186:8065/hooks/4skkamks8pfx9xka7sd1st1uno"
 
-EVENTS_JSON_PATH = "/opt/azazel/logs/events.json"
-OPENCANARY_LOG_PATH = "/opt/azazel/logs/opencanary.log"
+# Suricataのeve.jsonログファイルパス
 SURICATA_EVE_JSON_PATH = "/var/log/suricata/eve.json"
+
+# config/notice.py に追加
+OPENCANARY_LOG_PATH = "/opt/azazel/logs/opencanary.log"
 
 # suppress key のモード指定
 # 選択肢: "signature", "signature_ip", "signature_ip_user", "signature_ip_user_session"
