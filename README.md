@@ -163,3 +163,28 @@ As cyber attacks become faster and more automated, traditional honeypots fall sh
 ## ライセンス / License
 
 MIT License
+
+---
+
+## 新しいデプロイフロー / Modern deployment flow
+
+旧来の `1_install_raspap.sh` と `2_install_azazel.sh` はメンテナンス対象外となり、
+`legacy/` ディレクトリに退避されました。今後はタグ付きリリースに含まれる
+インストーラを利用してください。
+
+### Install on Raspberry Pi (clean image)
+```bash
+# 固定タグを使うこと（例: v1.0.0）
+TAG=v1.0.0
+curl -fsSL https://github.com/01rabbit/Azazel/releases/download/${TAG}/azazel-installer-${TAG}.tar.gz \
+ | tar xz -C /tmp
+cd /tmp/azazel-installer && sudo bash scripts/bootstrap_mvp.sh
+```
+
+ブートストラップ後は `/etc/azazel/azazel.yaml` を編集し、必要に応じて
+`docs/OPERATIONS.md` の手順に従って Suricata や OpenCanary を再設定します。
+
+### Documentation
+- `docs/ARCHITECTURE.md` — コントロールプレーンの構成図と役割
+- `docs/OPERATIONS.md` — タグ付きリリースの取得からローリング更新まで
+- `docs/API_REFERENCE.md` — Python モジュールおよびスクリプトの概要

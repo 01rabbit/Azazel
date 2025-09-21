@@ -1,0 +1,54 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "type": "object",
+  "required": [
+    "node",
+    "interfaces",
+    "profiles",
+    "qos",
+    "soc",
+    "thresholds",
+    "notify",
+    "storage",
+    "privacy"
+  ],
+  "properties": {
+    "node": {"type": "string"},
+    "interfaces": {
+      "type": "object",
+      "required": ["lan", "wan"],
+      "properties": {
+        "lan": {"type": "string"},
+        "wan": {"type": "string"}
+      }
+    },
+    "profiles": {
+      "type": "object",
+      "required": ["active", "sat", "lte", "fiber"]
+    },
+    "qos": {
+      "type": "object",
+      "required": ["medical", "ops", "public"]
+    },
+    "soc": {
+      "type": "object",
+      "required": ["suricata_ruleset", "canary_services"]
+    },
+    "thresholds": {
+      "type": "object",
+      "required": ["t1_shield", "t2_lockdown", "unlock_wait_secs"]
+    },
+    "notify": {
+      "type": "object",
+      "required": ["level"]
+    },
+    "storage": {
+      "type": "object",
+      "required": ["log_dir", "retain_days"]
+    },
+    "privacy": {
+      "type": "object",
+      "required": ["pii_minimize"]
+    }
+  }
+}

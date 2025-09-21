@@ -1,0 +1,11 @@
+[Unit]
+Description=Vector log shipper
+After=network.target
+
+[Service]
+Type=simple
+ExecStart=/usr/bin/vector --config /etc/azazel/vector/vector.toml
+Restart=on-failure
+
+[Install]
+WantedBy=azctl.target
