@@ -1,0 +1,7 @@
+[Unit]
+Description=Azazel service stack
+Requires=suricata.service vector.service opencanary.service
+After=suricata.service vector.service opencanary.service
+
+[Install]
+WantedBy=multi-user.target

@@ -1,0 +1,12 @@
+[Unit]
+Description=Azazel control daemon
+After=network-online.target
+Wants=network-online.target
+
+[Service]
+Type=simple
+ExecStart=/usr/bin/env python3 -m azctl.cli --config /etc/azazel/azazel.yaml
+Restart=on-failure
+
+[Install]
+WantedBy=azctl.target

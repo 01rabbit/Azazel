@@ -1,0 +1,21 @@
+name: Release
+on:
+  push:
+    tags: ["v*.*.*"]
+jobs:
+  package:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Build artifact
+        run: |
+          mkdir -p dist/azazel-installer
+          cp -r scripts systemd configs azazel_core azctl docs Makefile dist/azazel-installer/
+          tar -C dist -czf dist/azazel-installer-${GITHUB_REF_NAME}.tar.gz azazel-installer
+          sha256sum dist/azazel-installer-${GITHUB_REF_NAME}.tar.gz > dist/SHA256SUMS
+      - name: Upload Release
+        uses: softprops/action-gh-release@v2
+        with:
+          files: |
+            dist/azazel-installer-${{ github.ref_name }}.tar.gz
+            dist/SHA256SUMS

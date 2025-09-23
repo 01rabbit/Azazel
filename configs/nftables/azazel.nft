@@ -1,0 +1,16 @@
+table inet azazel {
+  set blocked_hosts {
+    type ipv4_addr
+    flags timeout
+    timeout 1h
+  }
+
+  chain input {
+    type filter hook input priority 0;
+    ip saddr @blocked_hosts drop
+  }
+
+  chain azazel_redirect {
+    type nat hook prerouting priority 0;
+  }
+}

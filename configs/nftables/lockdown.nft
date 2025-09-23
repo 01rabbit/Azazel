@@ -1,0 +1,7 @@
+table inet azazel_lockdown {
+  chain input {
+    type filter hook input priority 0;
+    policy drop;
+    ip saddr 192.168.0.0/16 accept
+  }
+}

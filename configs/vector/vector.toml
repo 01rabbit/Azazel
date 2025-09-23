@@ -1,0 +1,9 @@
+[sources.azazel]
+type = "file"
+include = ["/var/log/azazel/*.log"]
+ignore_older_secs = 86400
+
+[sinks.console]
+type = "console"
+inputs = ["azazel"]
+encoding.codec = "json"

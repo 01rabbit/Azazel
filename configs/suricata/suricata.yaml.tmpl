@@ -1,0 +1,16 @@
+%YAML 1.1
+---
+vars:
+  address-groups:
+    HOME_NET: "[192.168.0.0/16]"
+  port-groups:
+    HTTP_PORTS: "80"
+
+default-log-dir: /var/log/suricata
+detection-engine:
+  - ruleset: {{ ruleset | default('balanced') }}
+outputs:
+  - eve-log:
+      enabled: yes
+      filetype: regular
+      filename: eve.json

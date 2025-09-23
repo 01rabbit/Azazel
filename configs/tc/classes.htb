@@ -1,0 +1,5 @@
+# HTB classes for Azazel QoS
+class htb 1:1 root rate 50mbit ceil 50mbit
+class htb 1:10 parent 1:1 rate 1mbit ceil 5mbit prio 0
+class htb 1:20 parent 1:1 rate 512kbit ceil 2mbit prio 1
+class htb 1:30 parent 1:1 rate 256kbit ceil 1mbit prio 2
