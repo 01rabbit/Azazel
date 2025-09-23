@@ -50,6 +50,18 @@ loads YAML describing synthetic events. `main(argv)` powers the systemd service
 by feeding events into `AzazelDaemon`, which applies score-based decisions and
 writes `decisions.log` entries containing the chosen mode and action presets.
 
+## HTTP endpoints
+
+### `POST /v1/mode`
+
+The controller exposes a minimal HTTP interface for supervised overrides. A
+`POST` request to `/v1/mode` with a JSON body such as `{ "mode": "shield" }`
+will transition the daemon to the requested state. The handler immediately
+applies the corresponding preset from `azazel.yaml` (delay, shaping rate, and
+block flag) and records the outcome to `decisions.log` alongside operator
+metadata. Preset values are documented in the operations guide's
+[mode action table](OPERATIONS.md#mode-presets).
+
 ## Scripts
 
 - `scripts/suricata_generate.py` renders the Suricata YAML template.

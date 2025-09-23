@@ -1,0 +1,25 @@
+node: azazel-sat-field
+interfaces: { lan: lan0, wan: wan0 }
+profiles:
+  active: sat
+  sat:   { uplink_kbps: 2000, rtt_ms: 700 }
+  lte:   { uplink_kbps: 6000, rtt_ms: 90 }
+  fiber: { uplink_kbps: 60000, rtt_ms: 12 }
+qos:
+  medical: { dest_fqdns: ["emis.example.org"], dest_cidrs: ["203.0.113.0/24"] }
+  ops: { ports: [22,443,853] }
+  public: {}
+soc:
+  suricata_ruleset: balanced
+  canary_services: ["ssh", "http", "pgsql"]
+actions:
+  portal:   { delay_ms: 100, shape_kbps: null, block: false }
+  shield:   { delay_ms: 200, shape_kbps: 128,  block: false }
+  lockdown: { delay_ms: 300, shape_kbps: 64,   block: true  }
+thresholds:
+  t1_shield: 45
+  t2_lockdown: 75
+  unlock_wait_secs: { shield: 900, portal: 2400 }
+notify: { level: warn }
+storage: { log_dir: "/var/log/azazel", retain_days: 21 }
+privacy: { pii_minimize: true, hash_fields: ["src.ip", "dst.ip", "username"] }

@@ -1,0 +1,25 @@
+node: azazel-lte-field
+interfaces: { lan: lan0, wan: wan0 }
+profiles:
+  active: lte
+  sat:   { uplink_kbps: 1800, rtt_ms: 650 }
+  lte:   { uplink_kbps: 12000, rtt_ms: 45 }
+  fiber: { uplink_kbps: 80000, rtt_ms: 10 }
+qos:
+  medical: { dest_fqdns: ["telemed.example.net"], dest_cidrs: ["198.18.0.0/15"] }
+  ops: { ports: [22,443,1194] }
+  public: {}
+soc:
+  suricata_ruleset: max-performance
+  canary_services: ["ssh", "http", "rdp"]
+actions:
+  portal:   { delay_ms: 75,  shape_kbps: null, block: false }
+  shield:   { delay_ms: 150, shape_kbps: 256,  block: false }
+  lockdown: { delay_ms: 250, shape_kbps: 96,   block: true  }
+thresholds:
+  t1_shield: 40
+  t2_lockdown: 70
+  unlock_wait_secs: { shield: 600, portal: 1800 }
+notify: { level: warn }
+storage: { log_dir: "/var/log/azazel", retain_days: 14 }
+privacy: { pii_minimize: true, hash_fields: ["src.ip", "dst.ip", "username"] }

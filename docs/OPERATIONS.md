@@ -46,13 +46,15 @@ into `/etc/azazel`, installs systemd units, and enables the aggregate
 ### Mode presets
 
 The controller maintains three defensive modes. Each mode applies a preset of
-delay, traffic shaping, and block behaviour sourced from `azazel.yaml`:
+delay, traffic shaping, and block behaviour sourced from `azazel.yaml`. Refer to
+the [API reference – `/v1/mode`](API_REFERENCE.md#post-v1mode) section for the
+remote override that activates these presets during incident response.
 
-| Mode     | Delay (ms) | Shape (kbps) | Block |
-|----------|-----------:|-------------:|:-----:|
-| portal   | 100        | –            |  No   |
-| shield   | 200        | 128          |  No   |
-| lockdown | 300        | 64           | Yes   |
+| Mode     | Delay (ms) | Shape (kbps) | Block | Use case |
+|----------|-----------:|-------------:|:-----:|----------|
+| portal   | 100        | –            |  No   | Baseline latency padding to slow automated scanning while keeping users online. |
+| shield   | 200        | 128          |  No   | Elevated response once intrusion scoring passes T1; throttles attackers but preserves remote work. |
+| lockdown | 300        | 64           | Yes   | Emergency containment when T2 is exceeded; combines shaping with hard blocks until the unlock timer expires. |
 
 Transitions to stricter modes occur when the moving average of recent scores
 exceeds the configured thresholds. Unlock timers enforce a cooling-off period

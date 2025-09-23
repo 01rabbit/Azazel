@@ -1,0 +1,25 @@
+node: azazel-fiber-hub
+interfaces: { lan: lan0, wan: wan0 }
+profiles:
+  active: fiber
+  sat:   { uplink_kbps: 2500, rtt_ms: 600 }
+  lte:   { uplink_kbps: 18000, rtt_ms: 35 }
+  fiber: { uplink_kbps: 120000, rtt_ms: 5 }
+qos:
+  medical: { dest_fqdns: ["clinic.example.org"], dest_cidrs: ["203.0.113.0/25"] }
+  ops: { ports: [22,443,3389] }
+  public: {}
+soc:
+  suricata_ruleset: balanced
+  canary_services: ["ssh", "http", "smb"]
+actions:
+  portal:   { delay_ms: 50,  shape_kbps: null, block: false }
+  shield:   { delay_ms: 125, shape_kbps: 512,  block: false }
+  lockdown: { delay_ms: 200, shape_kbps: 128,  block: true  }
+thresholds:
+  t1_shield: 35
+  t2_lockdown: 65
+  unlock_wait_secs: { shield: 480, portal: 1200 }
+notify: { level: warn }
+storage: { log_dir: "/var/log/azazel", retain_days: 30 }
+privacy: { pii_minimize: true, hash_fields: ["src.ip", "dst.ip", "username"] }

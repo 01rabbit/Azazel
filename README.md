@@ -69,6 +69,12 @@ These principles converge in Azazel’s design: **defense is not about passive p
 
 ## What's new
 
+- Sample configs under `configs/profiles/` showcase SAT, LTE, and fiber tuning
+  complete with thresholds and notify/storage defaults.
+- The operations guide now carries a mode action table describing preset intent
+  for each defensive posture.
+- `/v1/mode` documentation clarifies that invoking the endpoint applies presets
+  and records operator-triggered decisions in `decisions.log`.
 - Mode-aware presets backed by `azazel.yaml` apply delay/shape/block actions as
   the daemon transitions between portal, shield, and lockdown.
 - Vector remap normalization now emits a unified schema (ts/node/src/dst/proto
