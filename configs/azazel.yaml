@@ -1,0 +1,21 @@
+node: azazel-pi-01
+interfaces: { lan: lan0, wan: wan0 }
+profiles:
+  active: lte
+  sat:   { uplink_kbps: 2000, rtt_ms: 700 }
+  lte:   { uplink_kbps: 5000, rtt_ms: 80 }
+  fiber: { uplink_kbps: 50000, rtt_ms: 10 }
+qos:
+  medical: { dest_fqdns: ["emis.example.org"], dest_cidrs: ["203.0.113.0/24"] }
+  ops: { ports: [22,443,853] }
+  public: {}
+soc:
+  suricata_ruleset: balanced
+  canary_services: ["ssh", "http", "pgsql"]
+thresholds:
+  t1_shield: 50
+  t2_lockdown: 80
+  unlock_wait_secs: { shield: 600, portal: 1800 }
+notify: { level: warn }
+storage: { log_dir: "/var/log/azazel", retain_days: 14 }
+privacy: { pii_minimize: true, hash_fields: ["src.ip", "dst.ip", "username"] }

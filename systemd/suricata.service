@@ -1,0 +1,11 @@
+[Unit]
+Description=Suricata IDS
+After=network-online.target
+
+[Service]
+Type=simple
+ExecStart=/usr/bin/suricata -c /etc/suricata/suricata.yaml -i wan0
+Restart=on-failure
+
+[Install]
+WantedBy=azctl.target
