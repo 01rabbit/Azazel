@@ -32,3 +32,7 @@ jobs:
         run: |
           sudo apt-get update && sudo apt-get install -y shellcheck
           find scripts -name "*.sh" -print0 | xargs -0 -I{} shellcheck {}
+      - name: Allowlist dry-run
+        run: |
+          python scripts/resolve_allowlist.py --dry-run --output build/generated/lockdown_allowlist.nft
+          test -s build/generated/lockdown_allowlist.nft

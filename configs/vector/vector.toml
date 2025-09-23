@@ -3,7 +3,129 @@ type = "file"
 include = ["/var/log/azazel/*.log"]
 ignore_older_secs = 86400
 
+[transforms.norm]
+type = "remap"
+inputs = ["azazel"]
+drop_on_error = false
+source = '''
+normalized = {}
+normalized.ts = format_timestamp!(now(), format: "%+")
+if exists(.timestamp) {
+  normalized.ts = to_string!(.timestamp)
+} else if exists(.time) {
+  normalized.ts = to_string!(.time)
+}
+
+normalized.node = null
+if exists(.host) {
+  normalized.node = to_string!(.host)
+} else if exists(.agent.hostname) {
+  normalized.node = to_string!(.agent.hostname)
+} else if exists(.node) {
+  normalized.node = to_string!(.node)
+}
+
+normalized.event = null
+if exists(.event_type) {
+  normalized.event = to_string!(.event_type)
+} else if exists(.alert.signature) {
+  normalized.event = to_string!(.alert.signature)
+} else if exists(.service) {
+  normalized.event = to_string!(.service)
+} else if exists(.message) {
+  normalized.event = to_string!(.message)
+}
+
+normalized.src = {"ip": null, "port": null}
+if exists(.src_ip) {
+  normalized.src.ip = to_string!(.src_ip)
+} else if exists(.src.ip) {
+  normalized.src.ip = to_string!(.src.ip)
+} else if exists(.source.address) {
+  normalized.src.ip = to_string!(.source.address)
+}
+
+if exists(.src_port) {
+  normalized.src.port = to_int!(.src_port)
+} else if exists(.src.port) {
+  normalized.src.port = to_int!(.src.port)
+} else if exists(.source.port) {
+  normalized.src.port = to_int!(.source.port)
+}
+
+normalized.dst = {"ip": null, "port": null}
+if exists(.dest_ip) {
+  normalized.dst.ip = to_string!(.dest_ip)
+} else if exists(.dest.ip) {
+  normalized.dst.ip = to_string!(.dest.ip)
+} else if exists(.destination.address) {
+  normalized.dst.ip = to_string!(.destination.address)
+}
+
+if exists(.dest_port) {
+  normalized.dst.port = to_int!(.dest_port)
+} else if exists(.dest.port) {
+  normalized.dst.port = to_int!(.dest.port)
+} else if exists(.destination.port) {
+  normalized.dst.port = to_int!(.destination.port)
+}
+
+normalized.proto = null
+if exists(.proto) {
+  normalized.proto = to_string!(.proto)
+} else if exists(.protocol) {
+  normalized.proto = to_string!(.protocol)
+} else if exists(.transport) {
+  normalized.proto = to_string!(.transport)
+}
+
+normalized.sig_id = null
+if exists(.alert.signature_id) {
+  normalized.sig_id = to_int!(.alert.signature_id)
+} else if exists(.signature_id) {
+  normalized.sig_id = to_int!(.signature_id)
+}
+
+normalized.score = null
+if exists(.score) {
+  normalized.score = to_int!(.score)
+}
+
+normalized.severity = null
+if exists(.severity) {
+  normalized.severity = to_string!(.severity)
+} else if exists(.alert.severity) {
+  normalized.severity = to_string!(.alert.severity)
+}
+
+normalized.actions = []
+if exists(.actions) && is_array(.actions) {
+  normalized.actions = map(.actions, |value| to_string!(value))
+}
+
+normalized.mode = null
+if exists(.mode) {
+  normalized.mode = to_string!(.mode)
+}
+
+normalized.qos_class = null
+if exists(.qos_class) {
+  normalized.qos_class = to_string!(.qos_class)
+}
+
+normalized.evidence_ref = null
+if exists(.evidence_ref) {
+  normalized.evidence_ref = to_string!(.evidence_ref)
+} else if exists(.file) {
+  normalized.evidence_ref = to_string!(.file)
+} else if exists(.logfile) {
+  normalized.evidence_ref = to_string!(.logfile)
+}
+
+. = normalized
+'''
+
 [sinks.console]
 type = "console"
-inputs = ["azazel"]
+inputs = ["norm"]
 encoding.codec = "json"

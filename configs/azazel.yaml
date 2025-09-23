@@ -12,6 +12,10 @@ qos:
 soc:
   suricata_ruleset: balanced
   canary_services: ["ssh", "http", "pgsql"]
+actions:
+  portal:   { delay_ms: 100, shape_kbps: null, block: false }
+  shield:   { delay_ms: 200, shape_kbps: 128,  block: false }
+  lockdown: { delay_ms: 300, shape_kbps: 64,   block: true  }
 thresholds:
   t1_shield: 50
   t2_lockdown: 80

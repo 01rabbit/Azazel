@@ -1,5 +1,14 @@
-# HTB classes for Azazel QoS
-class htb 1:1 root rate 50mbit ceil 50mbit
-class htb 1:10 parent 1:1 rate 1mbit ceil 5mbit prio 0
-class htb 1:20 parent 1:1 rate 512kbit ceil 2mbit prio 1
-class htb 1:30 parent 1:1 rate 256kbit ceil 1mbit prio 2
+# Azazel HTB class design template
+#
+# Syntax: class <name> prio <priority> share <percent>
+# The share column represents the minimum guaranteed percentage
+# of the configured profile uplink_kbps.
+class medical prio 1 share 40
+class ops     prio 2 share 25
+class public  prio 3 share 25
+class suspect prio 4 share 10
+
+# Profile guidance (rate/ceil are computed automatically by azazel_core.qos.apply):
+# - sat:   uplink ≈ 2000 kbps  -> medical rate ≈ 800 kbps, ceil 2000 kbps
+# - lte:   uplink ≈ 5000 kbps  -> medical rate ≈ 2000 kbps, ceil 5000 kbps
+# - fiber: uplink ≈ 50000 kbps -> medical rate ≈ 20000 kbps, ceil 50000 kbps

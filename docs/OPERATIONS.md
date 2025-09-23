@@ -43,6 +43,23 @@ into `/etc/azazel`, installs systemd units, and enables the aggregate
    ```
 3. Reload services: `sudo systemctl restart azctl.target`.
 
+### Mode presets
+
+The controller maintains three defensive modes. Each mode applies a preset of
+delay, traffic shaping, and block behaviour sourced from `azazel.yaml`:
+
+| Mode     | Delay (ms) | Shape (kbps) | Block |
+|----------|-----------:|-------------:|:-----:|
+| portal   | 100        | –            |  No   |
+| shield   | 200        | 128          |  No   |
+| lockdown | 300        | 64           | Yes   |
+
+Transitions to stricter modes occur when the moving average of recent scores
+exceeds the configured thresholds. Unlock timers enforce a cooling-off period
+before the daemon steps down to a less restrictive mode. When lockdown is
+entered in the field the supervising `azctl/daemon` should apply
+`nft -f configs/nftables/lockdown.nft` after updating the generated allowlist.
+
 ## 4. Health checks
 
 Use `scripts/sanity_check.sh` to confirm Suricata, Vector, and OpenCanary are

@@ -32,11 +32,41 @@
     },
     "soc": {
       "type": "object",
-      "required": ["suricata_ruleset", "canary_services"]
+      "required": ["suricata_ruleset", "canary_services"],
+      "properties": {
+        "suricata_ruleset": {"type": "string"},
+        "canary_services": {
+          "type": "array",
+          "items": {"type": "string"}
+        }
+      }
+    },
+    "actions": {
+      "type": "object",
+      "required": ["portal", "shield", "lockdown"],
+      "additionalProperties": false,
+      "properties": {
+        "portal": {"$ref": "#/definitions/actionPreset"},
+        "shield": {"$ref": "#/definitions/actionPreset"},
+        "lockdown": {"$ref": "#/definitions/actionPreset"}
+      }
     },
     "thresholds": {
       "type": "object",
-      "required": ["t1_shield", "t2_lockdown", "unlock_wait_secs"]
+      "required": ["t1_shield", "t2_lockdown", "unlock_wait_secs"],
+      "additionalProperties": false,
+      "properties": {
+        "t1_shield": {"type": "integer", "minimum": 0},
+        "t2_lockdown": {"type": "integer", "minimum": 0},
+        "unlock_wait_secs": {
+          "type": "object",
+          "required": ["shield", "portal"],
+          "properties": {
+            "shield": {"type": "integer", "minimum": 0},
+            "portal": {"type": "integer", "minimum": 0}
+          }
+        }
+      }
     },
     "notify": {
       "type": "object",
@@ -49,6 +79,69 @@
     "privacy": {
       "type": "object",
       "required": ["pii_minimize"]
+    }
+  },
+  "definitions": {
+    "actionPreset": {
+      "type": "object",
+      "required": ["delay_ms", "shape_kbps", "block"],
+      "additionalProperties": false,
+      "properties": {
+        "delay_ms": {"type": "integer", "minimum": 0},
+        "shape_kbps": {"type": ["integer", "null"], "minimum": 0},
+        "block": {"type": "boolean"}
+      }
+    },
+    "normalizedEvent": {
+      "type": "object",
+      "required": [
+        "ts",
+        "node",
+        "event",
+        "src",
+        "dst",
+        "proto",
+        "sig_id",
+        "score",
+        "severity",
+        "actions",
+        "mode",
+        "qos_class",
+        "evidence_ref"
+      ],
+      "additionalProperties": false,
+      "properties": {
+        "ts": {"type": "string"},
+        "node": {"type": ["string", "null"]},
+        "event": {"type": ["string", "null"]},
+        "src": {
+          "type": "object",
+          "required": ["ip", "port"],
+          "properties": {
+            "ip": {"type": ["string", "null"]},
+            "port": {"type": ["integer", "null"]}
+          }
+        },
+        "dst": {
+          "type": "object",
+          "required": ["ip", "port"],
+          "properties": {
+            "ip": {"type": ["string", "null"]},
+            "port": {"type": ["integer", "null"]}
+          }
+        },
+        "proto": {"type": ["string", "null"]},
+        "sig_id": {"type": ["integer", "null"]},
+        "score": {"type": ["integer", "null"]},
+        "severity": {"type": ["string", "null"]},
+        "actions": {
+          "type": "array",
+          "items": {"type": "string"}
+        },
+        "mode": {"type": ["string", "null"]},
+        "qos_class": {"type": ["string", "null"]},
+        "evidence_ref": {"type": ["string", "null"]}
+      }
     }
   }
 }

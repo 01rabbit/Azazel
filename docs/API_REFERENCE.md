@@ -9,11 +9,17 @@ the behaviour during testing.
 - `State(name: str, description: str = "")`
 - `Event(name: str, severity: int = 0)`
 - `Transition(source, target, condition, action=None)`
-- `StateMachine(initial_state)` provides:
+- `StateMachine(initial_state, config_path=None, window_size=5)` provides:
   - `add_transition(transition)` – register a new transition.
   - `dispatch(event)` – evaluate transitions from the current state.
-  - `reset()` – return to the initial state.
+  - `reset()` – return to the initial state and clear score history.
   - `summary()` – dictionary suitable for API responses.
+  - `get_thresholds()` – read shield/lockdown thresholds and unlock timers
+    from `azazel.yaml`.
+  - `get_actions_preset()` – fetch the delay/shape/block preset for the
+    current mode.
+  - `apply_score(severity)` – update the moving-average score window,
+    transition to the correct mode, and return evaluation metadata.
 
 ## `azazel_core.scorer`
 
@@ -39,9 +45,10 @@ handler `add_health_route(version)` returns a `HealthResponse` dataclass.
 
 ## `azctl.cli`
 
-`build_machine()` wires the idle and shield states. `load_events(path)` loads
-YAML describing synthetic events. `main(argv)` powers the systemd service by
-feeding events into `AzazelDaemon`, which applies score-based decisions.
+`build_machine()` wires the portal/shield/lockdown states. `load_events(path)`
+loads YAML describing synthetic events. `main(argv)` powers the systemd service
+by feeding events into `AzazelDaemon`, which applies score-based decisions and
+writes `decisions.log` entries containing the chosen mode and action presets.
 
 ## Scripts
 
@@ -49,3 +56,5 @@ feeding events into `AzazelDaemon`, which applies score-based decisions.
 - `scripts/nft_apply.sh` and `scripts/tc_reset.sh` manage enforcement tools.
 - `scripts/sanity_check.sh` prints warnings if dependent services are inactive.
 - `scripts/rollback.sh` removes installed assets.
+- `scripts/resolve_allowlist.py` resolves medical FQDNs to CIDRs and writes the
+  lockdown nftables allowlist used by the generated template.

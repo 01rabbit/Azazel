@@ -11,22 +11,51 @@ from .daemon import AzazelDaemon
 
 
 def build_machine() -> StateMachine:
-    idle = State(name="idle", description="Nominal operations")
+    portal = State(name="portal", description="Nominal operations")
     shield = State(name="shield", description="Heightened monitoring")
+    lockdown = State(name="lockdown", description="Full containment mode")
 
-    machine = StateMachine(initial_state=idle)
+    machine = StateMachine(initial_state=portal)
     machine.add_transition(
         Transition(
-            source=idle,
+            source=portal,
             target=shield,
-            condition=lambda event: event.name == "escalate",
+            condition=lambda event: event.name == "shield",
+        )
+    )
+    machine.add_transition(
+        Transition(
+            source=portal,
+            target=lockdown,
+            condition=lambda event: event.name == "lockdown",
         )
     )
     machine.add_transition(
         Transition(
             source=shield,
-            target=idle,
-            condition=lambda event: event.name == "recover",
+            target=portal,
+            condition=lambda event: event.name == "portal",
+        )
+    )
+    machine.add_transition(
+        Transition(
+            source=shield,
+            target=lockdown,
+            condition=lambda event: event.name == "lockdown",
+        )
+    )
+    machine.add_transition(
+        Transition(
+            source=lockdown,
+            target=shield,
+            condition=lambda event: event.name == "shield",
+        )
+    )
+    machine.add_transition(
+        Transition(
+            source=lockdown,
+            target=portal,
+            condition=lambda event: event.name == "portal",
         )
     )
     return machine

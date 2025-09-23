@@ -63,9 +63,22 @@ These principles converge in Azazel’s design: **defense is not about passive p
   OpenCanary等を利用し、攻撃者を観察ではなく誘導・拘束。正規ユーザーには影響を与えずに隔離。  
   *Leverages tools like OpenCanary to mislead and isolate attackers—not merely observe them—without affecting legitimate users.*
 
-- **可搬型設計 / Portable Deployment**  
-  軽量構成でRaspberry Piに最適化。災害対応や一時的な現場展開にも対応。  
+- **可搬型設計 / Portable Deployment**
+  軽量構成でRaspberry Piに最適化。災害対応や一時的な現場展開にも対応。
   *Lightweight and optimized for Raspberry Pi, enabling easy deployment in disaster recovery or temporary field operations.*
+
+## What's new
+
+- Mode-aware presets backed by `azazel.yaml` apply delay/shape/block actions as
+  the daemon transitions between portal, shield, and lockdown.
+- Vector remap normalization now emits a unified schema (ts/node/src/dst/proto
+  fields) validated via unit tests.
+- QoS plans derive HTB class rate/ceil values per profile using
+  `configs/tc/classes.htb`.
+- Lockdown tooling ships with a templated nftables ruleset and an
+  `resolve_allowlist.py` utility that resolves medical FQDNs into CIDRs.
+- CI enforces schema validation, pytest, shellcheck, and allowlist generation
+  to ensure release tags remain deployable on clean systems.
 
 ---
 
