@@ -1,7 +1,17 @@
+# Azazel lockdown template
+#
+# Load the generated allowlist and drop all other outbound traffic when
+# lockdown mode is active. The allowlist should define the sets
+# `medical_allow_v4` and `medical_allow_v6` via resolve_allowlist.py.
+
 table inet azazel_lockdown {
-  chain input {
-    type filter hook input priority 0;
-    policy drop;
-    ip saddr 192.168.0.0/16 accept
-  }
+    include "/build/generated/lockdown_allowlist.nft"
+
+    chain lockdown {
+        type filter hook forward priority 0;
+        policy drop;
+
+        ip saddr @medical_allow_v4 accept
+        ip6 saddr @medical_allow_v6 accept
+    }
 }
