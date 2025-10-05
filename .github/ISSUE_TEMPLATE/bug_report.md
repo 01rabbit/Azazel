@@ -4,6 +4,7 @@ about: Report a problem in docs/specs
 ---
 
 **Section**
+
 - [ ] Concept
 - [ ] Architecture
 - [ ] Specs

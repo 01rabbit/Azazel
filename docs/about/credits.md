@@ -1,6 +1,7 @@
 # Credits
 
 ## Project
+
 **Azazel System** — Cyber Scapegoat Gateway  
 Originating from the concept of *delaying action* in active cyber defense.
 
@@ -8,12 +9,14 @@ Originating from the concept of *delaying action* in active cyber defense.
 - **Azazel-Zero**: Portable surrogate gateway for personal and mobile defense  
 
 Developed and maintained by **Makoto SUGITA (Mr. Rabbit)**  
-2025 — Presented at **Black Hat USA Arsenal**, **BSides Las Vegas**, and **SecTor Canada**
+2025 — Presented at 🇺🇸**Black Hat USA Arsenal**, 🇺🇸**BSides Las Vegas**, and 🇨🇦**SecTor Canada**
 
 ---
 
 ## Acknowledgements
+
 Special thanks to:
+
 - **BSides Las Vegas Proving Ground Mentor: Soya**  
 - **Black Hat Arsenal Review Board** for technical validation  
 - The global **deception and active defense research community** for inspiration and peer discussion  
@@ -22,6 +25,7 @@ Special thanks to:
 ---
 
 ## Symbolism
+
 > *Azazel* embodies the scapegoat that absorbs and delays harm—  
 > sacrificing time and exposure to protect others.  
 > This philosophy guides every line of code and every mode of defense.
