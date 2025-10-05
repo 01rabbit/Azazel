@@ -1,0 +1,7 @@
+cff-version: 1.2.0
+title: Azazel System
+message: If you use this work, please cite it as below.
+authors:
+  - family-names: <Your Lastname>
+    given-names: <Your Firstname>
+repository-code: https://github.com/<your-org>/azazel-system
