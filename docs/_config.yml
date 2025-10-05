@@ -1,6 +1,11 @@
 title: Azazel System
 description: Cyber Scapegoat Gateway — delaying action for sustainable active cyber defense.
-theme: jekyll-theme-minimal
+remote_theme: just-the-docs/just-the-docs
+color_scheme: light
+search_enabled: true
+aux_links:
+  "View on GitHub":
+    - "//github.com/01rabbit/Azazel"
 logo: /assets/images/Azazel_logo.PNG
 lang: en
 plugins: []
@@ -26,7 +31,7 @@ nav:
       - API: /specs/api
       - Profiles: /specs/profiles
   - Variants:
-      - Azazel-Pi: /variants/azazel-pi
-      - Azazel-Zero: /variants/azazel-zero
+      - Azazel-Pi: /variants/azazel-pi.md
+      - Azazel-Zero: /variants/azazel-zero.md
   - Papers & Talks: /papers/references
   - Credits: /about/credits

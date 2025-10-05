@@ -1,6 +1,6 @@
 # Azazel System（アザゼル・システム）
 
-[English](/docs/index.md) | [日本語](/docs/index_ja.md)
+[English]({{ site.baseurl }}/) | [日本語]({{ site.baseurl }}/index_ja)
 
 ## Azazel Systemの防御思想は、日本における二つの戦術的概念に着想を得ています
 
@@ -17,4 +17,4 @@ Azazel-Pi / Azazel-Zero の源流として、思想・戦術・アーキテク�
 - **方法**: 検知・誤誘導・遅延。攻撃者のテンポを崩し、防御側の主導を維持する。
 - **適用**: 避難所ネットワーク、フィールド運用、エッジ・ゲートウェイ。
 
-→ 派生: [Azazel-Pi](/docs/variants/azazel-pi.md) · [Azazel-Zero](/docs/variants/azazel-zero.md)
+→ 派生: [Azazel-Pi]({{ site.baseurl }}/variants/azazel-pi) · [Azazel-Zero]({{ site.baseurl }}/variants/azazel-zero)

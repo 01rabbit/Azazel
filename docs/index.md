@@ -1,6 +1,6 @@
 # Azazel System
 
-[English](/docs/index.md) | [日本語](/docs/index_ja.md)
+[English]({{ site.baseurl }}/) | [日本語]({{ site.baseurl }}/index_ja)
 
 ## Azazel System is rooted in two key Japanese strategic doctrines
 
@@ -17,4 +17,4 @@ Azazel System is the upstream of **Azazel-Pi** and **Azazel-Zero**. It defines t
 - **How**: Detect, deceive, delay. Shape adversary tempo and preserve defender initiative.
 - **Where**: Edge gateways, pop-up shelters, field ops, and beyond.
 
-→ Variants: [Azazel-Pi](/docs/variants/azazel-pi.md) · [Azazel-Zero](/docs/variants/azazel-zero.md)
+→ Variants: [Azazel-Pi]({{ site.baseurl }}/variants/azazel-pi) · [Azazel-Zero]({{ site.baseurl }}/variants/azazel-zero)
