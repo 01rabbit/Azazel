@@ -5,8 +5,8 @@
 **Azazel System** — Cyber Scapegoat Gateway  
 Originating from the concept of *delaying action* in active cyber defense.
 
-- **Azazel-Pi**: Field-deployable SOC/NOC system for emergency and tactical environments  
-- **Azazel-Zero**: Portable surrogate gateway for personal and mobile defense  
+- **Azazel-Pi (AZ-01)**: Field-deployable SOC/NOC system for emergency and tactical environments  
+- **Azazel-Zero (AZ-02)**: Portable surrogate gateway for personal and mobile defense  
 
 Developed and maintained by **Makoto SUGITA (Mr. Rabbit)**  
 2025 — Presented at 🇺🇸**Black Hat USA Arsenal**, 🇺🇸**BSides Las Vegas**, and 🇨🇦**SecTor Canada**
