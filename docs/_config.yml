@@ -31,7 +31,7 @@ nav:
       - API: /specs/api
       - Profiles: /specs/profiles
   - Variants:
-      - Azazel-Pi: /variants/azazel-pi.md
-      - Azazel-Zero: /variants/azazel-zero.md
+      - Azazel-Edge Gateway: /variants/azazel-pi.md
+      - Azazel-Gadget Shield: /variants/azazel-zero.md
   - Papers & Talks: /papers/references
   - Credits: /about/credits

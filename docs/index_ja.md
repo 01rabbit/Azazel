@@ -11,10 +11,10 @@
 このように、Azazel Systemは「防御とは単に守ることではなく、敵の行動を制御し、時間を稼ぐこと」というコンセプトを体現しており、日本的な戦術思想に根ざしたサイバーデセプションツールです。
 
 ---
-Azazel-Pi / Azazel-Zero の源流として、思想・戦術・アーキテクチャ・共通イベントスキーマ・運用モード（Portal/Shield/Lockdown）を定義します。
+**Azazel-Edge Gateway**（旧称：Azazel-Pi）と**Azazel-Gadget Shield**（旧称：Azazel-Zero）の源流として、思想・戦術・アーキテクチャ・共通イベントスキーマ・運用モード（Portal/Shield/Lockdown）を定義します。
 
 - **目的**: 混乱下で最も貴重な資源は「時間」。遅滞行動で守りを成立させる。
 - **方法**: 検知・誤誘導・遅延。攻撃者のテンポを崩し、防御側の主導を維持する。
 - **適用**: 避難所ネットワーク、フィールド運用、エッジ・ゲートウェイ。
 
-→ 派生: [Azazel-Pi]({{ site.baseurl }}/variants/azazel-pi) · [Azazel-Zero]({{ site.baseurl }}/variants/azazel-zero)
+→ 派生: [Azazel-Edge Gateway]({{ site.baseurl }}/variants/azazel-pi) · [Azazel-Gadget Shield]({{ site.baseurl }}/variants/azazel-zero)

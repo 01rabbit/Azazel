@@ -11,10 +11,10 @@
 These principles converge in Azazel’s design: defense is not about passive protection, but about active control and strategic delay.
 
 ---
-Azazel System is the upstream of **Azazel-Pi** and **Azazel-Zero**. It defines the philosophy, tactics, architecture, shared event schema, and operational modes (Portal / Shield / Lockdown).
+Azazel System is the upstream of **Azazel-Edge Gateway** (formerly Azazel-Pi) and **Azazel-Gadget Shield** (formerly Azazel-Zero). It defines the philosophy, tactics, architecture, shared event schema, and operational modes (Portal / Shield / Lockdown).
 
 - **Why**: When resources are scarce and chaos is plenty, time is the only currency that matters.
 - **How**: Detect, deceive, delay. Shape adversary tempo and preserve defender initiative.
 - **Where**: Edge gateways, pop-up shelters, field ops, and beyond.
 
-→ Variants: [Azazel-Pi]({{ site.baseurl }}/variants/azazel-pi) · [Azazel-Zero]({{ site.baseurl }}/variants/azazel-zero)
+→ Variants: [Azazel-Edge Gateway]({{ site.baseurl }}/variants/azazel-pi) · [Azazel-Gadget Shield]({{ site.baseurl }}/variants/azazel-zero)
