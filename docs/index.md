@@ -14,6 +14,19 @@ nav_exclude: false
     <a href="https://github.com/01rabbit/Azazel-Edge/releases"><img alt="Azazel-Edge release" src="https://img.shields.io/github/v/release/01rabbit/Azazel-Edge?display_name=tag&label=Azazel-Edge&color=00c2d7"></a>
     <a href="https://github.com/01rabbit/Azazel-Gadget/releases"><img alt="Azazel-Gadget release" src="https://img.shields.io/github/v/release/01rabbit/Azazel-Gadget?display_name=tag&label=Azazel-Gadget&color=00c2d7"></a>
   </p>
+  <div class="az-loop">
+    <span class="az-loop-step">Detect</span>
+    <span class="az-loop-arrow">→</span>
+    <span class="az-loop-step">Decide</span>
+    <span class="az-loop-arrow">→</span>
+    <span class="az-loop-step">Delay</span>
+    <span class="az-loop-arrow">→</span>
+    <span class="az-loop-step">Redirect</span>
+    <span class="az-loop-arrow">→</span>
+    <span class="az-loop-step">Observe</span>
+    <span class="az-loop-arrow">→</span>
+    <span class="az-loop-step">Buy Time</span>
+  </div>
 </div>
 
 <div class="az-grid">
