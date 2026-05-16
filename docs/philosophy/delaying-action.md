@@ -6,6 +6,8 @@ Back to: [Philosophy Index](README.md) | Related: [Deception and Delay](../conce
 
 Delaying action is a deliberate operation to slow and shape adversary movement while preserving defender capability.
 
+![Delaying Action](../assets/images/delaying-action.png)
+
 In Azazel, this means:
 
 - Detect suspicious behavior early

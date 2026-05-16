@@ -6,6 +6,8 @@ Back to: [Philosophy Index](README.md) | Related: [Delaying Action](delaying-act
 
 Go no Sen is initiative through response: do not move first by default; observe the opponent's motion, then take control through informed timing.
 
+![Go no Sen - 後の先](../assets/images/go-no-sen-後の先.png)
+
 ## Azazel Interpretation
 
 In Azazel doctrine, this is implemented as:

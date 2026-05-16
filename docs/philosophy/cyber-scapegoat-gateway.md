@@ -6,6 +6,8 @@ Back to: [Philosophy Index](README.md) | Related: [Product Map](../products/prod
 
 A Cyber Scapegoat Gateway is a defensive gateway role that can intentionally absorb hostile interaction and attract attacker focus away from high-value systems.
 
+![Cyber Scapegoat Gateway](../assets/images/cyber-scapegoat-gateway.png)
+
 ## What It Is Not
 
 - Not a revenge mechanism
