@@ -38,5 +38,10 @@ Special thanks to:
 
 ---
 
-© 2025 Makoto SUGITA (Mr. Rabbit).  
-Licensed under the **Apache License 2.0** unless otherwise stated.
+© 2025 Makoto SUGITA (Mr. Rabbit).
+
+License by repository:
+
+- **Azazel**: Apache-2.0
+- **Azazel-Edge**: MIT
+- **Azazel-Gadget**: MIT

@@ -9,6 +9,10 @@ nav_exclude: true
   <h1>思想を先に、制御を常に。</h1>
   <p class="az-lead">Azazel Systemは、サイバー空間に遅滞行動を適用する防御思想とツール群です。決定論的なローカル判断を軸に、観測可能性と対処時間を確保します。</p>
   <img src="{{ site.baseurl }}/assets/images/azazel-banner.png" alt="Azazel System Banner" />
+  <p class="az-badges">
+    <a href="https://github.com/01rabbit/Azazel-Edge/releases"><img alt="Azazel-Edge release" src="https://img.shields.io/github/v/release/01rabbit/Azazel-Edge?display_name=tag&label=Azazel-Edge&color=00c2d7"></a>
+    <a href="https://github.com/01rabbit/Azazel-Gadget/releases"><img alt="Azazel-Gadget release" src="https://img.shields.io/github/v/release/01rabbit/Azazel-Gadget?display_name=tag&label=Azazel-Gadget&color=00c2d7"></a>
+  </p>
 </div>
 
 <div class="az-grid">
@@ -38,6 +42,14 @@ nav_exclude: true
     <ul>
       <li><a href="https://github.com/01rabbit/Azazel-Edge">Azazel-Edge</a></li>
       <li><a href="https://github.com/01rabbit/Azazel-Gadget">Azazel-Gadget</a></li>
+    </ul>
+  </section>
+  <section class="az-card">
+    <h2>ライセンス</h2>
+    <ul>
+      <li><code>Azazel</code>: Apache-2.0</li>
+      <li><code>Azazel-Edge</code>: MIT</li>
+      <li><code>Azazel-Gadget</code>: MIT</li>
     </ul>
   </section>
 </div>

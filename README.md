@@ -3,6 +3,13 @@ Cyber Scapegoat Gateway
 
 ![Azazel System Banner](docs/assets/images/azazel-banner.png)
 
+## Development Status
+
+[![Azazel-Edge release](https://img.shields.io/github/v/release/01rabbit/Azazel-Edge?display_name=tag&label=Azazel-Edge&color=00c2d7)](https://github.com/01rabbit/Azazel-Edge/releases)
+[![Azazel-Gadget release](https://img.shields.io/github/v/release/01rabbit/Azazel-Gadget?display_name=tag&label=Azazel-Gadget&color=00c2d7)](https://github.com/01rabbit/Azazel-Gadget/releases)
+[![Azazel-Edge release date](https://img.shields.io/github/release-date/01rabbit/Azazel-Edge?label=Azazel-Edge%20updated)](https://github.com/01rabbit/Azazel-Edge/releases)
+[![Azazel-Gadget release date](https://img.shields.io/github/release-date/01rabbit/Azazel-Gadget?label=Azazel-Gadget%20updated)](https://github.com/01rabbit/Azazel-Gadget/releases)
+
 Azazel System is a cyber defense doctrine and tool family built around one principle: do not merely block the attacker; bind them, slow them, observe them, and buy time.
 
 It applies delaying action to cyberspace through detection, deterministic decision loops, controlled friction, and selective redirection toward decoys.
@@ -70,3 +77,9 @@ Azazel System is the doctrine. Azazel-Edge and Azazel-Gadget are concrete implem
 - `01rabbit/Azazel`: doctrine, philosophy, naming, and shared architecture
 - `01rabbit/Azazel-Edge`: field-deployable edge SOC/NOC gateway implementation
 - `01rabbit/Azazel-Gadget`: portable personal tactical defense implementation
+
+## License Matrix
+
+- `01rabbit/Azazel`: Apache-2.0
+- `01rabbit/Azazel-Edge`: MIT
+- `01rabbit/Azazel-Gadget`: MIT

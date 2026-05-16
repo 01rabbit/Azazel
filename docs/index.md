@@ -10,6 +10,10 @@ nav_exclude: false
   <h1>Doctrine First. Control Always.</h1>
   <p class="az-lead">Azazel System is a cyber defense doctrine and tool family that applies delaying action to cyberspace through deterministic local decisions.</p>
   <img src="{{ site.baseurl }}/assets/images/azazel-banner.png" alt="Azazel System Banner" />
+  <p class="az-badges">
+    <a href="https://github.com/01rabbit/Azazel-Edge/releases"><img alt="Azazel-Edge release" src="https://img.shields.io/github/v/release/01rabbit/Azazel-Edge?display_name=tag&label=Azazel-Edge&color=00c2d7"></a>
+    <a href="https://github.com/01rabbit/Azazel-Gadget/releases"><img alt="Azazel-Gadget release" src="https://img.shields.io/github/v/release/01rabbit/Azazel-Gadget?display_name=tag&label=Azazel-Gadget&color=00c2d7"></a>
+  </p>
 </div>
 
 <div class="az-grid">
@@ -39,6 +43,14 @@ nav_exclude: false
     <ul>
       <li><a href="https://github.com/01rabbit/Azazel-Edge">Azazel-Edge</a></li>
       <li><a href="https://github.com/01rabbit/Azazel-Gadget">Azazel-Gadget</a></li>
+    </ul>
+  </section>
+  <section class="az-card">
+    <h2>License Matrix</h2>
+    <ul>
+      <li><code>Azazel</code>: Apache-2.0</li>
+      <li><code>Azazel-Edge</code>: MIT</li>
+      <li><code>Azazel-Gadget</code>: MIT</li>
     </ul>
   </section>
 </div>
