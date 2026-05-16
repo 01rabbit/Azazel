@@ -1,3 +1,9 @@
+---
+title: Naming
+nav_order: 6
+nav_exclude: false
+---
+
 # Naming Convention
 
 Back to: [README](../../README.md) | [Product Map](../products/product-map.md)

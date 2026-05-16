@@ -1,3 +1,9 @@
+---
+title: Philosophy
+nav_order: 2
+nav_exclude: false
+---
+
 # Philosophy
 
 Back to: [README](../../README.md) | Next: [Delaying Action](delaying-action.md)

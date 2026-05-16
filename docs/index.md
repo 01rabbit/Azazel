@@ -1,44 +1,44 @@
-# Azazel System
+---
+title: Azazel System
+nav_order: 1
+nav_exclude: false
+---
 
-[English]({{ site.baseurl }}/) | [日本語]({{ site.baseurl }}/index_ja)
+<div class="az-hero">
+  <p class="az-lang"><a href="{{ site.baseurl }}/">English</a> | <a href="{{ site.baseurl }}/index_ja">日本語</a></p>
+  <p class="az-kicker">Cyber Scapegoat Gateway</p>
+  <h1>Doctrine First. Control Always.</h1>
+  <p class="az-lead">Azazel System is a cyber defense doctrine and tool family that applies delaying action to cyberspace through deterministic local decisions.</p>
+  <img src="{{ site.baseurl }}/assets/images/azazel-banner.png" alt="Azazel System Banner" />
+</div>
 
-Cyber Scapegoat Gateway
-
-![Azazel System Banner]({{ site.baseurl }}/assets/images/azazel-banner.png)
-
-Azazel System is a cyber defense doctrine and tool family built around delaying action in cyberspace.
-
-It does not rely on passive blocking alone. It uses deterministic local decisions to detect hostile behavior, apply bounded delay, redirect suspicious traffic toward controlled decoys when needed, and buy time for defenders.
-
-## Core Statement
-
-Do not merely block the attacker.
-Bind them, slow them, observe them, and buy time.
-
-## Repository Roles
-
-- `01rabbit/Azazel`
-  - Doctrine, philosophy, naming, and architecture entry point
-- `01rabbit/Azazel-Edge`
-  - Field-deployable edge SOC/NOC gateway implementation
-- `01rabbit/Azazel-Gadget`
-  - Portable personal tactical defense implementation
-
-## Start Here
-
-- [Philosophy Index]({{ site.baseurl }}/philosophy/README)
-- [System Overview]({{ site.baseurl }}/concepts/system-overview)
-- [Products Index]({{ site.baseurl }}/products/README)
-- [Naming Convention]({{ site.baseurl }}/specs/naming)
-
-## Product Repositories
-
-- [Azazel-Edge Gateway](https://github.com/01rabbit/Azazel-Edge)
-- [Azazel-Gadget Shield](https://github.com/01rabbit/Azazel-Gadget)
-
-## Navigation Path
-
-- Entry page (website, profile, or shared link)
-- Azazel System doctrine overview
-- Product selection by operational context
-- Implementation deep dive in Edge or Gadget repositories
+<div class="az-grid">
+  <section class="az-card">
+    <h2>Core Statement</h2>
+    <p>Do not merely block the attacker. Bind them, slow them, observe them, and buy time.</p>
+  </section>
+  <section class="az-card">
+    <h2>Repository Roles</h2>
+    <ul>
+      <li><code>01rabbit/Azazel</code>: doctrine, philosophy, naming, architecture</li>
+      <li><code>01rabbit/Azazel-Edge</code>: field-deployable edge SOC/NOC gateway</li>
+      <li><code>01rabbit/Azazel-Gadget</code>: portable tactical defense on untrusted Wi-Fi</li>
+    </ul>
+  </section>
+  <section class="az-card">
+    <h2>Start Here</h2>
+    <ul>
+      <li><a href="{{ site.baseurl }}/philosophy/README">Philosophy Index</a></li>
+      <li><a href="{{ site.baseurl }}/concepts/system-overview">System Overview</a></li>
+      <li><a href="{{ site.baseurl }}/products/README">Products Index</a></li>
+      <li><a href="{{ site.baseurl }}/specs/naming">Naming Convention</a></li>
+    </ul>
+  </section>
+  <section class="az-card">
+    <h2>Implementations</h2>
+    <ul>
+      <li><a href="https://github.com/01rabbit/Azazel-Edge">Azazel-Edge Gateway</a></li>
+      <li><a href="https://github.com/01rabbit/Azazel-Gadget">Azazel-Gadget Shield</a></li>
+    </ul>
+  </section>
+</div>

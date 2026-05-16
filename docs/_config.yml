@@ -14,17 +14,16 @@ kramdown:
   input: GFM
   hard_wrap: false
 defaults:
-  - scope: {path: ""} 
-    values: {layout: default}
+  - scope:
+      path: ""
+    values:
+      layout: default
+      nav_exclude: true
 nav:
   - Home: /
-  - 日本語: /index_ja
   - Doctrine: /philosophy/README
   - Concepts: /concepts/system-overview
   - Products: /products/README
-  - Architecture:
-      - Overview: /architecture/overview
-      - Modes: /architecture/modes
-  - Specs:
-      - Naming: /specs/naming
+  - Architecture Overview: /architecture/overview
+  - Naming: /specs/naming
   - Credits: /about/credits

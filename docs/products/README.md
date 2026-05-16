@@ -1,3 +1,9 @@
+---
+title: Products
+nav_order: 4
+nav_exclude: false
+---
+
 # Products
 
 Back to: [README](../../README.md) | Related: [Product Map](product-map.md)

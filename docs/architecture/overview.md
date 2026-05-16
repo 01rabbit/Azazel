@@ -1,3 +1,9 @@
+---
+title: Architecture Overview
+nav_order: 5
+nav_exclude: false
+---
+
 # Architecture Overview
 
 ```text
