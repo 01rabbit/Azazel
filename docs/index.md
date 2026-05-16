@@ -36,9 +36,9 @@ Bind them, slow them, observe them, and buy time.
 - [Azazel-Edge Gateway](https://github.com/01rabbit/Azazel-Edge)
 - [Azazel-Gadget Shield](https://github.com/01rabbit/Azazel-Gadget)
 
-## Conference / Arsenal Path
+## Navigation Path
 
-- Booth or conference profile
-- This Azazel System page
-- Doctrine and product selection
+- Entry page (website, profile, or shared link)
+- Azazel System doctrine overview
+- Product selection by operational context
 - Implementation deep dive in Edge or Gadget repositories

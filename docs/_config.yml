@@ -19,33 +19,12 @@ defaults:
 nav:
   - Home: /
   - 日本語: /index_ja
-  - Doctrine:
-      - Philosophy Index: /philosophy/README
-      - Delaying Action: /philosophy/delaying-action
-      - Cyber Scapegoat Gateway: /philosophy/cyber-scapegoat-gateway
-      - Go no Sen: /philosophy/go-no-sen
-  - Concepts:
-      - System Overview: /concepts/system-overview
-      - Deterministic Defense: /concepts/deterministic-defense
-      - Deception and Delay: /concepts/deception-and-delay
-      - Offline Edge Defense: /concepts/offline-edge-defense
-  - Products:
-      - Products Index: /products/README
-      - Azazel-Edge Gateway: /products/azazel-edge
-      - Azazel-Gadget Shield: /products/azazel-gadget
-      - Product Map: /products/product-map
+  - Doctrine: /philosophy/README
+  - Concepts: /concepts/system-overview
+  - Products: /products/README
   - Architecture:
       - Overview: /architecture/overview
-      - Data Pipeline: /architecture/data-pipeline
       - Modes: /architecture/modes
-      - Event Schema: /architecture/schema/event-schema
   - Specs:
       - Naming: /specs/naming
-      - API: /specs/api
-      - Profiles: /specs/profiles
-  - Legacy Pages:
-      - Concept (Legacy): /concept/philosophy
-      - Tactics (Legacy): /concept/tactics
-      - Azazel-Edge Variant (Legacy): /variants/azazel-pi
-      - Azazel-Gadget Variant (Legacy): /variants/azazel-zero
   - Credits: /about/credits
