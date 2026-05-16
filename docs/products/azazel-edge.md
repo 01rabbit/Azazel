@@ -1,4 +1,4 @@
-# Azazel-Edge Gateway
+# Azazel-Edge
 
 Back to: [Products Index](README.md) | Related: [Deterministic Defense](../concepts/deterministic-defense.md)
 

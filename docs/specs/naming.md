@@ -12,17 +12,17 @@ Back to: [README](../../README.md) | [Product Map](../products/product-map.md)
 
 - **Azazel System**
   - The doctrine, philosophy, naming, and architecture entry point for the system family.
-- **Azazel-Edge Gateway**
+- **Azazel-Edge**
   - Field-deployable edge SOC/NOC implementation of Azazel doctrine.
-- **Azazel-Gadget Shield**
+- **Azazel-Gadget**
   - Portable tactical implementation for personal defense on untrusted Wi-Fi.
 - **Cyber Scapegoat Gateway**
   - The defensive role concept: absorb, delay, redirect, and expose hostile behavior.
 
 ## Legacy Name Mapping
 
-- `Azazel-Pi` -> `Azazel-Edge Gateway`
-- `Azazel-Zero` -> `Azazel-Gadget Shield`
+- `Azazel-Pi` -> `Azazel-Edge`
+- `Azazel-Zero` -> `Azazel-Gadget`
 
 Use legacy names only when migration context is required.
 
@@ -30,12 +30,12 @@ Use legacy names only when migration context is required.
 
 Primary product naming format:
 
-`Azazel-<Form> <Role>`
+`Azazel-<Form>`
 
 Examples:
 
-- `Azazel-Edge Gateway`
-- `Azazel-Gadget Shield`
+- `Azazel-Edge`
+- `Azazel-Gadget`
 
 ## External Presentation Wording
 

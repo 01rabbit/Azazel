@@ -1,6 +1,6 @@
 # Offline Edge Defense
 
-Back to: [System Overview](system-overview.md) | Related: [Azazel-Gadget Shield](../products/azazel-gadget.md)
+Back to: [System Overview](system-overview.md) | Related: [Azazel-Gadget](../products/azazel-gadget.md)
 
 Azazel variants are designed for constrained and partially disconnected environments.
 
@@ -14,4 +14,4 @@ Azazel variants are designed for constrained and partially disconnected environm
 
 Offline-capable design supports timely local detect-decide-delay behavior without waiting for remote control planes.
 
-See also: [Azazel-Edge Gateway](../products/azazel-edge.md)
+See also: [Azazel-Edge](../products/azazel-edge.md)

@@ -1,4 +1,4 @@
-# Azazel-Gadget Shield
+# Azazel-Gadget
 
 Back to: [Products Index](README.md) | Related: [Offline Edge Defense](../concepts/offline-edge-defense.md)
 

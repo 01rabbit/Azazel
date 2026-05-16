@@ -38,8 +38,8 @@ See also: [Deterministic Defense](docs/concepts/deterministic-defense.md) | [Off
 
 | Project | Former Name | Role | Target |
 |---|---|---|---|
-| [Azazel-Edge Gateway](https://github.com/01rabbit/Azazel-Edge) | Azazel-Pi | Field-deployable edge SOC/NOC and scapegoat gateway | Raspberry Pi 5 / edge networks |
-| [Azazel-Gadget Shield](https://github.com/01rabbit/Azazel-Gadget) | Azazel-Zero | Portable tactical defense on untrusted Wi-Fi | Raspberry Pi Zero 2 W / personal use |
+| [Azazel-Edge](https://github.com/01rabbit/Azazel-Edge) | Azazel-Pi | Field-deployable edge SOC/NOC and scapegoat gateway | Raspberry Pi 5 / edge networks |
+| [Azazel-Gadget](https://github.com/01rabbit/Azazel-Gadget) | Azazel-Zero | Portable tactical defense on untrusted Wi-Fi | Raspberry Pi Zero 2 W / personal use |
 | Azazel System (this repository) | - | Doctrine, architecture, naming, and product-family entry point | Cross-repository |
 
 ## Which Repository Should I Read?

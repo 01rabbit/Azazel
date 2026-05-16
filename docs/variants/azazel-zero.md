@@ -1,4 +1,4 @@
-# Azazel-Gadget Shield
+# Azazel-Gadget
 
 **Formerly:** Azazel-Zero (AZ-02)
 
@@ -9,4 +9,4 @@ Focus: laptop surrogate gateway, e-paper UI, minimal Suricata/OpenCanary, gadget
 
 See also: [Products Index](../products/README.md) | [Naming Convention](../specs/naming.md)
 
-![Azazel-Gadget Shield Prototype](../assets/images/azazel-zero-prototype.jpg)
+![Azazel-Gadget Prototype](../assets/images/azazel-zero-prototype.jpg)

@@ -5,7 +5,7 @@ Back to: [Products Index](README.md) | Related: [Naming Convention](../specs/nam
 ## Doctrine to Implementation
 
 - **Doctrine layer:** Azazel System ([README](../../README.md))
-- **Implementation layer:** [Azazel-Edge Gateway](https://github.com/01rabbit/Azazel-Edge), [Azazel-Gadget Shield](https://github.com/01rabbit/Azazel-Gadget)
+- **Implementation layer:** [Azazel-Edge](https://github.com/01rabbit/Azazel-Edge), [Azazel-Gadget](https://github.com/01rabbit/Azazel-Gadget)
 
 ## Positioning
 

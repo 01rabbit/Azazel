@@ -37,8 +37,8 @@ nav_exclude: false
   <section class="az-card">
     <h2>Implementations</h2>
     <ul>
-      <li><a href="https://github.com/01rabbit/Azazel-Edge">Azazel-Edge Gateway</a></li>
-      <li><a href="https://github.com/01rabbit/Azazel-Gadget">Azazel-Gadget Shield</a></li>
+      <li><a href="https://github.com/01rabbit/Azazel-Edge">Azazel-Edge</a></li>
+      <li><a href="https://github.com/01rabbit/Azazel-Gadget">Azazel-Gadget</a></li>
     </ul>
   </section>
 </div>

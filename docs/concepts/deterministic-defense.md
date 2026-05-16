@@ -1,6 +1,6 @@
 # Deterministic Defense
 
-Back to: [System Overview](system-overview.md) | Related: [Azazel-Edge Gateway](../products/azazel-edge.md)
+Back to: [System Overview](system-overview.md) | Related: [Azazel-Edge](../products/azazel-edge.md)
 
 Azazel prioritizes deterministic controls before probabilistic assistants.
 

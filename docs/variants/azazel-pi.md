@@ -1,4 +1,4 @@
-# Azazel-Edge Gateway
+# Azazel-Edge
 
 **Formerly:** Azazel-Pi (AZ-01)
 
@@ -9,4 +9,4 @@ Focus: shelter SOC/NOC, Vector aggregation, Mattermost notifier, nftables/tc tem
 
 See also: [Products Index](../products/README.md) | [Naming Convention](../specs/naming.md)
 
-![Azazel-Edge Gateway Prototype](../assets/images/azazel-pi-prototype.jpg)
+![Azazel-Edge Prototype](../assets/images/azazel-pi-prototype.jpg)
