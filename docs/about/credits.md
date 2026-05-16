@@ -15,7 +15,12 @@ Originating from the concept of *delaying action* in active cyber defense.
 - **Azazel-Gadget** (formerly **Azazel-Zero**, AZ-02): Portable surrogate gateway for personal and mobile defense  
 
 Developed and maintained by **Makoto SUGITA (Mr. Rabbit)**  
-2025 — Presented at 🇺🇸**Black Hat USA Arsenal**, 🇺🇸**BSides Las Vegas**, and 🇨🇦**SecTor Canada**
+Selected presentations:
+
+- 2026 — Presented at 🇸🇬 **Black Hat Asia Arsenal**
+- 2026 — Accepted for 🇺🇸 **Black Hat USA Arsenal**
+- 2025 — Presented at 🇯🇵 **CODE BLUE Bluebox**
+- 2025 — Presented at 🇺🇸 **BSides Las Vegas** and 🇨🇦 **SecTor Canada**
 
 ---
 
@@ -23,6 +28,7 @@ Developed and maintained by **Makoto SUGITA (Mr. Rabbit)**
 
 Special thanks to:
 
+- **@k** — for continuous personal support behind this work
 - **BSides Las Vegas Proving Ground Mentor: Soya**  
 - **Black Hat Arsenal Review Board** for technical validation  
 - The global **deception and active defense research community** for inspiration and peer discussion  
