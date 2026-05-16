@@ -1,55 +1,72 @@
 # Azazel System
+Cyber Scapegoat Gateway
 
-**Official designation:** Azazel-&lt;Form&gt; &lt;Role&gt; — **Cyber Scapegoat Gateway**
+![Azazel System Banner](docs/assets/images/azazel-banner.png)
 
-*(Legacy: Azazel-Pi, Azazel-Zero—see [Naming Convention](docs/specs/naming.md))*
+Azazel System is a cyber defense doctrine and tool family built around one principle: do not merely block the attacker; bind them, slow them, observe them, and buy time.
 
-![azazel-logo](docs/assets/images/Azazel_logo.PNG)
+It applies delaying action to cyberspace through detection, deterministic decision loops, controlled friction, and selective redirection toward decoys.
 
-## Azazel Systemの防御思想は、日本における二つの戦術的概念に着想を得ています
+## Core Idea: Delaying Action in Cyberspace
 
-- ひとつは、日本陸軍における防御戦術の原則である「敵を戦場に拘束する」という考え方です。これは、敵の攻撃をただ防ぐのではなく、あえて戦場に引き留め、敵の行動を制限しながら、味方の後続準備や反撃の時間を稼ぐことを目的としています。Azazel Systemもこれと同様に、侵入者をシステム上に誘導し、デコイや通信遅延の中に拘束することで、攻撃の自由度を奪い、防御側に主導権を渡す構造をとっています。
+In military tactics, delaying action is not passive retreat. It is an intentional operation to shape enemy movement, reduce enemy tempo, and preserve defender initiative.
 
-- もうひとつは、日本古来の武術における「後の先（ごのせん）」という戦い方です。これは、相手の動きを見てから反応することで、逆に主導権を握るという高度な戦術です。見かけ上は後手に見えても、実際には相手の攻撃を利用して、制御し、反撃の機を得るというものです。Azazel Systemでは、Suricataによる侵入検知後に遅滞制御を発動することで、この「後の先」の構えを実装しています。攻撃をあえて引き受け、観察し、制御するという戦術的な対応が、この思想に通じます。
+Azazel translates this into network defense: detect hostile behavior, decide locally, delay attacker progress, and maintain visibility long enough for effective response.
 
-このように、Azazel Systemは「防御とは単に守ることではなく、敵の行動を制御し、時間を稼ぐこと」というコンセプトを体現しており、日本的な戦術思想に根ざしたサイバーデセプションツールです。
+See also: [Delaying Action](docs/philosophy/delaying-action.md) | [Go no Sen](docs/philosophy/go-no-sen.md)
 
-## Azazel System is rooted in two key Japanese strategic doctrines
+## Why "Scapegoat Gateway"
 
-- The Imperial Japanese Army’s principle of battlefield containment—not simply blocking the enemy, but intentionally binding them to a location to limit their actions and buy time for reinforcements or counteroffensives.
+Azazel can absorb hostile interaction, draw attacker attention away from valuable assets, and redirect suspicious behavior into controlled decoys.
 
-- The martial arts concept of "Go no Sen", or taking initiative in response. Rather than preemptive strikes, this principle capitalizes on the opponent's move, using their momentum against them. Azazel embodies this by activating its response only after intrusion is detected, deliberately reacting to the attacker’s behavior to assert control.
+The objective is not retaliation. The objective is control, observability, and time for defenders.
 
-These principles converge in Azazel’s design: defense is not about passive protection, but about active control and strategic delay.
+See also: [Cyber Scapegoat Gateway](docs/philosophy/cyber-scapegoat-gateway.md)
 
-## 可搬型設計 / Portable Deployment
+## Design Principles
 
-- 軽量・省電力な構成により、外出先や現場などの一時的なネットワーク接続環境でも容易に導入可能です。  
-***Lightweight and energy-efficient, enabling quick deployment in temporary and mobile environments.***
+- Local-first and offline-capable operation
+- Deterministic decisions before AI assistance
+- Gradual response instead of binary allow/block
+- Deception and delay with bounded impact on legitimate users
+- Deployability on small edge devices
+- Auditable defensive actions and mode transitions
 
-- 出張時、イベント会場、外部検証ネットワークなど、セキュリティが保証されない場所での利用に最適です。  
-***Perfect for use during business trips, field operations, or in untrusted networks outside your primary infrastructure.***
+See also: [Deterministic Defense](docs/concepts/deterministic-defense.md) | [Offline Edge Defense](docs/concepts/offline-edge-defense.md)
 
-## 特徴 / Features
+## Tool Family
 
-- 遅滞戦術の実装 / Tactical Delaying  
-陸戦における「遅滞行動」の概念を、サイバー空間に適用。侵入を許容しつつ、その進行をコントロール。  
-***Applies the military concept of delaying action to cyberspace—permitting intrusion while strategically controlling its progression.***
+| Project | Former Name | Role | Target |
+|---|---|---|---|
+| [Azazel-Edge Gateway](https://github.com/01rabbit/Azazel-Edge) | Azazel-Pi | Field-deployable edge SOC/NOC and scapegoat gateway | Raspberry Pi 5 / edge networks |
+| [Azazel-Gadget Shield](https://github.com/01rabbit/Azazel-Gadget) | Azazel-Zero | Portable tactical defense on untrusted Wi-Fi | Raspberry Pi Zero 2 W / personal use |
+| Azazel System (this repository) | - | Doctrine, architecture, naming, and product-family entry point | Cross-repository |
 
-- リアルタイム侵入検知と制御 / Real-Time IDS-based Control  
-Suricata による侵入検知をトリガーに、攻撃元IPの通信を tc や iptables/nftables により動的に遅延・制限。  
-***Triggered by Suricata IDS alerts, dynamically throttles or restricts traffic from attacker IPs using tc and iptables/nftables.***
+## Which Repository Should I Read?
 
-- スケープゴート型デコイ / Scapegoat Decoy  
-OpenCanary等を利用し、攻撃者を観察ではなく誘導・拘束。正規ユーザーには影響を与えずに隔離。  
-***Leverages tools like OpenCanary to mislead and isolate attackers—not merely observe them—without affecting legitimate users.***
+- Start here if you want doctrine, terminology, and architecture framing.
+- Read [Azazel-Edge](https://github.com/01rabbit/Azazel-Edge) for edge SOC/NOC gateway implementation.
+- Read [Azazel-Gadget](https://github.com/01rabbit/Azazel-Gadget) for personal tactical device implementation.
 
-- 可搬型設計 / Portable Deployment  
-軽量構成でRaspberry Piに最適化。災害対応や一時的な現場展開にも対応。  
-***Lightweight and optimized for Raspberry Pi, enabling easy deployment in disaster recovery or temporary field operations.***
+Azazel System is the doctrine. Azazel-Edge and Azazel-Gadget are concrete implementations of that doctrine.
 
-## At a Glance
+## Documentation Map
 
-- Website: [https://01rabbit.github.io/Azazel/](https://01rabbit.github.io/Azazel/)
-- Variants: **Azazel-Edge Gateway** (formerly Azazel-Pi, AZ-01) · **Azazel-Gadget Shield** (formerly Azazel-Zero, AZ-02)
-- Docs: [Naming Convention](docs/specs/naming.md) · Philosophy · Tactics · Architecture · Event Schema · Operation Modes · API Drafts
+- [Philosophy](docs/philosophy/README.md)
+- [Concepts](docs/concepts/system-overview.md)
+- [Products](docs/products/README.md)
+- [Naming and Terminology](docs/specs/naming.md)
+- [Existing Architecture Docs](docs/architecture/overview.md)
+
+## Conference / Arsenal Visitor Path
+
+- Arsenal booth, conference profile, or social link
+- [Azazel System overview site](https://01rabbit.github.io/Azazel/)
+- Doctrine and product selection from this repository
+- Implementation deep dive in [Azazel-Edge](https://github.com/01rabbit/Azazel-Edge) or [Azazel-Gadget](https://github.com/01rabbit/Azazel-Gadget)
+
+## Repository Map
+
+- `01rabbit/Azazel`: doctrine, philosophy, naming, and shared architecture
+- `01rabbit/Azazel-Edge`: field-deployable edge SOC/NOC gateway implementation
+- `01rabbit/Azazel-Gadget`: portable personal tactical defense implementation

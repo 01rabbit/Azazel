@@ -2,19 +2,43 @@
 
 [English]({{ site.baseurl }}/) | [日本語]({{ site.baseurl }}/index_ja)
 
-## Azazel System is rooted in two key Japanese strategic doctrines
+Cyber Scapegoat Gateway
 
-- The Imperial Japanese Army’s principle of battlefield containment—not simply blocking the enemy, but intentionally binding them to a location to limit their actions and buy time for reinforcements or counteroffensives.
+![Azazel System Banner]({{ site.baseurl }}/assets/images/azazel-banner.png)
 
-- The martial arts concept of "Go no Sen", or taking initiative in response. Rather than preemptive strikes, this principle capitalizes on the opponent's move, using their momentum against them. Azazel embodies this by activating its response only after intrusion is detected, deliberately reacting to the attacker’s behavior to assert control.
+Azazel System is a cyber defense doctrine and tool family built around delaying action in cyberspace.
 
-These principles converge in Azazel’s design: defense is not about passive protection, but about active control and strategic delay.
+It does not rely on passive blocking alone. It uses deterministic local decisions to detect hostile behavior, apply bounded delay, redirect suspicious traffic toward controlled decoys when needed, and buy time for defenders.
 
----
-Azazel System is the upstream of **Azazel-Edge Gateway** (formerly Azazel-Pi) and **Azazel-Gadget Shield** (formerly Azazel-Zero). It defines the philosophy, tactics, architecture, shared event schema, and operational modes (Portal / Shield / Lockdown).
+## Core Statement
 
-- **Why**: When resources are scarce and chaos is plenty, time is the only currency that matters.
-- **How**: Detect, deceive, delay. Shape adversary tempo and preserve defender initiative.
-- **Where**: Edge gateways, pop-up shelters, field ops, and beyond.
+Do not merely block the attacker.
+Bind them, slow them, observe them, and buy time.
 
-→ Variants: [Azazel-Edge Gateway]({{ site.baseurl }}/variants/azazel-pi) · [Azazel-Gadget Shield]({{ site.baseurl }}/variants/azazel-zero)
+## Repository Roles
+
+- `01rabbit/Azazel`
+  - Doctrine, philosophy, naming, and architecture entry point
+- `01rabbit/Azazel-Edge`
+  - Field-deployable edge SOC/NOC gateway implementation
+- `01rabbit/Azazel-Gadget`
+  - Portable personal tactical defense implementation
+
+## Start Here
+
+- [Philosophy Index]({{ site.baseurl }}/philosophy/README)
+- [System Overview]({{ site.baseurl }}/concepts/system-overview)
+- [Products Index]({{ site.baseurl }}/products/README)
+- [Naming Convention]({{ site.baseurl }}/specs/naming)
+
+## Product Repositories
+
+- [Azazel-Edge Gateway](https://github.com/01rabbit/Azazel-Edge)
+- [Azazel-Gadget Shield](https://github.com/01rabbit/Azazel-Gadget)
+
+## Conference / Arsenal Path
+
+- Booth or conference profile
+- This Azazel System page
+- Doctrine and product selection
+- Implementation deep dive in Edge or Gadget repositories

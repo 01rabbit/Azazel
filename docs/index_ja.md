@@ -2,19 +2,43 @@
 
 [English]({{ site.baseurl }}/) | [日本語]({{ site.baseurl }}/index_ja)
 
-## Azazel Systemの防御思想は、日本における二つの戦術的概念に着想を得ています
+Cyber Scapegoat Gateway
 
-- ひとつは、日本陸軍における防御戦術の原則である「敵を戦場に拘束する」という考え方です。これは、敵の攻撃をただ防ぐのではなく、あえて戦場に引き留め、敵の行動を制限しながら、味方の後続準備や反撃の時間を稼ぐことを目的としています。御調子門もこれと同様に、侵入者をシステム上に誘導し、デコイや通信遅延の中に拘束することで、攻撃の自由度を奪い、防御側に主導権を渡す構造をとっています。
+![Azazel System Banner]({{ site.baseurl }}/assets/images/azazel-banner.png)
 
-- もうひとつは、日本古来の武術における「後の先（ごのせん）」という戦い方です。これは、相手の動きを見てから反応することで、逆に主導権を握るという高度な戦術です。見かけ上は後手に見えても、実際には相手の攻撃を利用して、制御し、反撃の機を得るというものです。御調子門では、Suricataによる侵入検知後に遅滞制御を発動することで、この「後の先」の構えを実装しています。攻撃をあえて引き受け、観察し、制御するという戦術的な対応が、この思想に通じます。
+Azazel Systemは、サイバー空間に「遅滞行動」を適用する防御思想とツール群です。
 
-このように、Azazel Systemは「防御とは単に守ることではなく、敵の行動を制御し、時間を稼ぐこと」というコンセプトを体現しており、日本的な戦術思想に根ざしたサイバーデセプションツールです。
+単純な遮断だけに依存せず、ローカルでの決定論的判断を軸として、攻撃的挙動を検知し、必要に応じて遅延・誘導を行い、防御側の観測と対処のための時間を確保します。
 
----
-**Azazel-Edge Gateway**（旧称：Azazel-Pi）と**Azazel-Gadget Shield**（旧称：Azazel-Zero）の源流として、思想・戦術・アーキテクチャ・共通イベントスキーマ・運用モード（Portal/Shield/Lockdown）を定義します。
+## 中核メッセージ
 
-- **目的**: 混乱下で最も貴重な資源は「時間」。遅滞行動で守りを成立させる。
-- **方法**: 検知・誤誘導・遅延。攻撃者のテンポを崩し、防御側の主導を維持する。
-- **適用**: 避難所ネットワーク、フィールド運用、エッジ・ゲートウェイ。
+攻撃を単に遮断しない。
+拘束し、遅らせ、観測し、時間を稼ぐ。
 
-→ 派生: [Azazel-Edge Gateway]({{ site.baseurl }}/variants/azazel-pi) · [Azazel-Gadget Shield]({{ site.baseurl }}/variants/azazel-zero)
+## リポジトリの役割
+
+- `01rabbit/Azazel`
+  - 思想、命名、アーキテクチャの母艦
+- `01rabbit/Azazel-Edge`
+  - フィールド向けエッジSOC/NOCゲートウェイ実装
+- `01rabbit/Azazel-Gadget`
+  - 可搬型の個人向け戦術防御実装
+
+## まず読む場所
+
+- [Philosophy Index]({{ site.baseurl }}/philosophy/README)
+- [System Overview]({{ site.baseurl }}/concepts/system-overview)
+- [Products Index]({{ site.baseurl }}/products/README)
+- [Naming Convention]({{ site.baseurl }}/specs/naming)
+
+## 製品リポジトリ
+
+- [Azazel-Edge Gateway](https://github.com/01rabbit/Azazel-Edge)
+- [Azazel-Gadget Shield](https://github.com/01rabbit/Azazel-Gadget)
+
+## Arsenal来場者向け導線
+
+- ブースやカンファレンスプロフィール
+- Azazel Systemページ
+- 思想理解と製品選択
+- Edge/Gadgetリポジトリで実装詳細へ
