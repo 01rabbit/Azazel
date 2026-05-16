@@ -41,6 +41,20 @@ body {
   border-bottom: 1px solid var(--az-border);
 }
 
+.site-button {
+  background: #12222c;
+  color: #d8f5ff !important;
+  border: 1px solid #2a4b5d;
+  box-shadow: none;
+}
+
+.site-button:hover,
+.site-button:focus {
+  background: #16303d;
+  color: #ebfbff !important;
+  border-color: #3a6a81;
+}
+
 .main-content {
   background: transparent;
 }
@@ -90,6 +104,11 @@ body {
 
 .search-input:focus {
   background: #12222c;
+}
+
+.search-label,
+.search-label .search-icon {
+  color: #9fc6d6;
 }
 
 .nav-list .nav-list-item .nav-list-link {
