@@ -1,5 +1,5 @@
 ---
-title: Azazel System
+title: Azazel
 nav_order: 1
 nav_exclude: false
 ---
@@ -8,7 +8,7 @@ nav_exclude: false
   <p class="az-lang"><a href="{{ site.baseurl }}/">English</a> | <a href="{{ site.baseurl }}/index_ja">日本語</a></p>
   <p class="az-kicker">Cyber Scapegoat Gateway</p>
   <h1>Doctrine First. Control Always.</h1>
-  <p class="az-lead">Azazel System is a cyber defense doctrine and tool family that applies delaying action to cyberspace through deterministic local decisions.</p>
+  <p class="az-lead">Azazel uses the naming standard <code>Azazel-&lt;Form&gt; &lt;Role&gt;</code> and applies delaying action to cyberspace through deterministic local decisions.</p>
   <img src="{{ site.baseurl }}/assets/images/azazel-banner.png" alt="Azazel System Banner" />
   <p class="az-badges">
     <a href="https://github.com/01rabbit/Azazel-Edge/releases"><img alt="Azazel-Edge release" src="https://img.shields.io/github/v/release/01rabbit/Azazel-Edge?display_name=tag&label=Azazel-Edge&color=00c2d7"></a>
@@ -54,8 +54,8 @@ nav_exclude: false
   <section class="az-card">
     <h2>Implementations</h2>
     <ul>
-      <li><a href="https://github.com/01rabbit/Azazel-Edge">Azazel-Edge</a></li>
-      <li><a href="https://github.com/01rabbit/Azazel-Gadget">Azazel-Gadget</a></li>
+      <li><a href="https://github.com/01rabbit/Azazel-Edge">Azazel-Edge (form namespace)</a></li>
+      <li><a href="https://github.com/01rabbit/Azazel-Gadget">Azazel-Gadget (form namespace)</a></li>
     </ul>
   </section>
   <section class="az-card">

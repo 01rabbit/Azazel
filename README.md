@@ -1,5 +1,4 @@
-# Azazel System
-Cyber Scapegoat Gateway
+# Azazel-<Form> <Role> - Cyber Scapegoat Gateway
 
 ![Azazel System Banner](docs/assets/images/azazel-banner.png)
 
@@ -10,7 +9,7 @@ Cyber Scapegoat Gateway
 [![Azazel-Edge release date](https://img.shields.io/github/release-date/01rabbit/Azazel-Edge?label=Azazel-Edge%20updated)](https://github.com/01rabbit/Azazel-Edge/releases)
 [![Azazel-Gadget release date](https://img.shields.io/github/release-date/01rabbit/Azazel-Gadget?label=Azazel-Gadget%20updated)](https://github.com/01rabbit/Azazel-Gadget/releases)
 
-Azazel System is a cyber defense doctrine and tool family built around one principle: do not merely block the attacker; bind them, slow them, observe them, and buy time.
+Azazel is a cyber defense doctrine and tool family built around one principle: do not merely block the attacker; bind them, slow them, observe them, and buy time.
 
 It applies delaying action to cyberspace through detection, deterministic decision loops, controlled friction, and selective redirection toward decoys.
 
@@ -47,7 +46,11 @@ See also: [Deterministic Defense](docs/concepts/deterministic-defense.md) | [Off
 |---|---|---|---|
 | [Azazel-Edge](https://github.com/01rabbit/Azazel-Edge) | Azazel-Pi | Field-deployable edge SOC/NOC and scapegoat gateway | Raspberry Pi 5 / edge networks |
 | [Azazel-Gadget](https://github.com/01rabbit/Azazel-Gadget) | Azazel-Zero | Portable tactical defense on untrusted Wi-Fi | Raspberry Pi Zero 2 W / personal use |
-| Azazel System (this repository) | - | Doctrine, architecture, naming, and product-family entry point | Cross-repository |
+| Azazel (this repository) | Legacy doctrine hub | Doctrine, architecture, naming, and product-family entry point | Cross-repository |
+
+Legacy alias mapping: `Azazel-Pi -> Azazel-Edge (formerly)`, `Azazel-Zero -> Azazel-Gadget (formerly)`, `Azazel-USB -> Azazel-Boot (same meaning)`.
+
+Naming rule summary: formal names use `Azazel-<Form> <Role>`, and external presentation should prefer `Azazel-<Form> <Role> - Cyber Scapegoat Gateway`.
 
 ## Which Repository Should I Read?
 
@@ -55,7 +58,7 @@ See also: [Deterministic Defense](docs/concepts/deterministic-defense.md) | [Off
 - Read [Azazel-Edge](https://github.com/01rabbit/Azazel-Edge) for edge SOC/NOC gateway implementation.
 - Read [Azazel-Gadget](https://github.com/01rabbit/Azazel-Gadget) for personal tactical device implementation.
 
-Azazel System is the doctrine. Azazel-Edge and Azazel-Gadget are concrete implementations of that doctrine.
+Azazel is the doctrine. Azazel-Edge and Azazel-Gadget are concrete implementations of that doctrine.
 
 ## Documentation Map
 

@@ -8,7 +8,7 @@ nav_exclude: false
 
 Back to: [README](../../README.md) | Related: [Product Map](product-map.md)
 
-Azazel System doctrine is implemented through multiple product variants.
+Azazel doctrine is implemented through multiple product variants under the `Azazel-<Form> <Role>` naming convention.
 
 - [Azazel-Edge](azazel-edge.md)
 - [Azazel-Gadget](azazel-gadget.md)

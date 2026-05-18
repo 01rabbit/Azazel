@@ -8,7 +8,7 @@ nav_exclude: false
 
 Back to: [README](../../README.md) | Next: [Delaying Action](delaying-action.md)
 
-This section defines the doctrinal core of Azazel System.
+This section defines the doctrinal core of Azazel.
 
 - [Delaying Action](delaying-action.md)
 - [Cyber Scapegoat Gateway](cyber-scapegoat-gateway.md)

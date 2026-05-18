@@ -8,7 +8,7 @@ nav_exclude: false
 
 Back to: [README](../../README.md) | Related: [Products](../products/README.md)
 
-Azazel System defines a defense doctrine centered on active control of attacker tempo.
+Azazel defines a defense doctrine centered on active control of attacker tempo.
 
 Core loop:
 

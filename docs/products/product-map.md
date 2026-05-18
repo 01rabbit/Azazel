@@ -4,14 +4,16 @@ Back to: [Products Index](README.md) | Related: [Naming Convention](../specs/nam
 
 ## Doctrine to Implementation
 
-- **Doctrine layer:** Azazel System ([README](../../README.md))
+- **Doctrine layer:** Azazel naming and doctrine hub ([README](../../README.md))
 - **Implementation layer:** [Azazel-Edge](https://github.com/01rabbit/Azazel-Edge), [Azazel-Gadget](https://github.com/01rabbit/Azazel-Gadget)
 
 ## Positioning
 
-Azazel System is the doctrine.
+Azazel is the doctrine.
 
 Azazel-Edge and Azazel-Gadget are concrete implementation variants optimized for different operational contexts.
+
+Formal naming for externally presented products follows `Azazel-<Form> <Role> - Cyber Scapegoat Gateway`.
 
 ## Selection Guide
 

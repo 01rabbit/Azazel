@@ -1,5 +1,5 @@
 ---
-title: Azazel System（日本語）
+title: Azazel（日本語）
 nav_exclude: true
 ---
 
@@ -7,7 +7,7 @@ nav_exclude: true
   <p class="az-lang"><a href="{{ site.baseurl }}/">English</a> | <a href="{{ site.baseurl }}/index_ja">日本語</a></p>
   <p class="az-kicker">Cyber Scapegoat Gateway</p>
   <h1>思想を先に、制御を常に。</h1>
-  <p class="az-lead">Azazel Systemは、サイバー空間に遅滞行動を適用する防御思想とツール群です。決定論的なローカル判断を軸に、観測可能性と対処時間を確保します。</p>
+  <p class="az-lead">Azazelは命名規則 <code>Azazel-&lt;Form&gt; &lt;Role&gt;</code> を採用し、決定論的なローカル判断を軸に、サイバー空間で遅滞行動を実装します。</p>
   <img src="{{ site.baseurl }}/assets/images/azazel-banner.png" alt="Azazel System Banner" />
   <p class="az-badges">
     <a href="https://github.com/01rabbit/Azazel-Edge/releases"><img alt="Azazel-Edge release" src="https://img.shields.io/github/v/release/01rabbit/Azazel-Edge?display_name=tag&label=Azazel-Edge&color=00c2d7"></a>
