@@ -15,13 +15,22 @@ Originating from the concept of *delaying action* in active cyber defense.
 - **Azazel-Gadget** (formerly **Azazel-Zero**, AZ-02): Portable surrogate gateway for personal and mobile defense  
 
 Developed and maintained by **Makoto SUGITA (Mr. Rabbit)**  
-Selected presentations:
+Presentations (Azazel System series):
 
-- 2025 — Presented at 🇯🇵 **BSides Tokyo**
-- 2025 — Presented at 🇺🇸 **BSides Las Vegas**
-- 2025 — Presented at 🇺🇸 **Black Hat USA Arsenal**
-- 2025 — Presented at 🇨🇦 **SecTor Arsenal**
-- 2025 — Presented at 🇯🇵 **CODE BLUE Bluebox**
+### 2026
+
+- 🇸🇬 **Black Hat Asia Arsenal** - Azazel-Pi
+- 🇯🇵 **CODE BLUE CyberTAMAGO** - Azazel-Gadget
+
+### 2025
+
+- 🇯🇵 **BSides Tokyo** - Azazel System (Azazel-Pi transition phase)
+- 🇺🇸 **BSides Las Vegas** - Azazel System
+- 🇺🇸 **Black Hat USA Arsenal** - Azazel System (Azazel-Pi transition phase)
+- 🇨🇦 **SecTor Arsenal** - Azazel System (Azazel-Pi transition phase)
+- 🇯🇵 **CODE BLUE CyberTAMAGO** - Azazel Series
+- 🇯🇵 **CODE BLUE Bluebox** - Azazel-Pi
+- 🇯🇵 **AVTOKYO HIVE** - Azazel-Pi
 
 ---
 
