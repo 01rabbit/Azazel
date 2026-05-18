@@ -17,10 +17,11 @@ Originating from the concept of *delaying action* in active cyber defense.
 Developed and maintained by **Makoto SUGITA (Mr. Rabbit)**  
 Selected presentations:
 
-- 2026 — Presented at 🇸🇬 **Black Hat Asia Arsenal**
-- 2026 — Accepted for 🇺🇸 **Black Hat USA Arsenal**
+- 2025 — Presented at 🇯🇵 **BSides Tokyo**
+- 2025 — Presented at 🇺🇸 **BSides Las Vegas**
+- 2025 — Presented at 🇺🇸 **Black Hat USA Arsenal**
+- 2025 — Presented at 🇨🇦 **SecTor Arsenal**
 - 2025 — Presented at 🇯🇵 **CODE BLUE Bluebox**
-- 2025 — Presented at 🇺🇸 **BSides Las Vegas** and 🇨🇦 **SecTor Canada**
 
 ---
 
@@ -44,7 +45,7 @@ Special thanks to:
 
 ---
 
-© 2025 Makoto SUGITA (Mr. Rabbit).
+© 2025-2026 Makoto SUGITA (Mr. Rabbit).
 
 License by repository:
 
