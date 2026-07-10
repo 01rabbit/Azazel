@@ -4,6 +4,8 @@ Back to: [Products Index](README.md) | Related: [Deterministic Defense](../conce
 
 Repository: [01rabbit/Azazel-Edge](https://github.com/01rabbit/Azazel-Edge)
 
+Development codename: `SENTINEL` (see [Naming Convention](../specs/naming.md)).
+
 Formerly known as `Azazel-Pi`.
 
 ## Role

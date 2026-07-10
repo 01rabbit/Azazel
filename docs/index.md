@@ -40,6 +40,8 @@ nav_exclude: false
       <li><code>01rabbit/Azazel</code>: doctrine, philosophy, naming, architecture</li>
       <li><code>01rabbit/Azazel-Edge</code>: field-deployable edge SOC/NOC gateway</li>
       <li><code>01rabbit/Azazel-Gadget</code>: portable tactical defense on untrusted Wi-Fi</li>
+      <li><code>01rabbit/Azazel-Knowledge</code> (AZ-04, formerly Azazel-CTI): advisory-only tactical CTI node, <code>Azazel-Knowledge Advisor</code>; never commands the edge</li>
+      <li><code>01rabbit/Azazel-Fabric</code> (AZ-05, formerly Azazel-Common): shared contracts library for the series, <code>Azazel-Fabric Contract</code></li>
     </ul>
   </section>
   <section class="az-card">
@@ -56,6 +58,8 @@ nav_exclude: false
     <ul>
       <li><a href="https://github.com/01rabbit/Azazel-Edge">Azazel-Edge (form namespace)</a></li>
       <li><a href="https://github.com/01rabbit/Azazel-Gadget">Azazel-Gadget (form namespace)</a></li>
+      <li><a href="https://github.com/01rabbit/Azazel-Knowledge">Azazel-Knowledge Advisor (AZ-04, formerly Azazel-CTI)</a></li>
+      <li><a href="https://github.com/01rabbit/Azazel-Fabric">Azazel-Fabric Contract (AZ-05, shared contracts, formerly Azazel-Common)</a></li>
     </ul>
   </section>
   <section class="az-card">
@@ -64,6 +68,8 @@ nav_exclude: false
       <li><code>Azazel</code>: Apache-2.0</li>
       <li><code>Azazel-Edge</code>: MIT</li>
       <li><code>Azazel-Gadget</code>: MIT</li>
+      <li><code>Azazel-Knowledge</code>: MIT</li>
+      <li><code>Azazel-Fabric</code>: TBD</li>
     </ul>
   </section>
 </div>

@@ -4,6 +4,8 @@ Back to: [Products Index](README.md) | Related: [Offline Edge Defense](../concep
 
 Repository: [01rabbit/Azazel-Gadget](https://github.com/01rabbit/Azazel-Gadget)
 
+Development codename: `TACMOD` (see [Naming Convention](../specs/naming.md)).
+
 Formerly known as `Azazel-Zero`.
 
 ## Role
