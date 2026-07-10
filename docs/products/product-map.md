@@ -6,8 +6,8 @@ Back to: [Products Index](README.md) | Related: [Naming Convention](../specs/nam
 
 - **Doctrine layer:** Azazel naming and doctrine hub ([README](../../README.md))
 - **Implementation layer:** [Azazel-Edge](https://github.com/01rabbit/Azazel-Edge), [Azazel-Gadget](https://github.com/01rabbit/Azazel-Gadget)
-- **Knowledge / advisory plane:** [Azazel-Grimoire Advisor](https://github.com/01rabbit/Azazel-Grimoire) (AZ-04, formerly Azazel-CTI) — an optional, advisory-only CTI node that enriches edge decisions without holding authority
-- **Contracts layer:** [Azazel-Covenant](https://github.com/01rabbit/Azazel-Covenant) (AZ-05, formerly Azazel-Common) — the shared contracts library the series speaks, not a decision core
+- **Knowledge / advisory plane:** [Azazel-Knowledge Advisor](https://github.com/01rabbit/Azazel-Knowledge) (AZ-04, formerly Azazel-CTI) — an optional, advisory-only CTI node that enriches edge decisions without holding authority
+- **Contracts layer:** [Azazel-Fabric Contract](https://github.com/01rabbit/Azazel-Fabric) (AZ-05, formerly Azazel-Common) — the shared contracts library the series speaks, not a decision core
 
 ## Positioning
 
@@ -15,7 +15,9 @@ Azazel is the doctrine.
 
 Azazel-Edge and Azazel-Gadget are concrete implementation variants optimized for different operational contexts.
 
-Azazel-Grimoire Advisor and Azazel-Covenant are complements to the appliances, not alternatives to them: the CTI node advises the deterministic edge, and Azazel-Covenant supplies the shared contracts that let the series interoperate.
+Edge, Gadget, and Boot are the defensive deployment classes; Fabric and Knowledge are the support classes that make the Azazel System work as a series.
+
+Azazel-Knowledge Advisor and Azazel-Fabric Contract are complements to the appliances, not alternatives to them: the CTI node advises the deterministic edge, and Azazel-Fabric Contract supplies the shared contracts that let the series interoperate.
 
 Formal naming for externally presented products follows `Azazel-<Form> <Role> - Cyber Scapegoat Gateway`.
 
@@ -23,6 +25,6 @@ Formal naming for externally presented products follows `Azazel-<Form> <Role> - 
 
 - Choose **Azazel-Edge** for edge SOC/NOC and field gateway operations.
 - Choose **Azazel-Gadget** for personal tactical defense on untrusted Wi-Fi.
-- Add **Azazel-Grimoire Advisor** when you want an optional, advisory-only knowledge plane that enriches edge decisions with deterministic threat context. It never commands, and the edge stays fully functional if it is absent, slow, or wrong.
-- Reach for **Azazel-Covenant** when you are building on the series and need the shared contracts layer; it is the common language, not a decision core.
+- Add **Azazel-Knowledge Advisor** when you want an optional, advisory-only knowledge plane that enriches edge decisions with deterministic threat context. It never commands, and the edge stays fully functional if it is absent, slow, or wrong.
+- Reach for **Azazel-Fabric Contract** when you are building on the series and need the shared contracts layer; it is the common language, not a decision core.
 - Read this repository when you need naming, philosophy, architecture framing, and cross-product doctrine.

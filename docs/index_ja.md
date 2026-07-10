@@ -26,8 +26,8 @@ nav_exclude: true
       <li><code>01rabbit/Azazel</code>: 思想、命名、アーキテクチャの母艦</li>
       <li><code>01rabbit/Azazel-Edge</code>: フィールド向けエッジSOC/NOC実装</li>
       <li><code>01rabbit/Azazel-Gadget</code>: 可搬型の個人向け戦術防御実装</li>
-      <li><code>01rabbit/Azazel-Grimoire</code>(AZ-04、旧称 Azazel-CTI): 助言専用の戦術CTIノード「Azazel-Grimoire Advisor」。Edgeに命令はしない</li>
-      <li><code>01rabbit/Azazel-Covenant</code>(AZ-05、旧称 Azazel-Common): シリーズ共有の契約ライブラリ</li>
+      <li><code>01rabbit/Azazel-Knowledge</code>(AZ-04、旧称 Azazel-CTI): 助言専用の戦術CTIノード「Azazel-Knowledge Advisor」。Edgeに命令はしない</li>
+      <li><code>01rabbit/Azazel-Fabric</code>(AZ-05、旧称 Azazel-Common): シリーズ共有の契約ライブラリ「Azazel-Fabric Contract」</li>
     </ul>
   </section>
   <section class="az-card">
@@ -44,8 +44,8 @@ nav_exclude: true
     <ul>
       <li><a href="https://github.com/01rabbit/Azazel-Edge">Azazel-Edge</a></li>
       <li><a href="https://github.com/01rabbit/Azazel-Gadget">Azazel-Gadget</a></li>
-      <li><a href="https://github.com/01rabbit/Azazel-Grimoire">Azazel-Grimoire Advisor(AZ-04、旧称 Azazel-CTI)</a></li>
-      <li><a href="https://github.com/01rabbit/Azazel-Covenant">Azazel-Covenant(AZ-05、共有契約、旧称 Azazel-Common)</a></li>
+      <li><a href="https://github.com/01rabbit/Azazel-Knowledge">Azazel-Knowledge Advisor(AZ-04、旧称 Azazel-CTI)</a></li>
+      <li><a href="https://github.com/01rabbit/Azazel-Fabric">Azazel-Fabric Contract(AZ-05、共有契約、旧称 Azazel-Common)</a></li>
     </ul>
   </section>
   <section class="az-card">
@@ -54,8 +54,8 @@ nav_exclude: true
       <li><code>Azazel</code>: Apache-2.0</li>
       <li><code>Azazel-Edge</code>: MIT</li>
       <li><code>Azazel-Gadget</code>: MIT</li>
-      <li><code>Azazel-Grimoire</code>: MIT</li>
-      <li><code>Azazel-Covenant</code>: TBD</li>
+      <li><code>Azazel-Knowledge</code>: MIT</li>
+      <li><code>Azazel-Fabric</code>: TBD</li>
     </ul>
   </section>
 </div>

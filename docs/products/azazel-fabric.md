@@ -1,12 +1,16 @@
-# Azazel-Covenant
+# Azazel-Fabric Contract
 
 Back to: [Products Index](README.md) | Related: [Naming Convention](../specs/naming.md)
 
-Repository: [01rabbit/Azazel-Covenant](https://github.com/01rabbit/Azazel-Covenant)
+Repository: [01rabbit/Azazel-Fabric](https://github.com/01rabbit/Azazel-Fabric)
 
-Formal series designation: **`Azazel-Covenant`** (library repository, no Role suffix), series number **AZ-05**. Formerly `Azazel-Common`; see [Naming Convention](../specs/naming.md) for the ratified decision.
+Development codename: **Covenant** — the binding agreement the series' products sign. Codenames are used for changelogs, release names, and milestones, never in formal external naming (see [Naming Convention](../specs/naming.md)).
 
-A covenant is a binding agreement — precisely what a contracts library holds, and the register matches the Leviticus origin of the series name.
+Formal series designation: **`Azazel-Fabric Contract`**, series number **AZ-05**. Formerly `Azazel-Common`; see [Naming Convention](../specs/naming.md) for the ratified decision.
+
+Subtitle: **Shared contracts and interoperability foundation for the Azazel System**.
+
+Azazel-Fabric holds the shared schemas, state representations, and exchange contracts — the series' common language. It is deliberately not a decision core; "Core" was avoided so it cannot be mistaken for an execution center above the arbiter.
 
 ## Role
 
@@ -28,11 +32,11 @@ The shared contracts library for the Azazel series — the common language spoke
 
 - **Azazel-Gadget**: consuming it in production, pinned to v0.2.0 (emits and reads `StatusView`).
 - **Azazel-Edge**: design-stage adapter plan only.
-- **Azazel-Grimoire Advisor**: adoption not yet decided.
+- **Azazel-Knowledge Advisor**: adoption not yet decided.
 
 ## Package and License
 
-- Distribution name `azazel-covenant`, import as `azazel_covenant` (from v0.3.0; the v0.1.0/v0.2.0 tags keep the former `azazel-common` / `azazel_common` identifiers). Latest tagged release: v0.2.0.
+- Distribution name `azazel-fabric`, import as `azazel_fabric` (from v0.3.0; the v0.1.0/v0.2.0 tags keep the former `azazel-common` / `azazel_common` identifiers). Latest tagged release: v0.2.0.
 - License: TBD (no LICENSE file yet).
 
 See also: [Product Map](product-map.md) | [Naming Convention](../specs/naming.md)

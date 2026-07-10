@@ -14,4 +14,4 @@ nav_exclude: false
 
 Core profiles: **medical / ops / public / suspect**. Modes: **Portal / Shield / Lockdown** with windowed thresholds and timed unlocks.
 
-An optional advisory CTI node ([Azazel-Grimoire Advisor](https://github.com/01rabbit/Azazel-Grimoire), AZ-04, formerly Azazel-CTI) can enrich the correlator and policy engine with deterministic threat context, confidence, and recommendations. It only advises: final authority stays with the deterministic arbiter, and the pipeline remains fully functional if the node is absent, slow, or wrong.
+An optional advisory CTI node ([Azazel-Knowledge Advisor](https://github.com/01rabbit/Azazel-Knowledge), AZ-04, formerly Azazel-CTI) can enrich the correlator and policy engine with deterministic threat context, confidence, and recommendations. It only advises: final authority stays with the deterministic arbiter, and the pipeline remains fully functional if the node is absent, slow, or wrong.

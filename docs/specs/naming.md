@@ -25,30 +25,24 @@ Recommended external format:
 - `Gadget`: USB gadget direct-connect class (smallest and most portable form).
 - `Edge`: resident edge class for boundary operation on SBC/miniPC hardware.
 - `Boot`: bootable rapid-response class (portable USB boot operation).
-- `Grimoire`: knowledge-node class — the series' accumulated record of threats
-  and reactions. A grimoire never casts its own spells: the reader (Azazel-Edge's
-  deterministic arbiter) decides. Likewise this node's generated detection
-  rules are drafts it never deploys.
+- `Fabric`: cross-product interoperability and shared-contract class.
+- `Knowledge`: resident threat-knowledge and intelligence-support class.
 
 ## Role Vocabulary
 
 - `Gateway`: boundary gateway for multiple endpoints or small networks.
 - `Shield`: forward defensive layer for a single user or endpoint.
 - `Probe`: observation and measurement focused role with minimal control.
-- `Advisor`: advisory intelligence role — returns context, confidence, reasons,
-  and recommendations; holds no command authority.
+- `Advisor`: advisory knowledge provider without enforcement authority.
+- `Contract`: shared schemas, interfaces, and interoperability definitions.
 
 Do not introduce extra Form or Role words without updating this specification first.
 
-## Library Repositories
-
-Repositories that are libraries rather than deployable appliances take the
-form `Azazel-<Name>` with **no Role suffix** — forcing a Form/Role pair onto a
-library would dilute both vocabularies.
-
-- `Covenant`: the shared contracts library for the series. A covenant is a
-  binding agreement, which is precisely what a contracts library holds, and
-  the register matches the Leviticus origin of the series name.
+Edge, Gadget, and Boot are the defensive deployment classes; Fabric and
+Knowledge are the support classes that make the Azazel System work as a
+series. With `Fabric Contract`, every product now follows the uniform
+`Azazel-<Form> <Role>` grammar — there is no longer a library-repository
+exception.
 
 ## AZ Numbering
 
@@ -61,16 +55,16 @@ Current assignments:
 - `AZ-01`: Azazel-Edge
 - `AZ-02`: Azazel-Gadget
 - `AZ-03`: Azazel-Boot (reserved)
-- `AZ-04`: Azazel-Grimoire Advisor
-- `AZ-05`: Azazel-Covenant
+- `AZ-04`: Azazel-Knowledge Advisor
+- `AZ-05`: Azazel-Fabric Contract
 
 ## Legacy Name Mapping
 
 - `Azazel-Pi` -> `Azazel-Edge` (formerly)
 - `Azazel-Zero` -> `Azazel-Gadget` (formerly)
 - `Azazel-USB` -> `Azazel-Boot` (same meaning)
-- `Azazel-CTI` -> `Azazel-Grimoire` (formerly, working name)
-- `Azazel-Common` -> `Azazel-Covenant` (formerly)
+- `Azazel-CTI` -> `Azazel-Knowledge` (formerly, working name)
+- `Azazel-Common` -> `Azazel-Fabric` (formerly)
 
 Use legacy names only when migration context is required.
 
@@ -79,23 +73,40 @@ Use legacy names only when migration context is required.
 The owner ratified two series designations on 2026-07-10 (ADR-0001 for the CTI
 node records the same decision):
 
-- CTI node: repository `01rabbit/Azazel-Grimoire`, formal name
-  **`Azazel-Grimoire Advisor`**, series number `AZ-04`. Formerly `Azazel-CTI`
+- CTI node: repository `01rabbit/Azazel-Knowledge`, formal name
+  **`Azazel-Knowledge Advisor`**, series number `AZ-04`. Formerly `Azazel-CTI`
   (working name).
-- Contracts library: repository `01rabbit/Azazel-Covenant`, formal name
-  **`Azazel-Covenant`** (no Role suffix; see Library Repositories above),
-  series number `AZ-05`. Formerly `Azazel-Common`.
+- Contracts library: repository `01rabbit/Azazel-Fabric`, formal name
+  **`Azazel-Fabric Contract`**, series number `AZ-05`. Formerly
+  `Azazel-Common`.
 
-The vocabulary these designations introduce (`Grimoire`, `Advisor`,
-`Covenant`) now lives in the Form Vocabulary, Role Vocabulary, and Library
-Repositories sections above.
+The vocabulary these designations introduce (`Knowledge`, `Advisor`,
+`Fabric`, `Contract`) now lives in the Form Vocabulary and Role Vocabulary
+sections above. Interim candidates (Azazel-Grimoire Advisor,
+Azazel-Covenant) were considered and superseded the same day, before
+adoption; `Grimoire` and `Covenant` were retained as the two products'
+development codenames (see Codenames).
+
+## Codenames
+
+A product may carry a development codename, used for changelogs, release
+names, and internal milestones. Codenames never appear in formal external
+naming — the `Azazel-<Form> <Role>` line above is canonical.
+
+- `AZ-04` Azazel-Knowledge Advisor — codename **Grimoire**: the accumulated
+  book of threats. A grimoire never casts its own spells — the node drafts
+  detection rules but never deploys them; the reader (Azazel-Edge's
+  deterministic arbiter) decides.
+- `AZ-05` Azazel-Fabric Contract — codename **Covenant**: the binding
+  agreement the series' products sign.
 
 ## Naming Examples
 
 - `Azazel-Edge Gateway`
 - `Azazel-Gadget Shield`
 - `Azazel-Boot Probe`
-- `Azazel-Grimoire Advisor`
+- `Azazel-Knowledge Advisor`
+- `Azazel-Fabric Contract`
 
 ## External Presentation Wording
 

@@ -1,12 +1,16 @@
-# Azazel-Grimoire Advisor
+# Azazel-Knowledge Advisor
 
 Back to: [Products Index](README.md) | Related: [Deterministic Defense](../concepts/deterministic-defense.md)
 
-Repository: [01rabbit/Azazel-Grimoire](https://github.com/01rabbit/Azazel-Grimoire)
+Repository: [01rabbit/Azazel-Knowledge](https://github.com/01rabbit/Azazel-Knowledge)
 
-Formal series designation: **`Azazel-Grimoire Advisor`**, series number **AZ-04**. Formerly `Azazel-CTI` (working name); see [Naming Convention](../specs/naming.md) for the ratified decision.
+Development codename: **Grimoire** — the accumulated book of threats; a grimoire never casts its own spells. Codenames are used for changelogs, release names, and milestones, never in formal external naming (see [Naming Convention](../specs/naming.md)).
 
-A grimoire never casts its own spells: this node holds the series' accumulated record of threats and reactions, but the reader — Azazel-Edge's deterministic arbiter — decides. Its generated detection rules are likewise drafts it never deploys.
+Formal series designation: **`Azazel-Knowledge Advisor`**, series number **AZ-04**. Formerly `Azazel-CTI` (working name); see [Naming Convention](../specs/naming.md) for the ratified decision.
+
+Subtitle: **On-Premises Tactical Threat Knowledge Advisor**.
+
+Azazel-Knowledge accumulates and correlates IOC, ATT&CK, attacker reactions, and behavioral patterns, and only advises: it never commands. Final authority always stays with Azazel-Edge's deterministic arbiter, which keeps working if the node is absent, slow, or wrong. Its generated detection rules are likewise drafts it never deploys.
 
 ## Role
 
