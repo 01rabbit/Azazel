@@ -13,6 +13,8 @@ Originating from the concept of *delaying action* in active cyber defense.
 
 - **Azazel-Edge** (formerly **Azazel-Pi**, AZ-01): Field-deployable SOC/NOC system for emergency and tactical environments  
 - **Azazel-Gadget** (formerly **Azazel-Zero**, AZ-02): Portable surrogate gateway for personal and mobile defense  
+- **Azazel-CTI** (working name): Advisory-only, deterministic on-premises tactical CTI node — it never commands, and the edge stays functional if it is absent, slow, or wrong  
+- **Azazel-Common**: Shared contracts library for the series — the common language, not a decision core  
 
 Developed and maintained by **Makoto SUGITA (Mr. Rabbit)**  
 Presentations (Azazel series):
@@ -61,3 +63,5 @@ License by repository:
 - **Azazel**: Apache-2.0
 - **Azazel-Edge**: MIT
 - **Azazel-Gadget**: MIT
+- **Azazel-CTI**: MIT
+- **Azazel-Common**: TBD

@@ -26,6 +26,8 @@ nav_exclude: true
       <li><code>01rabbit/Azazel</code>: 思想、命名、アーキテクチャの母艦</li>
       <li><code>01rabbit/Azazel-Edge</code>: フィールド向けエッジSOC/NOC実装</li>
       <li><code>01rabbit/Azazel-Gadget</code>: 可搬型の個人向け戦術防御実装</li>
+      <li><code>01rabbit/Azazel-CTI</code>(仮称): 助言専用の戦術CTIノード。Edgeに命令はしない</li>
+      <li><code>01rabbit/Azazel-Common</code>: シリーズ共有の契約ライブラリ</li>
     </ul>
   </section>
   <section class="az-card">
@@ -42,6 +44,8 @@ nav_exclude: true
     <ul>
       <li><a href="https://github.com/01rabbit/Azazel-Edge">Azazel-Edge</a></li>
       <li><a href="https://github.com/01rabbit/Azazel-Gadget">Azazel-Gadget</a></li>
+      <li><a href="https://github.com/01rabbit/Azazel-CTI">Azazel-CTI(仮称)</a></li>
+      <li><a href="https://github.com/01rabbit/Azazel-Common">Azazel-Common(共有契約)</a></li>
     </ul>
   </section>
   <section class="az-card">
@@ -50,6 +54,8 @@ nav_exclude: true
       <li><code>Azazel</code>: Apache-2.0</li>
       <li><code>Azazel-Edge</code>: MIT</li>
       <li><code>Azazel-Gadget</code>: MIT</li>
+      <li><code>Azazel-CTI</code>: MIT</li>
+      <li><code>Azazel-Common</code>: TBD</li>
     </ul>
   </section>
 </div>
