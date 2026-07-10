@@ -25,79 +25,77 @@ Recommended external format:
 - `Gadget`: USB gadget direct-connect class (smallest and most portable form).
 - `Edge`: resident edge class for boundary operation on SBC/miniPC hardware.
 - `Boot`: bootable rapid-response class (portable USB boot operation).
+- `Grimoire`: knowledge-node class — the series' accumulated record of threats
+  and reactions. A grimoire never casts its own spells: the reader (Azazel-Edge's
+  deterministic arbiter) decides. Likewise this node's generated detection
+  rules are drafts it never deploys.
 
 ## Role Vocabulary
 
 - `Gateway`: boundary gateway for multiple endpoints or small networks.
 - `Shield`: forward defensive layer for a single user or endpoint.
 - `Probe`: observation and measurement focused role with minimal control.
+- `Advisor`: advisory intelligence role — returns context, confidence, reasons,
+  and recommendations; holds no command authority.
 
 Do not introduce extra Form or Role words without updating this specification first.
+
+## Library Repositories
+
+Repositories that are libraries rather than deployable appliances take the
+form `Azazel-<Name>` with **no Role suffix** — forcing a Form/Role pair onto a
+library would dilute both vocabularies.
+
+- `Covenant`: the shared contracts library for the series. A covenant is a
+  binding agreement, which is precisely what a contracts library holds, and
+  the register matches the Leviticus origin of the series name.
+
+## AZ Numbering
+
+`AZ-xx` is a series accession number, assigned in the order a repository
+joined the Azazel series. It is not limited to appliance form factors; the
+knowledge-plane node and the contracts library carry numbers too.
+
+Current assignments:
+
+- `AZ-01`: Azazel-Edge
+- `AZ-02`: Azazel-Gadget
+- `AZ-03`: Azazel-Boot (reserved)
+- `AZ-04`: Azazel-Grimoire Advisor
+- `AZ-05`: Azazel-Covenant
 
 ## Legacy Name Mapping
 
 - `Azazel-Pi` -> `Azazel-Edge` (formerly)
 - `Azazel-Zero` -> `Azazel-Gadget` (formerly)
 - `Azazel-USB` -> `Azazel-Boot` (same meaning)
+- `Azazel-CTI` -> `Azazel-Grimoire` (formerly, working name)
+- `Azazel-Common` -> `Azazel-Covenant` (formerly)
 
 Use legacy names only when migration context is required.
 
-## Pending Designations
+## Ratified Designations (2026-07-10)
 
-Two series repositories exist without a formal `Azazel-<Form> <Role>` designation:
+The owner ratified two series designations on 2026-07-10 (ADR-0001 for the CTI
+node records the same decision):
 
-- `Azazel-CTI`: presented under a working name. Its ADR-0001 defers the formal series name.
-- `Azazel-Common`: the shared contracts library for the series.
+- CTI node: repository `01rabbit/Azazel-Grimoire`, formal name
+  **`Azazel-Grimoire Advisor`**, series number `AZ-04`. Formerly `Azazel-CTI`
+  (working name).
+- Contracts library: repository `01rabbit/Azazel-Covenant`, formal name
+  **`Azazel-Covenant`** (no Role suffix; see Library Repositories above),
+  series number `AZ-05`. Formerly `Azazel-Common`.
 
-The current Form vocabulary (`Gadget`, `Edge`, `Boot`) covers appliance form factors and does not yet cover a knowledge-plane node such as the CTI node, nor a contracts library. Formal designations for both are pending a spec extension. No new Form or Role words are introduced here; per the rule above, that requires updating this specification first.
-
-## Proposed Vocabulary Extension (draft — pending owner ratification)
-
-This section is a **proposal only**. Nothing below is a valid name until the
-owner ratifies it (for the CTI node, that decision is additionally recorded in
-its ADR-0001). Until then, external-facing text keeps the working names.
-
-### Proposed new vocabulary
-
-- Form `Keep` (proposed): resident companion knowledge-node class — an SBC that
-  stands *behind* the gateway and holds the series' records and threat
-  knowledge. The castle register matches the existing vocabulary: the `Gateway`
-  is the gatehouse; the keep is the stronghold where knowledge is kept.
-- Role `Oracle` (proposed): advisory intelligence role — answers questions with
-  context, confidence, reasons, and recommendations, and holds no command
-  authority. An oracle is consulted; it never commands.
-
-### Proposed designations
-
-- CTI node: repository `Azazel-Keep`, formal name **`Azazel-Keep Oracle`**.
-  Alternatives considered: `Azazel-Watch Oracle` (watchtower register; rejected
-  because the node analyzes stored knowledge rather than observing live
-  traffic), Role `Advisor` (plainer; kept as fallback if `Oracle` reads as too
-  authoritative).
-- Contracts library: repositories that are libraries rather than deployable
-  appliances take the form `Azazel-<Name>` with **no Role suffix** (forcing a
-  Form/Role pair onto a library would dilute both vocabularies). Recommended
-  name: **`Azazel-Covenant`** — a covenant is a binding agreement, which is
-  precisely what a contracts library holds, and the register matches the
-  Leviticus origin of the series name. Alternatives: `Azazel-Canon` (the
-  shared canon of schemas), or retaining `Azazel-Common` (explicitly
-  legitimate: it is honest, already deliberate — "Common", not "Core" — and a
-  rename has real cost since consumers pin the repository URL by git tag).
-
-### Migration cost note
-
-Renaming is not free: the CTI node's Python namespace (`azazel_cti`), CLI
-(`azctl`), systemd/container names, and the umbrella site would all move; the
-contracts library is pinned by URL from Azazel-Gadget's `requirements.txt`.
-Ratification should therefore be bundled with a migration checklist, and the
-legacy mapping section above extended (`Azazel-CTI -> Azazel-Keep (formerly)`,
-`Azazel-Common -> Azazel-Covenant (formerly)`) at switch time.
+The vocabulary these designations introduce (`Grimoire`, `Advisor`,
+`Covenant`) now lives in the Form Vocabulary, Role Vocabulary, and Library
+Repositories sections above.
 
 ## Naming Examples
 
 - `Azazel-Edge Gateway`
 - `Azazel-Gadget Shield`
 - `Azazel-Boot Probe`
+- `Azazel-Grimoire Advisor`
 
 ## External Presentation Wording
 

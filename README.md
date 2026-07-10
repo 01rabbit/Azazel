@@ -46,11 +46,11 @@ See also: [Deterministic Defense](docs/concepts/deterministic-defense.md) | [Off
 |---|---|---|---|
 | [Azazel-Edge](https://github.com/01rabbit/Azazel-Edge) | Azazel-Pi | Field-deployable edge SOC/NOC and scapegoat gateway | Raspberry Pi 5 / edge networks |
 | [Azazel-Gadget](https://github.com/01rabbit/Azazel-Gadget) | Azazel-Zero | Portable tactical defense on untrusted Wi-Fi | Raspberry Pi Zero 2 W / personal use |
-| [Azazel-CTI](https://github.com/01rabbit/Azazel-CTI) (working name) | — | Advisory-only tactical CTI node (never commands; edge stays functional if it is absent, slow, or wrong) | Raspberry Pi 4 / on-premises |
-| [Azazel-Common](https://github.com/01rabbit/Azazel-Common) | — | Shared contracts library for the series (common language, not a decision core) | Cross-repository |
+| [Azazel-Grimoire Advisor](https://github.com/01rabbit/Azazel-Grimoire) | Azazel-CTI | Advisory-only tactical CTI node (never commands; edge stays functional if it is absent, slow, or wrong) | Raspberry Pi 4 / on-premises |
+| [Azazel-Covenant](https://github.com/01rabbit/Azazel-Covenant) | Azazel-Common | Shared contracts library for the series (common language, not a decision core) | Cross-repository |
 | Azazel (this repository) | Legacy doctrine hub | Doctrine, architecture, naming, and product-family entry point | Cross-repository |
 
-Legacy alias mapping: `Azazel-Pi -> Azazel-Edge (formerly)`, `Azazel-Zero -> Azazel-Gadget (formerly)`, `Azazel-USB -> Azazel-Boot (same meaning)`.
+Legacy alias mapping: `Azazel-Pi -> Azazel-Edge (formerly)`, `Azazel-Zero -> Azazel-Gadget (formerly)`, `Azazel-USB -> Azazel-Boot (same meaning)`, `Azazel-CTI -> Azazel-Grimoire (formerly, working name)`, `Azazel-Common -> Azazel-Covenant (formerly)`.
 
 Naming rule summary: formal names use `Azazel-<Form> <Role>`, and external presentation should prefer `Azazel-<Form> <Role> - Cyber Scapegoat Gateway`.
 
@@ -82,13 +82,13 @@ Azazel is the doctrine. Azazel-Edge and Azazel-Gadget are concrete implementatio
 - `01rabbit/Azazel`: doctrine, philosophy, naming, and shared architecture
 - `01rabbit/Azazel-Edge`: field-deployable edge SOC/NOC gateway implementation
 - `01rabbit/Azazel-Gadget`: portable personal tactical defense implementation
-- `01rabbit/Azazel-CTI` (working name): advisory-only, deterministic on-premises tactical CTI node
-- `01rabbit/Azazel-Common`: shared contracts library for the series
+- `01rabbit/Azazel-Grimoire` (AZ-04, formerly Azazel-CTI): advisory-only, deterministic on-premises tactical CTI node, `Azazel-Grimoire Advisor`
+- `01rabbit/Azazel-Covenant` (AZ-05, formerly Azazel-Common): shared contracts library for the series
 
 ## License Matrix
 
 - `01rabbit/Azazel`: Apache-2.0
 - `01rabbit/Azazel-Edge`: MIT
 - `01rabbit/Azazel-Gadget`: MIT
-- `01rabbit/Azazel-CTI`: MIT
-- `01rabbit/Azazel-Common`: TBD
+- `01rabbit/Azazel-Grimoire`: MIT
+- `01rabbit/Azazel-Covenant`: TBD

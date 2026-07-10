@@ -40,8 +40,8 @@ nav_exclude: false
       <li><code>01rabbit/Azazel</code>: doctrine, philosophy, naming, architecture</li>
       <li><code>01rabbit/Azazel-Edge</code>: field-deployable edge SOC/NOC gateway</li>
       <li><code>01rabbit/Azazel-Gadget</code>: portable tactical defense on untrusted Wi-Fi</li>
-      <li><code>01rabbit/Azazel-CTI</code> (working name): advisory-only tactical CTI node; never commands the edge</li>
-      <li><code>01rabbit/Azazel-Common</code>: shared contracts library for the series</li>
+      <li><code>01rabbit/Azazel-Grimoire</code> (AZ-04, formerly Azazel-CTI): advisory-only tactical CTI node, <code>Azazel-Grimoire Advisor</code>; never commands the edge</li>
+      <li><code>01rabbit/Azazel-Covenant</code> (AZ-05, formerly Azazel-Common): shared contracts library for the series</li>
     </ul>
   </section>
   <section class="az-card">
@@ -58,8 +58,8 @@ nav_exclude: false
     <ul>
       <li><a href="https://github.com/01rabbit/Azazel-Edge">Azazel-Edge (form namespace)</a></li>
       <li><a href="https://github.com/01rabbit/Azazel-Gadget">Azazel-Gadget (form namespace)</a></li>
-      <li><a href="https://github.com/01rabbit/Azazel-CTI">Azazel-CTI (working name)</a></li>
-      <li><a href="https://github.com/01rabbit/Azazel-Common">Azazel-Common (shared contracts)</a></li>
+      <li><a href="https://github.com/01rabbit/Azazel-Grimoire">Azazel-Grimoire Advisor (AZ-04, formerly Azazel-CTI)</a></li>
+      <li><a href="https://github.com/01rabbit/Azazel-Covenant">Azazel-Covenant (AZ-05, shared contracts, formerly Azazel-Common)</a></li>
     </ul>
   </section>
   <section class="az-card">
@@ -68,8 +68,8 @@ nav_exclude: false
       <li><code>Azazel</code>: Apache-2.0</li>
       <li><code>Azazel-Edge</code>: MIT</li>
       <li><code>Azazel-Gadget</code>: MIT</li>
-      <li><code>Azazel-CTI</code>: MIT</li>
-      <li><code>Azazel-Common</code>: TBD</li>
+      <li><code>Azazel-Grimoire</code>: MIT</li>
+      <li><code>Azazel-Covenant</code>: TBD</li>
     </ul>
   </section>
 </div>

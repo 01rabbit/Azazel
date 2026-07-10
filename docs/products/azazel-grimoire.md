@@ -1,10 +1,12 @@
-# Azazel-CTI
+# Azazel-Grimoire Advisor
 
 Back to: [Products Index](README.md) | Related: [Deterministic Defense](../concepts/deterministic-defense.md)
 
-Repository: [01rabbit/Azazel-CTI](https://github.com/01rabbit/Azazel-CTI)
+Repository: [01rabbit/Azazel-Grimoire](https://github.com/01rabbit/Azazel-Grimoire)
 
-`Azazel-CTI` is a working name. Its ADR-0001 defers the formal series designation, so it is presented here under its working name until a naming spec extension lands. Formal series designation: pending.
+Formal series designation: **`Azazel-Grimoire Advisor`**, series number **AZ-04**. Formerly `Azazel-CTI` (working name); see [Naming Convention](../specs/naming.md) for the ratified decision.
+
+A grimoire never casts its own spells: this node holds the series' accumulated record of threats and reactions, but the reader — Azazel-Edge's deterministic arbiter — decides. Its generated detection rules are likewise drafts it never deploys.
 
 ## Role
 

@@ -1,10 +1,12 @@
-# Azazel-Common
+# Azazel-Covenant
 
 Back to: [Products Index](README.md) | Related: [Naming Convention](../specs/naming.md)
 
-Repository: [01rabbit/Azazel-Common](https://github.com/01rabbit/Azazel-Common)
+Repository: [01rabbit/Azazel-Covenant](https://github.com/01rabbit/Azazel-Covenant)
 
-Formal series designation: pending.
+Formal series designation: **`Azazel-Covenant`** (library repository, no Role suffix), series number **AZ-05**. Formerly `Azazel-Common`; see [Naming Convention](../specs/naming.md) for the ratified decision.
+
+A covenant is a binding agreement — precisely what a contracts library holds, and the register matches the Leviticus origin of the series name.
 
 ## Role
 
@@ -26,11 +28,11 @@ The shared contracts library for the Azazel series — the common language spoke
 
 - **Azazel-Gadget**: consuming it in production, pinned to v0.2.0 (emits and reads `StatusView`).
 - **Azazel-Edge**: design-stage adapter plan only.
-- **Azazel-CTI**: adoption not yet decided.
+- **Azazel-Grimoire Advisor**: adoption not yet decided.
 
 ## Package and License
 
-- Distribution name `azazel-common`, import as `azazel_common`; current release v0.2.0.
+- Distribution name `azazel-covenant`, import as `azazel_covenant` (from v0.3.0; the v0.1.0/v0.2.0 tags keep the former `azazel-common` / `azazel_common` identifiers). Latest tagged release: v0.2.0.
 - License: TBD (no LICENSE file yet).
 
 See also: [Product Map](product-map.md) | [Naming Convention](../specs/naming.md)

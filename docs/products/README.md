@@ -12,13 +12,13 @@ Azazel doctrine is implemented through multiple product variants under the `Azaz
 
 - [Azazel-Edge](azazel-edge.md)
 - [Azazel-Gadget](azazel-gadget.md)
-- [Azazel-CTI](azazel-cti.md) (working name)
-- [Azazel-Common](azazel-common.md)
+- [Azazel-Grimoire Advisor](azazel-grimoire.md)
+- [Azazel-Covenant](azazel-covenant.md)
 - [Conceptual Mapping](../concepts/system-overview.md)
 
 External repositories:
 
 - [01rabbit/Azazel-Edge](https://github.com/01rabbit/Azazel-Edge)
 - [01rabbit/Azazel-Gadget](https://github.com/01rabbit/Azazel-Gadget)
-- [01rabbit/Azazel-CTI](https://github.com/01rabbit/Azazel-CTI)
-- [01rabbit/Azazel-Common](https://github.com/01rabbit/Azazel-Common)
+- [01rabbit/Azazel-Grimoire](https://github.com/01rabbit/Azazel-Grimoire)
+- [01rabbit/Azazel-Covenant](https://github.com/01rabbit/Azazel-Covenant)
