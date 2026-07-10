@@ -51,6 +51,48 @@ Two series repositories exist without a formal `Azazel-<Form> <Role>` designatio
 
 The current Form vocabulary (`Gadget`, `Edge`, `Boot`) covers appliance form factors and does not yet cover a knowledge-plane node such as the CTI node, nor a contracts library. Formal designations for both are pending a spec extension. No new Form or Role words are introduced here; per the rule above, that requires updating this specification first.
 
+## Proposed Vocabulary Extension (draft — pending owner ratification)
+
+This section is a **proposal only**. Nothing below is a valid name until the
+owner ratifies it (for the CTI node, that decision is additionally recorded in
+its ADR-0001). Until then, external-facing text keeps the working names.
+
+### Proposed new vocabulary
+
+- Form `Keep` (proposed): resident companion knowledge-node class — an SBC that
+  stands *behind* the gateway and holds the series' records and threat
+  knowledge. The castle register matches the existing vocabulary: the `Gateway`
+  is the gatehouse; the keep is the stronghold where knowledge is kept.
+- Role `Oracle` (proposed): advisory intelligence role — answers questions with
+  context, confidence, reasons, and recommendations, and holds no command
+  authority. An oracle is consulted; it never commands.
+
+### Proposed designations
+
+- CTI node: repository `Azazel-Keep`, formal name **`Azazel-Keep Oracle`**.
+  Alternatives considered: `Azazel-Watch Oracle` (watchtower register; rejected
+  because the node analyzes stored knowledge rather than observing live
+  traffic), Role `Advisor` (plainer; kept as fallback if `Oracle` reads as too
+  authoritative).
+- Contracts library: repositories that are libraries rather than deployable
+  appliances take the form `Azazel-<Name>` with **no Role suffix** (forcing a
+  Form/Role pair onto a library would dilute both vocabularies). Recommended
+  name: **`Azazel-Covenant`** — a covenant is a binding agreement, which is
+  precisely what a contracts library holds, and the register matches the
+  Leviticus origin of the series name. Alternatives: `Azazel-Canon` (the
+  shared canon of schemas), or retaining `Azazel-Common` (explicitly
+  legitimate: it is honest, already deliberate — "Common", not "Core" — and a
+  rename has real cost since consumers pin the repository URL by git tag).
+
+### Migration cost note
+
+Renaming is not free: the CTI node's Python namespace (`azazel_cti`), CLI
+(`azctl`), systemd/container names, and the umbrella site would all move; the
+contracts library is pinned by URL from Azazel-Gadget's `requirements.txt`.
+Ratification should therefore be bundled with a migration checklist, and the
+legacy mapping section above extended (`Azazel-CTI -> Azazel-Keep (formerly)`,
+`Azazel-Common -> Azazel-Covenant (formerly)`) at switch time.
+
 ## Naming Examples
 
 - `Azazel-Edge Gateway`
