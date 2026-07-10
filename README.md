@@ -42,13 +42,16 @@ See also: [Deterministic Defense](docs/concepts/deterministic-defense.md) | [Off
 
 ## Tool Family
 
-| Project | Former Name | Role | Target |
-|---|---|---|---|
-| [Azazel-Edge](https://github.com/01rabbit/Azazel-Edge) | Azazel-Pi | Field-deployable edge SOC/NOC and scapegoat gateway | Raspberry Pi 5 / edge networks |
-| [Azazel-Gadget](https://github.com/01rabbit/Azazel-Gadget) | Azazel-Zero | Portable tactical defense on untrusted Wi-Fi | Raspberry Pi Zero 2 W / personal use |
-| [Azazel-Knowledge Advisor](https://github.com/01rabbit/Azazel-Knowledge) | Azazel-CTI | Advisory-only tactical CTI node (never commands; edge stays functional if it is absent, slow, or wrong) | Raspberry Pi 4 / on-premises |
-| [Azazel-Fabric Contract](https://github.com/01rabbit/Azazel-Fabric) | Azazel-Common | Shared contracts library for the series (common language, not a decision core) | Cross-repository |
-| Azazel (this repository) | Legacy doctrine hub | Doctrine, architecture, naming, and product-family entry point | Cross-repository |
+| Project | Designation | Codename | Former Name | Role | Target |
+|---|---|---|---|---|---|
+| [Azazel-Edge Gateway](https://github.com/01rabbit/Azazel-Edge) | AZ-01 | `SENTINEL` | Azazel-Pi | Field-deployable edge SOC/NOC and scapegoat gateway (deterministic arbiter) | Raspberry Pi 5 / edge networks |
+| [Azazel-Gadget Shield](https://github.com/01rabbit/Azazel-Gadget) | AZ-02 | `TACMOD` | Azazel-Zero | Portable tactical defense on untrusted Wi-Fi | Raspberry Pi Zero 2 W / personal use |
+| Azazel-Boot Probe | AZ-03 | — | Azazel-USB | Reserved bootable rapid-response class; no repository yet | Portable USB boot |
+| [Azazel-Knowledge Advisor](https://github.com/01rabbit/Azazel-Knowledge) | AZ-04 | `GRIMOIRE` | Azazel-CTI | Advisory-only tactical CTI node (never commands; the edge stays functional if it is absent, slow, or wrong) | Raspberry Pi 4 / on-premises |
+| [Azazel-Fabric Contract](https://github.com/01rabbit/Azazel-Fabric) | AZ-05 | `COVENANT` | Azazel-Common | Shared contracts library — the series' common language, not a decision core (`azazel_fabric`; Edge is the largest consumer, Gadget fully migrated) | Cross-repository |
+| Azazel (this repository) | — | — | — | Doctrine, architecture, naming, and product-family entry point | Cross-repository |
+
+Edge, Gadget, and Boot are the defensive deployment classes; Fabric and Knowledge are the support classes that make the Azazel System work as a series.
 
 Legacy alias mapping: `Azazel-Pi -> Azazel-Edge (formerly)`, `Azazel-Zero -> Azazel-Gadget (formerly)`, `Azazel-USB -> Azazel-Boot (same meaning)`, `Azazel-CTI -> Azazel-Knowledge (formerly, working name)`, `Azazel-Common -> Azazel-Fabric (formerly)`.
 
