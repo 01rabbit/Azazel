@@ -4,7 +4,7 @@ Back to: [Products Index](README.md) | Related: [Deterministic Defense](../conce
 
 Repository: [01rabbit/Azazel-Knowledge](https://github.com/01rabbit/Azazel-Knowledge)
 
-Development codename: **Grimoire** — the accumulated book of threats; a grimoire never casts its own spells. Codenames are used for changelogs, release names, and milestones, never in formal external naming (see [Naming Convention](../specs/naming.md)).
+Development codename: `GRIMOIRE` — the accumulated book of threats; a grimoire never casts its own spells. Codenames follow the series convention (see [Naming Convention](../specs/naming.md)) and never appear in formal external naming.
 
 Formal series designation: **`Azazel-Knowledge Advisor`**, series number **AZ-04**. Formerly `Azazel-CTI` (working name); see [Naming Convention](../specs/naming.md) for the ratified decision.
 

@@ -84,20 +84,27 @@ The vocabulary these designations introduce (`Knowledge`, `Advisor`,
 `Fabric`, `Contract`) now lives in the Form Vocabulary and Role Vocabulary
 sections above. Interim candidates (Azazel-Grimoire Advisor,
 Azazel-Covenant) were considered and superseded the same day, before
-adoption; `Grimoire` and `Covenant` were retained as the two products'
+adoption; `GRIMOIRE` and `COVENANT` were retained as the two products'
 development codenames (see Codenames).
 
 ## Codenames
 
-A product may carry a development codename, used for changelogs, release
-names, and internal milestones. Codenames never appear in formal external
-naming — the `Azazel-<Form> <Role>` line above is canonical.
+Each product may carry a development codename: a single uppercase word,
+shown in the repository README directly under the title as a
+`Codename:` blockquote, and used for changelogs, release names, and
+internal milestones. Codenames never appear in formal external naming — the
+`Azazel-<Form> <Role>` line above is canonical.
 
-- `AZ-04` Azazel-Knowledge Advisor — codename **Grimoire**: the accumulated
+Current assignments:
+
+- `AZ-01` Azazel-Edge Gateway — codename `SENTINEL`.
+- `AZ-02` Azazel-Gadget Shield — codename `TACMOD`.
+- `AZ-03` Azazel-Boot Probe — reserved, no codename yet.
+- `AZ-04` Azazel-Knowledge Advisor — codename `GRIMOIRE`: the accumulated
   book of threats. A grimoire never casts its own spells — the node drafts
   detection rules but never deploys them; the reader (Azazel-Edge's
   deterministic arbiter) decides.
-- `AZ-05` Azazel-Fabric Contract — codename **Covenant**: the binding
+- `AZ-05` Azazel-Fabric Contract — codename `COVENANT`: the binding
   agreement the series' products sign.
 
 ## Naming Examples
