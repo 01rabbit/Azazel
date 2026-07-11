@@ -6,8 +6,12 @@
 
 [![Azazel-Edge release](https://img.shields.io/github/v/release/01rabbit/Azazel-Edge?display_name=tag&label=Azazel-Edge&color=00c2d7)](https://github.com/01rabbit/Azazel-Edge/releases)
 [![Azazel-Gadget release](https://img.shields.io/github/v/release/01rabbit/Azazel-Gadget?display_name=tag&label=Azazel-Gadget&color=00c2d7)](https://github.com/01rabbit/Azazel-Gadget/releases)
+[![Azazel-Knowledge CI](https://img.shields.io/github/actions/workflow/status/01rabbit/Azazel-Knowledge/test.yml?label=Azazel-Knowledge%20CI)](https://github.com/01rabbit/Azazel-Knowledge/actions)
+[![Azazel-Fabric release](https://img.shields.io/github/v/release/01rabbit/Azazel-Fabric?display_name=tag&label=Azazel-Fabric&color=00c2d7)](https://github.com/01rabbit/Azazel-Fabric/releases)
 [![Azazel-Edge release date](https://img.shields.io/github/release-date/01rabbit/Azazel-Edge?label=Azazel-Edge%20updated)](https://github.com/01rabbit/Azazel-Edge/releases)
 [![Azazel-Gadget release date](https://img.shields.io/github/release-date/01rabbit/Azazel-Gadget?label=Azazel-Gadget%20updated)](https://github.com/01rabbit/Azazel-Gadget/releases)
+[![Azazel-Knowledge last commit](https://img.shields.io/github/last-commit/01rabbit/Azazel-Knowledge?label=Azazel-Knowledge%20updated)](https://github.com/01rabbit/Azazel-Knowledge/commits/main)
+[![Azazel-Fabric release date](https://img.shields.io/github/release-date/01rabbit/Azazel-Fabric?label=Azazel-Fabric%20updated)](https://github.com/01rabbit/Azazel-Fabric/releases)
 
 Azazel is a cyber defense doctrine and tool family built around one principle: do not merely block the attacker; bind them, slow them, observe them, and buy time.
 
@@ -72,6 +76,8 @@ Azazel is the doctrine. Azazel-Edge and Azazel-Gadget are concrete implementatio
 - [Products](docs/products/README.md)
 - [Naming and Terminology](docs/specs/naming.md)
 - [Existing Architecture Docs](docs/architecture/overview.md)
+- [Contributing](CONTRIBUTING.md)
+- [Security Policy](SECURITY.md)
 
 ## Conference / Arsenal Visitor Path
 
@@ -94,4 +100,4 @@ Azazel is the doctrine. Azazel-Edge and Azazel-Gadget are concrete implementatio
 - `01rabbit/Azazel-Edge`: MIT
 - `01rabbit/Azazel-Gadget`: MIT
 - `01rabbit/Azazel-Knowledge`: MIT
-- `01rabbit/Azazel-Fabric`: TBD
+- `01rabbit/Azazel-Fabric`: MIT

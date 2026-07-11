@@ -13,6 +13,8 @@ nav_exclude: false
   <p class="az-badges">
     <a href="https://github.com/01rabbit/Azazel-Edge/releases"><img alt="Azazel-Edge release" src="https://img.shields.io/github/v/release/01rabbit/Azazel-Edge?display_name=tag&label=Azazel-Edge&color=00c2d7"></a>
     <a href="https://github.com/01rabbit/Azazel-Gadget/releases"><img alt="Azazel-Gadget release" src="https://img.shields.io/github/v/release/01rabbit/Azazel-Gadget?display_name=tag&label=Azazel-Gadget&color=00c2d7"></a>
+    <a href="https://github.com/01rabbit/Azazel-Knowledge/actions"><img alt="Azazel-Knowledge CI" src="https://img.shields.io/github/actions/workflow/status/01rabbit/Azazel-Knowledge/test.yml?label=Azazel-Knowledge%20CI"></a>
+    <a href="https://github.com/01rabbit/Azazel-Fabric/releases"><img alt="Azazel-Fabric release" src="https://img.shields.io/github/v/release/01rabbit/Azazel-Fabric?display_name=tag&label=Azazel-Fabric&color=00c2d7"></a>
   </p>
   <div class="az-loop">
     <span class="az-loop-step">Detect</span>
@@ -69,7 +71,7 @@ nav_exclude: false
       <li><code>Azazel-Edge</code>: MIT</li>
       <li><code>Azazel-Gadget</code>: MIT</li>
       <li><code>Azazel-Knowledge</code>: MIT</li>
-      <li><code>Azazel-Fabric</code>: TBD</li>
+      <li><code>Azazel-Fabric</code>: MIT</li>
     </ul>
   </section>
 </div>

@@ -37,6 +37,6 @@ The shared contracts library for the Azazel series — the common language spoke
 ## Package and License
 
 - Distribution name `azazel-fabric`, import as `azazel_fabric` (from v0.3.0; the v0.1.0/v0.2.0 tags keep the former `azazel-common` / `azazel_common` identifiers). Latest tagged release: v0.3.0.
-- License: TBD (no LICENSE file yet).
+- License: MIT.
 
 See also: [Product Map](product-map.md) | [Naming Convention](../specs/naming.md)
