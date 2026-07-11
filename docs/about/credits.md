@@ -64,4 +64,4 @@ License by repository:
 - **Azazel-Edge**: MIT
 - **Azazel-Gadget**: MIT
 - **Azazel-Knowledge**: MIT
-- **Azazel-Fabric**: TBD
+- **Azazel-Fabric**: MIT
