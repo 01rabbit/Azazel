@@ -27,6 +27,7 @@ Recommended external format:
 - `Boot`: bootable rapid-response class (portable USB boot operation).
 - `Fabric`: cross-product interoperability and shared-contract class.
 - `Knowledge`: resident threat-knowledge and intelligence-support class.
+- `Deception`: portable engagement-environment execution class that materializes bounded attacker-facing deception packages without owning decision authority.
 
 ## Role Vocabulary
 
@@ -35,28 +36,30 @@ Recommended external format:
 - `Probe`: observation and measurement focused role with minimal control.
 - `Advisor`: advisory knowledge provider without enforcement authority.
 - `Contract`: shared schemas, interfaces, and interoperability definitions.
+- `Host`: execution host that materializes approved isolated environments and owns their local lifecycle, evidence export, and reset.
 
 Do not introduce extra Form or Role words without updating this specification first.
 
-Edge, Gadget, and Boot are the defensive deployment classes; Fabric and
-Knowledge are the support classes that make the Azazel System work as a
-series. With `Fabric Contract`, every product now follows the uniform
-`Azazel-<Form> <Role>` grammar — there is no longer a library-repository
-exception.
+Edge, Gadget, and Boot are defensive deployment classes. Deception is the
+attacker-facing engagement-environment execution class. Fabric and Knowledge
+are support classes that make the Azazel System work as a series. Every
+product follows the uniform `Azazel-<Form> <Role>` grammar.
 
 ## AZ Numbering
 
 `AZ-xx` is a series accession number, assigned in the order a repository
 joined the Azazel series. It is not limited to appliance form factors; the
-knowledge-plane node and the contracts library carry numbers too.
+knowledge-plane node, contracts library, and engagement-environment runtime
+carry numbers too.
 
 Current assignments:
 
-- `AZ-01`: Azazel-Edge
-- `AZ-02`: Azazel-Gadget
-- `AZ-03`: Azazel-Boot (reserved)
+- `AZ-01`: Azazel-Edge Gateway
+- `AZ-02`: Azazel-Gadget Shield
+- `AZ-03`: Azazel-Boot Probe (reserved)
 - `AZ-04`: Azazel-Knowledge Advisor
 - `AZ-05`: Azazel-Fabric Contract
+- `AZ-06`: Azazel-Deception Host
 
 ## Legacy Name Mapping
 
@@ -68,44 +71,44 @@ Current assignments:
 
 Use legacy names only when migration context is required.
 
-## Ratified Designations (2026-07-10)
+## Ratified Designations
 
-The owner ratified two series designations on 2026-07-10 (ADR-0001 for the CTI
-node records the same decision):
+### 2026-07-10
 
 - CTI node: repository `01rabbit/Azazel-Knowledge`, formal name
-  **`Azazel-Knowledge Advisor`**, series number `AZ-04`. Formerly `Azazel-CTI`
-  (working name).
+  **`Azazel-Knowledge Advisor`**, series number `AZ-04`. Formerly `Azazel-CTI`.
 - Contracts library: repository `01rabbit/Azazel-Fabric`, formal name
-  **`Azazel-Fabric Contract`**, series number `AZ-05`. Formerly
-  `Azazel-Common`.
+  **`Azazel-Fabric Contract`**, series number `AZ-05`. Formerly `Azazel-Common`.
 
-The vocabulary these designations introduce (`Knowledge`, `Advisor`,
-`Fabric`, `Contract`) now lives in the Form Vocabulary and Role Vocabulary
-sections above. Interim candidates (Azazel-Grimoire Advisor,
-Azazel-Covenant) were considered and superseded the same day, before
-adoption; `GRIMOIRE` and `COVENANT` were retained as the two products'
-development codenames (see Codenames).
+### 2026-08-13
+
+- Engagement-environment runtime: repository `01rabbit/Azazel-Deception`,
+  formal name **`Azazel-Deception Host`**, series number **`AZ-06`**,
+  codename **`THEATRE`**.
+- `Deception` and `Host` are ratified into the Form and Role vocabularies.
+- AZ-06 is a software/runtime class, not a Raspberry Pi-specific product.
+  OCI containers are the initial standard execution unit; Raspberry Pi 5 is
+  the minimum reference host for lightweight profiles, while ARM64/AMD64 and
+  larger x86 hosts provide portable scaling targets.
+- AZ-06 never becomes a second decision authority: Azazel-Edge remains the
+  final activation, routing, transition, budget, downgrade, and termination
+  authority.
 
 ## Codenames
 
 Each product may carry a development codename: a single uppercase word,
-shown in the repository README directly under the title as a
-`Codename:` blockquote, and used for changelogs, release names, and
-internal milestones. Codenames never appear in formal external naming — the
-`Azazel-<Form> <Role>` line above is canonical.
+shown in the repository README directly under the title as a `Codename:`
+block quote, and used for changelogs, release names, and internal milestones.
+Codenames never replace formal external naming.
 
 Current assignments:
 
 - `AZ-01` Azazel-Edge Gateway — codename `SENTINEL`.
 - `AZ-02` Azazel-Gadget Shield — codename `TACMOD`.
 - `AZ-03` Azazel-Boot Probe — reserved, no codename yet.
-- `AZ-04` Azazel-Knowledge Advisor — codename `GRIMOIRE`: the accumulated
-  book of threats. A grimoire never casts its own spells — the node drafts
-  detection rules but never deploys them; the reader (Azazel-Edge's
-  deterministic arbiter) decides.
-- `AZ-05` Azazel-Fabric Contract — codename `COVENANT`: the binding
-  agreement the series' products sign.
+- `AZ-04` Azazel-Knowledge Advisor — codename `GRIMOIRE`: the accumulated book of threats; it advises but never commands.
+- `AZ-05` Azazel-Fabric Contract — codename `COVENANT`: the binding agreement the series' products sign.
+- `AZ-06` Azazel-Deception Host — codename `THEATRE`: the controlled stage on which Edge-approved deception environments are materialized, observed, and reset.
 
 ## Naming Examples
 
@@ -114,6 +117,7 @@ Current assignments:
 - `Azazel-Boot Probe`
 - `Azazel-Knowledge Advisor`
 - `Azazel-Fabric Contract`
+- `Azazel-Deception Host`
 
 ## External Presentation Wording
 
@@ -121,10 +125,12 @@ Recommended wording for conference pages, repositories, and talks:
 
 - "Azazel uses the `Azazel-<Form> <Role>` naming convention."
 - "Use `Cyber Scapegoat Gateway` as the fixed external banner phrase."
-- "Azazel-Edge and Azazel-Gadget are concrete implementations of the doctrine."
-- "Azazel applies delaying action to cyberspace through detect, decide, delay, redirect, and observe loops."
+- "Azazel-Edge and Azazel-Gadget are concrete defensive implementations of the doctrine."
+- "Azazel-Deception Host is the container-first Engagement Environment Plane that materializes Edge-approved deception packages."
+- "Azazel applies delaying action to cyberspace through detect, decide, delay, redirect, observe, and bounded deception loops."
+- For MITRE Engage relationship claims, prefer `Engage-aligned` or `Engage-informed`; do not claim certification.
 
-Avoid vague claims. Prefer clear operational verbs: detect, decide, delay, redirect, observe, buy time.
+Avoid vague claims. Prefer clear operational verbs: detect, decide, delay, redirect, observe, materialize, reset, buy time.
 
 ## Restricted Terms
 
