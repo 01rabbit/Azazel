@@ -96,6 +96,8 @@ Bootstrap:
 7. stores runtime secrets outside every Git repository in `~/azazel-m5pro-lab/runtime.env` with mode `0600`;
 8. runs the M.I.O. shadow test set.
 
+The one-time Knowledge provisioning admin token is redacted from bootstrap output and is not persisted in lab logs. The generated scoped Edge development token is the only token retained in `runtime.env`.
+
 For the complete Knowledge and Deception unit suites:
 
 ```bash
@@ -124,11 +126,14 @@ There is no automatic cloud fallback.
 bash start-shadow-lab.sh
 ```
 
-Default loopback services:
+The launcher starts the Knowledge API **and its offline worker**. The worker drains local event/flow/reaction/deception-observation spools and can build local behavior state, but it is intentionally started without `--online`, so it performs no scheduled internet feed pulls.
 
-| Service | Endpoint | Authority |
+Default loopback services/processes:
+
+| Service/process | Endpoint | Authority |
 |---|---|---|
-| Azazel-Knowledge | `127.0.0.1:8070` | advisory-only |
+| Azazel-Knowledge API | `127.0.0.1:8070` | advisory-only |
+| Azazel-Knowledge worker | local state/spool | deterministic writer, offline feeds only |
 | Azazel-Deception | `127.0.0.1:8071` | shadow/replay, live disabled |
 | Ollama | `127.0.0.1:11434` | M.I.O. inference only |
 
@@ -180,7 +185,9 @@ The Raspberry Pi candidate is selected from measured results, not assumed from p
 
 ## 6. Knowledge integration target
 
-Knowledge already supports a local FastAPI surface and persists deterministic/advisory CTI state. The M.I.O. integration must remain:
+Knowledge already supports a local FastAPI surface and persists deterministic/advisory CTI state. The lab also runs the offline worker so event, reaction and deception-observation ingestion can be exercised without a Knowledge appliance.
+
+The M.I.O. integration must remain:
 
 ```text
 M.I.O. -> typed Knowledge query
