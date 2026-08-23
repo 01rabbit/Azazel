@@ -106,5 +106,5 @@ M.I.O. local-model replay (no Arbiter/enforcement):
     --playbook auth-ambiguity-v1 \\
     --endpoint "$AZAZEL_OLLAMA_ENDPOINT"
 
-Use stop-shadow-lab.sh to stop only the two processes started by this lab.
+The lab records only its own service PIDs under $PIDS. Stop those lab processes explicitly when finished; Docker/Ollama are external services and are not managed by this launcher.
 EOF
