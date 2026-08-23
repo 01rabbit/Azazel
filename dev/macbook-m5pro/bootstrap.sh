@@ -58,25 +58,28 @@ make_venv "$DECEPTION"
   .venv/bin/pip install -e '.[dev]'
 )
 
-KNOW_STATE="$STATE/knowledge"
-mkdir -p "$KNOW_STATE"
-if [[ ! -f "$KNOW_STATE/data/db/local.db" ]]; then
-  echo "[knowledge] provisioning isolated development state"
-  provision_log="$LOGS/knowledge-provision.log"
-  (
-    cd "$KNOW"
-    AZAZEL_ROOT="$KNOW_STATE" AZAZEL_CONFIG_DIR="$KNOW/config" .venv/bin/python ./azctl provision
-  ) | tee "$provision_log"
-  chmod 600 "$provision_log"
-fi
-
-# Reuse secrets across reruns. They live outside all Git repositories.
+# Load previously generated dev-only secrets before deciding whether they remain valid.
 if [[ -f "$RUNTIME_ENV" ]]; then
   # shellcheck disable=SC1090
   source "$RUNTIME_ENV"
 fi
 
-if [[ -z "${AZAZEL_KNOWLEDGE_TOKEN:-}" ]]; then
+KNOW_STATE="$STATE/knowledge"
+mkdir -p "$KNOW_STATE"
+NEW_KNOW_STATE=0
+if [[ ! -f "$KNOW_STATE/data/db/local.db" ]]; then
+  NEW_KNOW_STATE=1
+  echo "[knowledge] provisioning isolated development state"
+  provision_out="$(
+    cd "$KNOW"
+    AZAZEL_ROOT="$KNOW_STATE" AZAZEL_CONFIG_DIR="$KNOW/config" .venv/bin/python ./azctl provision
+  )"
+  # Provision prints a one-time admin token. Do not persist it in lab logs.
+  printf '%s\n' "$provision_out" | sed -E 's/^(  token:  ).*$/\1[REDACTED]/'
+  AZAZEL_KNOWLEDGE_TOKEN=""
+fi
+
+if [[ "$NEW_KNOW_STATE" == "1" || -z "${AZAZEL_KNOWLEDGE_TOKEN:-}" ]]; then
   echo "[knowledge] minting a scoped Edge development token (ingest,query,read)"
   client_out="$(cd "$KNOW" && AZAZEL_ROOT="$KNOW_STATE" AZAZEL_CONFIG_DIR="$KNOW/config" .venv/bin/python ./azctl client add --scopes ingest,query,read)"
   AZAZEL_KNOWLEDGE_TOKEN="$(printf '%s\n' "$client_out" | sed -n 's/^token (shown once): //p' | tail -n 1)"
