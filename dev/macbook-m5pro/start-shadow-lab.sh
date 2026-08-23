@@ -46,9 +46,29 @@ raise SystemExit(f"{name} did not open {host}:{port}")
 PY
 }
 
-KNOW_PID="$PIDS/knowledge.pid"
-if is_alive "$KNOW_PID"; then
-  echo "[skip] Knowledge already running pid=$(cat "$KNOW_PID")"
+KNOW_WORKER_PID="$PIDS/knowledge-worker.pid"
+if is_alive "$KNOW_WORKER_PID"; then
+  echo "[skip] Knowledge worker already running pid=$(cat "$KNOW_WORKER_PID")"
+else
+  echo "[start] Azazel-Knowledge worker (offline; no feed network pulls)"
+  (
+    cd "$KNOW"
+    AZAZEL_ROOT="$STATE/knowledge" \
+    AZAZEL_CONFIG_DIR="$KNOW/config" \
+    nohup .venv/bin/python -m azazel_knowledge.worker \
+      --root "$STATE/knowledge" \
+      --config-dir "$KNOW/config" \
+      --interval-s 1 \
+      >"$LOGS/knowledge-worker.log" 2>&1 &
+    echo $! > "$KNOW_WORKER_PID"
+  )
+  sleep 0.3
+  is_alive "$KNOW_WORKER_PID" || { echo "Knowledge worker exited; inspect $LOGS/knowledge-worker.log" >&2; exit 2; }
+fi
+
+KNOW_API_PID="$PIDS/knowledge-api.pid"
+if is_alive "$KNOW_API_PID"; then
+  echo "[skip] Knowledge API already running pid=$(cat "$KNOW_API_PID")"
 else
   echo "[start] Azazel-Knowledge API on 127.0.0.1:$AZAZEL_KNOWLEDGE_PORT"
   (
@@ -58,10 +78,10 @@ else
     nohup .venv/bin/uvicorn azazel_knowledge.api.app:app \
       --host 127.0.0.1 --port "$AZAZEL_KNOWLEDGE_PORT" \
       >"$LOGS/knowledge-api.log" 2>&1 &
-    echo $! > "$KNOW_PID"
+    echo $! > "$KNOW_API_PID"
   )
 fi
-wait_port 127.0.0.1 "$AZAZEL_KNOWLEDGE_PORT" "Azazel-Knowledge"
+wait_port 127.0.0.1 "$AZAZEL_KNOWLEDGE_PORT" "Azazel-Knowledge API"
 
 DECEPTION_PID="$PIDS/deception.pid"
 if is_alive "$DECEPTION_PID"; then
@@ -93,10 +113,11 @@ cat <<EOF
 
 Shadow lab is running.
 
-  Knowledge:  http://127.0.0.1:$AZAZEL_KNOWLEDGE_PORT
-  Deception:  http://127.0.0.1:$AZAZEL_DECEPTION_PORT  (shadow/replay only; live_execution=disabled)
-  Ollama:     $AZAZEL_OLLAMA_ENDPOINT
-  Logs:       $LOGS
+  Knowledge API:     http://127.0.0.1:$AZAZEL_KNOWLEDGE_PORT
+  Knowledge worker:  offline local spool/behavior processing enabled
+  Deception:         http://127.0.0.1:$AZAZEL_DECEPTION_PORT  (shadow/replay only; live_execution=disabled)
+  Ollama:            $AZAZEL_OLLAMA_ENDPOINT
+  Logs:              $LOGS
 
 M.I.O. local-model replay (no Arbiter/enforcement):
 
