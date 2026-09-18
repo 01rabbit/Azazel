@@ -102,6 +102,7 @@ Detailed design: [AZ-06 Container-First Architecture](docs/concepts/azazel-decep
 - [AZ-06 Container-First Architecture](docs/concepts/azazel-deception-host-container-first.md)
 - [Products](docs/products/README.md)
 - [Product Map](docs/products/product-map.md)
+- [Nexus and Boot Cross-Repository Development Plan](docs/roadmaps/nexus-boot-program-plan.md)
 - [Naming and Terminology](docs/specs/naming.md)
 - [Existing Architecture Docs](docs/architecture/overview.md)
 - [Contributing](CONTRIBUTING.md)
