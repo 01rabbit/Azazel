@@ -30,6 +30,8 @@ nav_exclude: true
       <li><code>01rabbit/Azazel-Gadget</code>: 可搬型の個人向け戦術防御実装</li>
       <li><code>01rabbit/Azazel-Knowledge</code>(AZ-04、旧称 Azazel-CTI): 助言専用の戦術CTIノード「Azazel-Knowledge Advisor」。Edgeに命令はしない</li>
       <li><code>01rabbit/Azazel-Fabric</code>(AZ-05、旧称 Azazel-Common): シリーズ共有の契約ライブラリ「Azazel-Fabric Contract」</li>
+      <li><code>01rabbit/Azazel-Boot</code>(AZ-03): 民間災害対応向けUSB SSD起動環境「Azazel-Boot Responder」</li>
+      <li><code>01rabbit/Azazel-Nexus</code>(AZ-07): 堅牢型Linux PC向け常設統合ノード「Azazel-Nexus Gateway」</li>
     </ul>
   </section>
   <section class="az-card">
@@ -48,6 +50,8 @@ nav_exclude: true
       <li><a href="https://github.com/01rabbit/Azazel-Gadget">Azazel-Gadget</a></li>
       <li><a href="https://github.com/01rabbit/Azazel-Knowledge">Azazel-Knowledge Advisor(AZ-04、旧称 Azazel-CTI)</a></li>
       <li><a href="https://github.com/01rabbit/Azazel-Fabric">Azazel-Fabric Contract(AZ-05、共有契約、旧称 Azazel-Common)</a></li>
+      <li><a href="https://github.com/01rabbit/Azazel-Boot">Azazel-Boot Responder(AZ-03、民間災害対応USB SSD)</a></li>
+      <li><a href="https://github.com/01rabbit/Azazel-Nexus">Azazel-Nexus Gateway(AZ-07、堅牢型統合ノード)</a></li>
     </ul>
   </section>
   <section class="az-card">

@@ -1,6 +1,6 @@
 # Security Policy
 
-This repository is the Azazel documentation and doctrine hub; product code and its own security surface live in the product repositories (Azazel-Edge, Azazel-Gadget, Azazel-Knowledge, Azazel-Fabric).
+This repository is the Azazel documentation and doctrine hub; product code and its own security surface live in the product repositories (Azazel-Edge, Azazel-Gadget, Azazel-Knowledge, Azazel-Fabric, Azazel-Deception, Azazel-Boot, and Azazel-Nexus).
 
 ## Reporting a Vulnerability
 
@@ -18,7 +18,7 @@ This repository is the Azazel documentation and doctrine hub; product code and i
 
 - This repository: site/documentation issues (e.g., content injection via the Pages site, leaked secrets in docs).
 - Product vulnerabilities belong in the product repository's own policy:
-  Azazel-Edge / Azazel-Gadget / Azazel-Knowledge / Azazel-Fabric (each has SECURITY.md).
+  Use the affected product repository's private advisory channel. A repository that has not yet published its own `SECURITY.md` remains covered by ecosystem-wide coordination through this repository.
 - Ecosystem-wide or cross-repository coordination issues may be reported here.
 
 ## Supported Versions
