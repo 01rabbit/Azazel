@@ -4,6 +4,8 @@
 
 This is the doctrine hub: README.md and `docs/specs/naming.md` are canonical for the whole Azazel series. Read them first.
 
+External teams continuing the series must also read the [Third-Party Development Handoff](docs/roadmaps/third-party-development-handoff.md) before selecting or creating implementation work.
+
 ## Branch naming
 
 `<type>/<short-description>`
