@@ -14,6 +14,7 @@ Azazel doctrine is implemented through multiple product variants under the `Azaz
 - [Azazel-Gadget](azazel-gadget.md)
 - [Azazel-Knowledge Advisor](azazel-knowledge.md)
 - [Azazel-Fabric Contract](azazel-fabric.md)
+- [Nexus and Boot cross-repository development plan](../roadmaps/nexus-boot-program-plan.md)
 - [Conceptual Mapping](../concepts/system-overview.md)
 
 External repositories:
