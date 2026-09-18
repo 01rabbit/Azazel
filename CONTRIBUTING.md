@@ -25,12 +25,12 @@ Examples: `docs/products-index-refresh`, `naming/az-06-designation`, `site/nav-c
   - [ ] `_config.yml` nav updated if a page moved or was added/removed
   - [ ] `docs/index_ja.md` updated when `docs/index.md` changes (JA mirror stays in sync)
   - [ ] Naming-spec compliance: no new Form/Role word without updating `docs/specs/naming.md` first; no restricted terms (e.g. "Jamming")
-  - [ ] Cross-product responsibility remains explicit when a change affects Edge, Gadget, Knowledge, Fabric, or Deception
+  - [ ] Cross-product responsibility remains explicit when a change affects Edge, Gadget, Knowledge, Fabric, Deception, Boot, or Nexus
 
 ## What not to do (requires owner sign-off)
 
 - Do not change the naming spec (`docs/specs/naming.md`), the License Matrix, or any `AZ-xx` designation without owner sign-off.
-- Do not add product code here. Product implementation belongs in the product repositories: Azazel-Edge, Azazel-Gadget, Azazel-Knowledge, Azazel-Fabric, and Azazel-Deception.
+- Do not add product code here. Product implementation belongs in the product repositories: Azazel-Edge, Azazel-Gadget, Azazel-Knowledge, Azazel-Fabric, Azazel-Deception, Azazel-Boot, and Azazel-Nexus.
 - Do not move final engagement authority away from Azazel-Edge. Azazel-Deception materializes approved environments; it does not decide engagements.
 
 ## License
