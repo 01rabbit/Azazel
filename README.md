@@ -107,6 +107,7 @@ Detailed design: [AZ-06 Container-First Architecture](docs/concepts/azazel-decep
 - [Product Map](docs/products/product-map.md)
 - [Nexus and Boot Cross-Repository Development Plan](docs/roadmaps/nexus-boot-program-plan.md)
 - [Nexus and Boot R0 Product and Compatibility Baseline](docs/roadmaps/nexus-boot-r0-baseline.md)
+- [Third-Party Development Handoff](docs/roadmaps/third-party-development-handoff.md)
 - [Naming and Terminology](docs/specs/naming.md)
 - [Existing Architecture Docs](docs/architecture/overview.md)
 - [Contributing](CONTRIBUTING.md)
