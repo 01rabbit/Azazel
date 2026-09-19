@@ -215,6 +215,8 @@ Deliverables:
 - record a signed installation inventory and activation receipt.
 - close the commissioning service after activation; re-entry requires a physical local action, strong administrator authentication, maintenance state, and explicit handling of active leases before roles can change.
 
+> Open finding **OF-01** (§15): the selector thresholds in the second deliverable do not produce the tier assignments the rest of this plan assumes. The thresholds above are reproduced unchanged and remain the specified selector until the owner decides; no product may substitute its own numbers in the meantime.
+
 Exit gate:
 
 - a nontechnical operator can complete a clean installation or USB startup from the written quick-start guide;
@@ -264,7 +266,7 @@ Deliverables:
 Exit gate:
 
 - Nexus completes detect -> explain -> decide -> redirect -> audit without external nodes;
-- Boot completes the Core loop on 8 GB and adds verified Lite functions at 16 GB;
+- Boot completes the Core loop on 8 GB and adds verified Lite functions at 16 GB (open finding **OF-01**, §15: as written, a nominal 8 GB host selects `diagnostic` and a nominal 16 GB host selects `core` under the R2 selector, so this gate cannot be met on the hardware it names);
 - invalid knowledge is rejected; dataset-specific expiry, decay, and confidence ceilings make expired security-sensitive entries unavailable and preserve material staleness through M.I.O. narrative and voice;
 - a decoy cannot reach protected, management, control-plane, or Internet zones in the physical test topology.
 - the isolation test covers IPv4, IPv6, DNS, link-local, multicast, container gateways, host services, and runtime sockets.
@@ -641,3 +643,52 @@ Final focused re-review status: **PASS** from all three review tracks. Each revi
 ## 14. Program definition of done
 
 The program is complete when a Nexus can be installed and operate standalone on its declared rugged-PC classes, and a Boot USB SSD can start a usable civil emergency Core on its declared laptop classes. Both use released, pinned Azazel components and Fabric contracts; both retain deterministic Edge authority; both expose actual capability and degradation; both produce verifiable audit and evidence exports; and both can be recovered using offline instructions and media.
+
+## 15. Open program findings
+
+Sections 10 and 11 record findings that were corrected before this plan was published. This section records findings raised against the published plan that are **not yet resolved**. A finding stays here, unresolved and unedited in substance, until the owner decides; the plan text it concerns is left as written so that no product silently implements a different rule. Findings use the fields of §9.2: severity, evidence, affected requirement, proposed correction, owner, and verification.
+
+### OF-01 — the RAM selector's thresholds contradict the tiers the plan assumes
+
+- **Raised:** 2026-09-19, during a cross-repository documentation verification pass.
+- **Severity:** proposed `P1`. It blocks the R2 selector implementation and makes the R4 Boot exit gate unmeetable as written. The owner confirms the severity together with the resolution.
+- **Status:** **open — owner decision required.** This finding is recorded, not resolved. Nothing in it changes a threshold, a gate, or a product document.
+
+**Evidence.** §5 R2 specifies one product-local selector over usable RAM in MiB after firmware reservation: less than 8192 `diagnostic`, 8192–16383 `core`, 16384–32767 `lite`, 32768 or more `standard`. Usable RAM is always below the nominal module size, because firmware reserves some of it, and each threshold is set at exactly the nominal size it is meant to admit (8192 MiB = 8 GiB, 16384 MiB = 16 GiB, 32768 MiB = 32 GiB). A host of a given nominal size therefore never reaches the threshold named after it; it always falls one tier below.
+
+A measurement on a nominal 16 GB Linux host: `/proc/meminfo` reports `MemTotal: 16481980 kB`, which is 16,095 MiB of usable RAM — 289 MiB short of the 16384 MiB `lite` threshold. That host selects `core`, not `lite`. By the same argument a nominal 8 GB host selects `diagnostic`, not `core`. The Nexus capability model additionally subtracts the measured Core reserve before selection, which moves every host further down, never up.
+
+**What it contradicts.**
+
+1. §5 R4 exit gate: "Boot completes the Core loop on 8 GB and adds verified Lite functions at 16 GB." Under the R2 selector an 8 GB host is `diagnostic` (no policy activation) and a 16 GB host is `core` (no Lite functions), so the gate cannot be met on the hardware it names.
+2. The R0 exit criterion in the [R0 baseline](nexus-boot-r0-baseline.md): "RAM tiers of 8 GB, 16 GB, and 32 GB or more select resource envelopes independently of topology." The nominal tier names in that criterion do not select the envelopes the rest of the program attaches to them.
+3. [Azazel-Nexus #5](https://github.com/01rabbit/Azazel-Nexus/issues/5), whose scope quotes the same four thresholds and whose acceptance criterion reads "An 8 GiB system operates deterministic Core with no model or remote dependency." An 8 GiB system selects `diagnostic` under the quoted thresholds.
+
+§8 of this plan records resource and performance targets for "8, 16, 32, and 64 GB classes" — nominal class names — which is the same mismatch of units seen from the reporting side.
+
+**Where the thresholds have propagated.** Verified by inspection on 2026-09-19:
+
+| Document or issue | Where |
+|---|---|
+| `Azazel-Nexus/docs/capability-model.md` | §2 resource-profile table, four rows; `standard` repeated at the worked example |
+| `Azazel-Nexus/docs/IMPLEMENTATION_SPEC.md` | resource-profile table, four rows |
+| `Azazel-Nexus/docs/operations.md` | resource-profile table, four rows, with companion hardware |
+| `Azazel-Nexus/docs/mio-runtime.md` | capacity-envelope table, four rows, plus the eligibility vocabulary mapped onto them |
+| `Azazel-Boot/docs/architecture.md` | §3.1, prose, explicitly inheriting the thresholds from this plan and explicitly declining to choose its own |
+| [Azazel-Nexus #5](https://github.com/01rabbit/Azazel-Nexus/issues/5) | scope and acceptance criteria |
+| [Azazel-Nexus #2](https://github.com/01rabbit/Azazel-Nexus/issues/2) (closed) | scope item 4 |
+| [Azazel-Boot #8](https://github.com/01rabbit/Azazel-Boot/issues/8) | premised on applying this selector after measuring Boot's Core reserve |
+
+`Azazel-Nexus/docs/nexus-integrated-node.md` states a related but separate requirement — "16384 MiB of usable RAM or more" for a self-contained Nexus — which inherits the same mismatch if the tier names are read as nominal sizes. No implementation of this four-tier selector exists in any repository, so the contradiction is still confined to documents and issues.
+
+**Candidate resolutions, stated neutrally and in no order of preference.** Each has consequences the owner weighs; this plan does not choose among them.
+
+1. **Move the thresholds** so that a host of each nominal class lands in the intended tier — for example by setting each boundary below the nominal size by a margin covering firmware reservation and the measured Core reserve. Requires a defensible margin, which requires measurement across the declared hardware sets.
+2. **Key the selector on nominal RAM** (installed module size) rather than usable RAM, and treat usable RAM as a separate recorded measurement. Changes what the selector reads, and needs a reliable nominal-size source on both rugged PCs and borrowed laptops.
+3. **Accept the current arithmetic and restate the prose** so that "8 GB" everywhere means ">= 8192 MiB usable" — that is, keep the thresholds and correct the R4 gate, the R0 exit criterion, Nexus #5, and the propagated tables to speak in usable MiB rather than nominal classes. Changes which physical machines qualify.
+
+**Affected requirements:** §5 R2 selector deliverable; §5 R4 Boot exit gate; §8 class names; R0 baseline exit criterion on RAM tiers.
+
+**Owner:** Azazel (this plan owns the selector; Nexus and Boot inherit it and must not diverge from it locally).
+
+**Verification when resolved:** the chosen rule is stated once in this plan; the R4 gate, the R0 exit criterion, and every propagated table and issue above are corrected in the same change; and the first implementation of the selector carries a test that asserts the tier selected for a measured host, not for a nominal label.
