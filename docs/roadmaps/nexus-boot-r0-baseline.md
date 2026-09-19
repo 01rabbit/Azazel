@@ -73,7 +73,7 @@ A closed entry records that the issue's own scope was delivered; it does not clo
 - Every consumer has an explicit immutable Fabric pin or image lock.
 - Edge authority and advisory-only boundaries are represented in contracts and integration tests.
 - Installer inventory is non-destructive; commissioning produces a reviewable topology plan before applying it.
-- RAM tiers of 8 GB, 16 GB, and 32 GB or more select resource envelopes independently of topology. (Open finding OF-01 below: the selector that implements this criterion does not assign these nominal tiers to the envelopes named here.)
+- RAM tiers of 8 GB, 16 GB, and 32 GB or more select resource envelopes independently of topology. (OF-01, resolved 2026-09-19: the selector's boundaries were moved to 7168 / 15360 / 31744 MiB usable — each nominal size minus a 1024 MiB firmware-reservation allowance — so that a host of each nominal class now reaches the envelope named here. A host whose firmware reserves more than that allowance still falls a tier below; the criterion is met for the declared classes, not for every machine.)
 - Nexus and Boot publish their own security policy, support matrix, license, update channel, and recovery procedure before a release is called supported.
 - Cross-repository conformance, degraded-mode, update, rollback, and recovery evidence is linked from the program plan.
 
@@ -85,4 +85,5 @@ Findings raised against R0 that are not yet resolved. The full record lives in t
 
 | Finding | Concerns | State |
 |---|---|---|
-| [OF-01](nexus-boot-program-plan.md#15-open-program-findings) — the RAM selector's thresholds contradict the tiers the program assumes | the exit criterion on 8/16/32 GB RAM tiers above, the program plan's R2 selector and R4 Boot exit gate, and the tables those thresholds have propagated into in Azazel-Nexus and Azazel-Boot | open; resolution is an owner decision, and the candidate resolutions are recorded without one being chosen |
+| [OF-01](nexus-boot-program-plan.md#15-open-program-findings) — the RAM selector's thresholds contradict the tiers the program assumes | the exit criterion on 8/16/32 GB RAM tiers above, the program plan's R2 selector and R4 Boot exit gate, and the tables those thresholds propagated into in Azazel-Nexus and Azazel-Boot | **resolved 2026-09-19** by owner decision: boundaries moved to nominal minus a 1024 MiB firmware-reservation allowance. The documentation half is corrected; the selector has no implementation yet, so the correction is written down and unproven |
+| [OF-02](nexus-boot-program-plan.md#15-open-program-findings) — the selector's four output values and the three capability states are never reconciled (`standard` vs `FULL`; `diagnostic` has no counterpart) | any product that must report a capability state derived from a selected tier | open; owner decision. Fabric's provisioning contracts encode neither vocabulary, so resolving it changes no contract |

@@ -204,7 +204,7 @@ Exit gate:
 Deliverables:
 
 - Nexus base installer and Boot image builder consume the same Fabric provisioning contracts;
-- detect usable RAM in MiB after firmware reservation through one product-local selector: less than 8192 diagnostic, 8192–16383 `core`, 16384–32767 `lite`, and 32768 or more `standard`, subject to the measured Core reserve;
+- detect usable RAM in MiB after firmware reservation through one product-local selector: less than 7168 diagnostic, 7168–15359 `core`, 15360–31743 `lite`, and 31744 or more `standard`, subject to the measured Core reserve. Each boundary is the nominal size it admits **minus a 1024 MiB firmware-reservation allowance** (8192−1024, 16384−1024, 32768−1024); see [OF-01](#of-01--the-ram-selectors-thresholds-contradict-the-tiers-the-plan-assumes) for why the boundaries are not the nominal sizes themselves;
 - evaluate the resource and topology profiles separately and enable only their verified intersection;
 - inventory interfaces by stable identity and keep all operational roles unassigned until commissioning;
 - use a composite interface identity (bus path, permanent MAC, VID/PID or PCI identity, serial where present, driver/firmware, wireless PHY, and physical label); zero or multiple matches fail closed and MAC-only matching is insufficient;
@@ -215,7 +215,7 @@ Deliverables:
 - record a signed installation inventory and activation receipt.
 - close the commissioning service after activation; re-entry requires a physical local action, strong administrator authentication, maintenance state, and explicit handling of active leases before roles can change.
 
-> Open finding **OF-01** (§15): the selector thresholds in the second deliverable do not produce the tier assignments the rest of this plan assumes. The thresholds above are reproduced unchanged and remain the specified selector until the owner decides; no product may substitute its own numbers in the meantime.
+> **OF-01 (§15) is resolved.** The boundaries above were moved on 2026-09-19 so that a host of each nominal class reaches the tier named after it. They are derived, not chosen: nominal minus a stated 1024 MiB firmware-reservation allowance. No product may substitute its own numbers; a product that believes the allowance is wrong raises a finding rather than diverging locally.
 
 Exit gate:
 
@@ -266,7 +266,7 @@ Deliverables:
 Exit gate:
 
 - Nexus completes detect -> explain -> decide -> redirect -> audit without external nodes;
-- Boot completes the Core loop on 8 GB and adds verified Lite functions at 16 GB (open finding **OF-01**, §15: as written, a nominal 8 GB host selects `diagnostic` and a nominal 16 GB host selects `core` under the R2 selector, so this gate cannot be met on the hardware it names);
+- Boot completes the Core loop on 8 GB and adds verified Lite functions at 16 GB (this gate was unmeetable as written until **OF-01** was resolved on 2026-09-19; under the corrected R2 boundaries a nominal 8 GB host reaches `core` and a nominal 16 GB host reaches `lite`, provided its firmware reserves no more than 1024 MiB);
 - invalid knowledge is rejected; dataset-specific expiry, decay, and confidence ceilings make expired security-sensitive entries unavailable and preserve material staleness through M.I.O. narrative and voice;
 - a decoy cannot reach protected, management, control-plane, or Internet zones in the physical test topology.
 - the isolation test covers IPv4, IPv6, DNS, link-local, multicast, container gateways, host services, and runtime sockets.
@@ -652,7 +652,7 @@ Sections 10 and 11 record findings that were corrected before this plan was publ
 
 - **Raised:** 2026-09-19, during a cross-repository documentation verification pass.
 - **Severity:** proposed `P1`. It blocks the R2 selector implementation and makes the R4 Boot exit gate unmeetable as written. The owner confirms the severity together with the resolution.
-- **Status:** **open — owner decision required.** This finding is recorded, not resolved. Nothing in it changes a threshold, a gate, or a product document.
+- **Status:** **resolved 2026-09-19 by owner decision.** Candidate resolution 1 (move the thresholds) was chosen. The resolution is recorded below; §5 R2 and the R4 exit gate carry the corrected boundaries, and the propagated documents were updated in the same change.
 
 **Evidence.** §5 R2 specifies one product-local selector over usable RAM in MiB after firmware reservation: less than 8192 `diagnostic`, 8192–16383 `core`, 16384–32767 `lite`, 32768 or more `standard`. Usable RAM is always below the nominal module size, because firmware reserves some of it, and each threshold is set at exactly the nominal size it is meant to admit (8192 MiB = 8 GiB, 16384 MiB = 16 GiB, 32768 MiB = 32 GiB). A host of a given nominal size therefore never reaches the threshold named after it; it always falls one tier below.
 
@@ -681,7 +681,26 @@ A measurement on a nominal 16 GB Linux host: `/proc/meminfo` reports `MemTotal: 
 
 `Azazel-Nexus/docs/nexus-integrated-node.md` states a related but separate requirement — "16384 MiB of usable RAM or more" for a self-contained Nexus — which inherits the same mismatch if the tier names are read as nominal sizes. No implementation of this four-tier selector exists in any repository, so the contradiction is still confined to documents and issues.
 
-**Candidate resolutions, stated neutrally and in no order of preference.** Each has consequences the owner weighs; this plan does not choose among them.
+**Resolution (owner decision, 2026-09-19): candidate 1 — move the thresholds.**
+
+| usable MiB after firmware reservation | tier |
+|---|---|
+| less than 7168 | `diagnostic` |
+| 7168 – 15359 | `core` |
+| 15360 – 31743 | `lite` |
+| 31744 or more | `standard` |
+
+Each boundary is **the nominal size it admits minus a 1024 MiB firmware-reservation allowance**: 8192−1024, 16384−1024, 32768−1024. The numbers are derived from that one constant, so they are revisable by changing the constant rather than by re-arguing three numbers.
+
+**Basis for the 1024 MiB allowance.** Firmware reservation on x86_64 comprises UEFI runtime services, ACPI tables, kernel-reserved regions, and — the large and variable term — integrated-GPU stolen memory, an aperture commonly 512 MiB and configurable in firmware setup. The one measurement this program holds is 289 MiB on a virtual host with no integrated GPU. 1024 MiB covers that case with room for a 512 MiB aperture and margin.
+
+**What the allowance is not.** It is not a claim about how much memory a tier needs. The tier names a **hardware class**; whether that class can actually run the work is decided separately by the measured Core reserve, which the selector clause already makes it "subject to" and which remains unmeasured. Keeping those two questions apart is what makes a generous allowance safe: a too-generous allowance admits a host to its nominal class and the Core reserve check then decides what it can do, whereas a too-small allowance excluded every host from its own class with no recourse.
+
+**Residual risk, stated rather than smoothed over.** A host whose firmware reserves more than 1024 MiB — a 2 GiB integrated-GPU aperture, for instance — still falls one tier below its nominal class. The remedy is measurement across the declared hardware sets, not a larger guess. Until those measurements exist, a host that appears to be mis-tiered is evidence about the allowance and is raised as a finding.
+
+**Not resolved by this decision:** the vocabulary mismatch recorded as OF-02 below.
+
+**Superseded — the candidates as they were stated before the decision.** Retained so the decision can be read against the alternatives it rejected.
 
 1. **Move the thresholds** so that a host of each nominal class lands in the intended tier — for example by setting each boundary below the nominal size by a margin covering firmware reservation and the measured Core reserve. Requires a defensible margin, which requires measurement across the declared hardware sets.
 2. **Key the selector on nominal RAM** (installed module size) rather than usable RAM, and treat usable RAM as a separate recorded measurement. Changes what the selector reads, and needs a reliable nominal-size source on both rugged PCs and borrowed laptops.
@@ -691,4 +710,22 @@ A measurement on a nominal 16 GB Linux host: `/proc/meminfo` reports `MemTotal: 
 
 **Owner:** Azazel (this plan owns the selector; Nexus and Boot inherit it and must not diverge from it locally).
 
-**Verification when resolved:** the chosen rule is stated once in this plan; the R4 gate, the R0 exit criterion, and every propagated table and issue above are corrected in the same change; and the first implementation of the selector carries a test that asserts the tier selected for a measured host, not for a nominal label.
+**Verification.** Done for the documentation half: the rule is stated once here, and §5 R2, the R4 exit gate, the R0 exit criterion, and the propagated Nexus and Boot tables were corrected in the same change. **Not yet done:** the first implementation of the selector must carry a test that asserts the tier selected for a **measured** host, not for a nominal label. Until that exists the correction is written down and unproven, which is the same standard this program applies elsewhere.
+
+### OF-02 — the selector's output vocabulary and the capability-state vocabulary do not match
+
+- **Raised:** 2026-09-19, while implementing the R1a provisioning contracts. Separate from OF-01 and not resolved by it.
+- **Severity:** proposed `P2`. It does not block the selector, but it makes any mapping from a selected tier to a reported capability state a local invention.
+- **Status:** **open — owner decision required.**
+
+**Evidence.** §5 R2's selector emits four values: `diagnostic`, `core`, `lite`, `standard`. §3.1's capability summary has three: `CORE`, `LITE`, `FULL`. `diagnostic` has no capability-state counterpart, and `standard` and `FULL` are never reconciled anywhere in this plan. A product that selects `standard` and must report a capability state has no stated rule for which one to report, and a product that selects `diagnostic` has no state at all.
+
+**Why it was not decided alongside OF-01.** OF-01 was an arithmetic defect with a measurable cause. This is a naming decision with consequences for what each state means: whether `standard` and `FULL` are the same thing under two names, whether `diagnostic` is a capability state or the absence of one, and whether a four-value resource vocabulary should map onto a three-value capability vocabulary at all — given that effective capability is an intersection of four dimensions and is not determined by the resource one.
+
+**What was done in the meantime.** `azazel_fabric.provisioning_contracts` encodes **neither** vocabulary as a contract field: a `ResourceProfile` carries measured usable MiB and no tier, and `assert_no_resource_tier_claim` rejects any tier or capability-state field. `registry.CAPABILITY_STATES` exists only so two products name the same summary the same way. Resolving OF-02 therefore changes no contract and invalidates no fixture.
+
+**Affected requirements:** §5 R2 selector deliverable; §3.1 capability summary; any product that must report a state derived from a tier.
+
+**Owner:** Azazel.
+
+**Verification when resolved:** the mapping — or the decision that there is none — is stated once in this plan, and no product derives a capability state from a resource tier by a locally invented rule.
