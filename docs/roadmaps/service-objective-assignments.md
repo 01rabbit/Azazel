@@ -255,10 +255,10 @@ repository:
 
 | Repository | Objectives it owns | Issue |
 | --- | --- | --- |
-| Azazel-Edge | SO-02, SO-03, SO-04, SO-05, SO-06, SO-07, SO-11 | to be filed |
-| Azazel-Deception | SO-08 | to be filed |
-| Azazel-Nexus | SO-01, SO-06 (consumer), SO-10 | to be filed |
-| Azazel-Boot | SO-01, SO-06 (consumer), SO-09, SO-10 | to be filed |
+| Azazel-Edge | SO-02, SO-03, SO-04, SO-05, SO-06, SO-07, SO-11 | [Azazel-Edge#414](https://github.com/01rabbit/Azazel-Edge/issues/414) |
+| Azazel-Deception | SO-08 | [Azazel-Deception#41](https://github.com/01rabbit/Azazel-Deception/issues/41) |
+| Azazel-Nexus | SO-01, SO-06 (consumer), SO-10 | [Azazel-Nexus#17](https://github.com/01rabbit/Azazel-Nexus/issues/17) |
+| Azazel-Boot | SO-01, SO-06 (consumer), SO-09, SO-10 | [Azazel-Boot#17](https://github.com/01rabbit/Azazel-Boot/issues/17) |
 
 Azazel-Knowledge and Azazel-Fabric own no row. Knowledge appears inside SO-06 as
 a dependency whose loss must change nothing, and inside SO-07 as a chain owner
