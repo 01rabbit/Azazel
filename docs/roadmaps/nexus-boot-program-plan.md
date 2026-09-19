@@ -652,6 +652,7 @@ Sections 10 and 11 record findings that were corrected before this plan was publ
 
 - **Raised:** 2026-09-19, during a cross-repository documentation verification pass.
 - **Severity:** proposed `P1`. It blocks the R2 selector implementation and makes the R4 Boot exit gate unmeetable as written. The owner confirms the severity together with the resolution.
+- **Decision issue:** [Azazel #74](https://github.com/01rabbit/Azazel/issues/74), closed as completed.
 - **Status:** **resolved 2026-09-19 by owner decision.** Candidate resolution 1 (move the thresholds) was chosen. The resolution is recorded below; §5 R2 and the R4 exit gate carry the corrected boundaries, and the propagated documents were updated in the same change.
 
 **Evidence.** §5 R2 specifies one product-local selector over usable RAM in MiB after firmware reservation: less than 8192 `diagnostic`, 8192–16383 `core`, 16384–32767 `lite`, 32768 or more `standard`. Usable RAM is always below the nominal module size, because firmware reserves some of it, and each threshold is set at exactly the nominal size it is meant to admit (8192 MiB = 8 GiB, 16384 MiB = 16 GiB, 32768 MiB = 32 GiB). A host of a given nominal size therefore never reaches the threshold named after it; it always falls one tier below.
@@ -718,7 +719,7 @@ Each boundary is **the nominal size it admits minus a 1024 MiB firmware-reservat
 
 - **Raised:** 2026-09-19, while implementing the R1a provisioning contracts. Separate from OF-01 and not resolved by it.
 - **Severity:** proposed `P2`. It does not block the selector, but it makes any mapping from a selected tier to a reported capability state a local invention.
-- **Status:** **open — owner decision required.**
+- **Status:** **open — owner decision required.** Raised for decision as [Azazel #77](https://github.com/01rabbit/Azazel/issues/77).
 
 **Evidence.** §5 R2's selector emits four values: `diagnostic`, `core`, `lite`, `standard`. §3.1's capability summary has three: `CORE`, `LITE`, `FULL`. `diagnostic` has no capability-state counterpart, and `standard` and `FULL` are never reconciled anywhere in this plan. A product that selects `standard` and must report a capability state has no stated rule for which one to report, and a product that selects `diagnostic` has no state at all.
 
