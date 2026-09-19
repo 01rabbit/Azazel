@@ -698,6 +698,8 @@ Each boundary is **the nominal size it admits minus a 1024 MiB firmware-reservat
 
 **Residual risk, stated rather than smoothed over.** A host whose firmware reserves more than 1024 MiB — a 2 GiB integrated-GPU aperture, for instance — still falls one tier below its nominal class. The remedy is measurement across the declared hardware sets, not a larger guess. Until those measurements exist, a host that appears to be mis-tiered is evidence about the allowance and is raised as a finding.
 
+**One further correction the decision forces.** The finding above records that the Nexus capability model additionally subtracted the measured Core reserve *before* selection, moving every host further down. That subtraction is incompatible with thresholds derived as nominal minus a firmware allowance: it would displace every host by the reserve amount a second time, and the tier would stop naming a hardware class. The selector's only input is therefore the usable-RAM reading after firmware reservation, and the Core reserve is applied **after** selection, as the constraint the selector clause makes the tier "subject to". The three Nexus sentences that said otherwise were corrected in the same change.
+
 **Not resolved by this decision:** the vocabulary mismatch recorded as OF-02 below.
 
 **Superseded — the candidates as they were stated before the decision.** Retained so the decision can be read against the alternatives it rejected.
