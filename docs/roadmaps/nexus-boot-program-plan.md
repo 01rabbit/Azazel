@@ -63,7 +63,7 @@ effective capability = resource profile
                      ∩ current trust/health state
 ```
 
-`ResourceProfile` records CPU, usable RAM, storage, and thermal/power budgets. `TopologyProfile` records commissioned interfaces, capture support, management reachability, and proven isolation properties. A 32 GB host with one unsuitable NIC may qualify for Standard local cognition while remaining in observe-only Core networking and keeping Deception disabled. The UI shows each capability state as well as the overall `CORE`, `LITE`, or `FULL` summary.
+`ResourceProfile` records CPU, usable RAM, storage, and thermal/power budgets. `TopologyProfile` records commissioned interfaces, capture support, management reachability, and proven isolation properties. A 32 GB host with one unsuitable NIC may qualify for Standard local cognition while remaining in observe-only Core networking and keeping Deception disabled. The UI shows each capability state as well as the overall `CORE`, `LITE`, or `FULL` summary. That summary and the resource profile are reported **separately and are never derived from each other** ([OF-02](#of-02--the-selectors-output-vocabulary-and-the-capability-state-vocabulary-do-not-match)): the host above selects the `standard` resource tier and still summarises as `CORE`, because capability is the intersection of four dimensions and the resource dimension does not decide it.
 
 ## 4. Shared configuration and release flow
 
@@ -719,7 +719,8 @@ Each boundary is **the nominal size it admits minus a 1024 MiB firmware-reservat
 
 - **Raised:** 2026-09-19, while implementing the R1a provisioning contracts. Separate from OF-01 and not resolved by it.
 - **Severity:** proposed `P2`. It does not block the selector, but it makes any mapping from a selected tier to a reported capability state a local invention.
-- **Status:** **open — owner decision required.** Raised for decision as [Azazel #77](https://github.com/01rabbit/Azazel/issues/77).
+- **Decision issue:** [Azazel #77](https://github.com/01rabbit/Azazel/issues/77), closed as completed.
+- **Status:** **resolved 2026-09-19 by owner decision.** Candidate resolution 2 was chosen: **there is no mapping.** A resource tier never derives a capability state. The resolution is recorded below.
 
 **Evidence.** §5 R2's selector emits four values: `diagnostic`, `core`, `lite`, `standard`. §3.1's capability summary has three: `CORE`, `LITE`, `FULL`. `diagnostic` has no capability-state counterpart, and `standard` and `FULL` are never reconciled anywhere in this plan. A product that selects `standard` and must report a capability state has no stated rule for which one to report, and a product that selects `diagnostic` has no state at all.
 
@@ -727,8 +728,29 @@ Each boundary is **the nominal size it admits minus a 1024 MiB firmware-reservat
 
 **What was done in the meantime.** `azazel_fabric.provisioning_contracts` encodes **neither** vocabulary as a contract field: a `ResourceProfile` carries measured usable MiB and no tier, and `assert_no_resource_tier_claim` rejects any tier or capability-state field. `registry.CAPABILITY_STATES` exists only so two products name the same summary the same way. Resolving OF-02 therefore changes no contract and invalidates no fixture.
 
+**Resolution — a resource tier never derives a capability state.**
+
+The four selector values and the three capability states are **different kinds of thing**, and no mapping between them exists in either direction. `standard` and `FULL` are **not synonyms**, and `diagnostic` has no capability-state counterpart because it names the **absence** of capability rather than a kind of it.
+
+**Why.** Effective capability is an intersection:
+
+```text
+effective capability = resource profile
+                     ∩ topology profile
+                     ∩ verified asset set
+                     ∩ current trust/health state
+```
+
+A mapping from tier to state would make the resource dimension decide the product of four dimensions. That is the same error the whole program guards against — the one §5 R2 states as "RAM alone never enables NIC roles, capture, enforcement, or Deception". Declaring the two vocabularies synonymous would have written that error into the vocabulary itself, where it would be invisible.
+
+**What a product reports.** The resource tier and the capability state are reported **separately**. A host that selects `standard` reports `standard` as its resource tier and, independently, whatever capability state the four-dimensional intersection yields — which may be `CORE`. That is not a contradiction to be reconciled; it is the intended and common case, and §3.1's worked example (a 32 GB host with one unsuitable NIC, Standard local cognition, observe-only Core networking, Deception disabled) is exactly it.
+
+**What this settles in the propagated documents.** `Azazel-Nexus/docs/inheritance-ledger.md` already stated the correct rule — "the two are not synonyms and must not be used interchangeably in either repository" — and becomes the canonical statement. `Azazel-Nexus/docs/mio-runtime.md` §2's table, which declared the vocabularies synonyms, is **withdrawn**: it may map each envelope to the eligibility that envelope *permits*, but not to a capability state.
+
+**Not a naming change.** No tier is renamed, no capability state is added or removed, and Edge's `Full-eligible` keeps its meaning — an outcome of the intersection, which is why it was never `standard`'s synonym.
+
 **Affected requirements:** §5 R2 selector deliverable; §3.1 capability summary; any product that must report a state derived from a tier.
 
 **Owner:** Azazel.
 
-**Verification when resolved:** the mapping — or the decision that there is none — is stated once in this plan, and no product derives a capability state from a resource tier by a locally invented rule.
+**Verification.** The rule is stated once here. The Nexus documents that contradicted it — `mio-runtime.md` §2's synonym table above all — are corrected by the propagation change that accompanies this decision; until that lands, this plan and those documents disagree, and this plan is authoritative. **Not yet done:** the first product that reports both a resource tier and a capability state must carry a test asserting that the state is **not** a function of the tier — that a `standard` host whose topology, assets or trust fall short reports a lower capability state. Until that exists the rule is written down and unproven.
