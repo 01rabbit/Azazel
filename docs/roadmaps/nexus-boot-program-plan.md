@@ -215,6 +215,8 @@ Deliverables:
 - record a signed installation inventory and activation receipt.
 - close the commissioning service after activation; re-entry requires a physical local action, strong administrator authentication, maintenance state, and explicit handling of active leases before roles can change.
 
+> **OF-03 (§15) is resolved.** Booting with **Secure Boot enabled**, through a signed shim chain, is the target boot path for both products; UEFI is assumed. Disabling Secure Boot is a fallback that requires the machine owner's agreement and confirmation of where the host's disk-encryption recovery key is, and it is restored at the end of the session — turning it off can put a BitLocker-protected host into recovery, whereas booting from USB alone cannot. No product enrolls its own key into a host's firmware. Whether a given machine boots this way is **measured into its compatibility entry**, never declared in advance.
+
 > **OF-01 (§15) is resolved.** The boundaries above were moved on 2026-09-19 so that a host of each nominal class reaches the tier named after it. They are derived, not chosen: nominal minus a stated 1024 MiB firmware-reservation allowance. No product may substitute its own numbers; a product that believes the allowance is wrong raises a finding rather than diverging locally.
 
 Exit gate:
@@ -754,3 +756,35 @@ A mapping from tier to state would make the resource dimension decide the produc
 **Owner:** Azazel.
 
 **Verification.** The rule is stated once here. The Nexus documents that contradicted it — `mio-runtime.md` §2's synonym table above all — are corrected by the propagation change that accompanies this decision; until that lands, this plan and those documents disagree, and this plan is authoritative. **Not yet done:** the first product that reports both a resource tier and a capability state must carry a test asserting that the state is **not** a function of the tier — that a `standard` host whose topology, assets or trust fall short reports a lower capability state. Until that exists the rule is written down and unproven.
+
+### OF-03 — the firmware boot path and Secure Boot posture are undeclared
+
+- **Raised:** 2026-09-19, while writing the Nexus and Boot support matrices. Nexus and Boot reached the same gap independently.
+- **Severity:** proposed `P2`. It blocks no current work, because neither product has an image builder, but it constrains the builder decision that is still open (Boot ADR-0002).
+- **Decision issue:** [Azazel #79](https://github.com/01rabbit/Azazel/issues/79), closed as completed.
+- **Status:** **resolved 2026-09-19 by owner decision.** The frame below is decided; the per-machine answers are measured, not declared.
+
+**Evidence.** This plan contains zero occurrences of `UEFI`, `Secure Boot`, `CSM`, or `legacy BIOS`. Boot ADR-0001 records that fact and disclaims the whole area; `Azazel-Boot/docs/compatibility.md` §2 records the boot path as "not yet decided", having been corrected on 2026-09-19 when an earlier row cited this plan for something it does not say. `Azazel-Nexus/docs/IMPLEMENTATION_SPEC.md` §12 says only "UEFI Secure Boot where supported", which is not a requirement. Four questions were therefore unanswered in both products: whether UEFI is required, whether a non-UEFI path is excluded, what Secure Boot's status is, and whether shim, key enrollment, or vendor signing are in scope.
+
+**Resolution — the frame, not the per-machine answer.**
+
+1. **Booting with Secure Boot enabled is the target**, via the standard signed chain: a Microsoft-UEFI-CA-signed `shim` as the first stage, which verifies the next stage against a certificate embedded in the shim itself. This is how mainstream Linux live media already boot on Secure Boot machines. UEFI is the assumed boot path.
+2. **Disabling Secure Boot is a fallback, never the default**, and it is permitted only with the machine owner's explicit agreement, only after the location of the host's disk-encryption recovery key has been established, and it must be restored at the end of the session.
+3. **Enrolling a product key into the host (MOK) is not adopted.** It writes a key into someone else's firmware and survives the session.
+4. **A qualified hardware entry records the Secure Boot state that was observed**, as `Azazel-Boot/docs/compatibility.md` §3.3 already requires. No product declares Secure Boot support for a machine nobody has tested.
+
+**Why disabling is the fallback rather than the plan.** Two costs fall entirely on the machine's owner, and both are specific to Boot's borrowed-hardware situation.
+
+The decisive one is disk-encryption recovery. Windows BitLocker with a TPM protector is, by default, sealed against a PCR that measures the Secure Boot state. Turning Secure Boot off changes that measurement, the TPM does not release the key, and the next Windows boot demands the recovery key. A responder who does that to a clinic's laptop, on a day the clinic is already in trouble, may have taken the owner's data away from them. **Booting from USB does not by itself do this — only changing the Secure Boot state does**, which is exactly why the two halves of "put USB first and turn Secure Boot off" have different standing here.
+
+The second is access: on managed clinic, municipal and corporate laptops a firmware password is common, and the responder does not have it. A plan that requires firmware changes does not run on those machines at all.
+
+**What this constrains.** Target 1 is a constraint on the image builder, which Boot ADR-0002 records as not yet selected: the image must carry a signed shim and a chain that shim will verify, which in practice means building on a distribution whose shim and kernel signatures are already trusted, or completing shim review for a self-signed chain. **Deciding this before the builder is selected is the point** — the reverse order risks choosing a builder that cannot produce Secure Boot media.
+
+**What is not decided, and is not decidable here.** Whether any specific machine boots this way is a measurement. No hardware has been tested, the compatibility list is empty, and the state of the industry transition away from the expiring Microsoft UEFI CA 2011 certificate must be checked against firmware in hand rather than assumed — a machine whose firmware never received the newer CA in a database update will not trust a shim signed under it.
+
+**Affected requirements:** §5 R2 installer and commissioning; §5 R7 Boot release gate; Boot ADR-0001 and ADR-0002; the Nexus and Boot support matrices; `Azazel-Boot/docs/compatibility.md`.
+
+**Owner:** Azazel (the frame). Per-machine Secure Boot state belongs to each product's compatibility evidence.
+
+**Verification.** The frame is stated once here. Propagation into the Nexus and Boot support matrices and into `Azazel-Boot/docs/compatibility.md` §2 — which still records the boot path as "not yet decided" — accompanies this decision as a separate change; until it lands, this plan and those documents disagree, and this plan is authoritative. **Not yet done:** no image has been built, no machine has been booted, and no Secure Boot state has been measured. The first qualified hardware entry carries that measurement; until then this frame is a target, not a capability.
