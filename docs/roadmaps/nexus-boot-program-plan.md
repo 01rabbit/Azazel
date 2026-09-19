@@ -787,4 +787,4 @@ The second is access: on managed clinic, municipal and corporate laptops a firmw
 
 **Owner:** Azazel (the frame). Per-machine Secure Boot state belongs to each product's compatibility evidence.
 
-**Verification.** Done for the documentation half: the frame is stated once here and propagated to the Nexus and Boot support matrices and to Boot's compatibility document. **Not yet done:** no image has been built, no machine has been booted, and no Secure Boot state has been measured. The first qualified hardware entry carries that measurement; until then this frame is a target, not a capability.
+**Verification.** The frame is stated once here. Propagation into the Nexus and Boot support matrices and into `Azazel-Boot/docs/compatibility.md` §2 — which still records the boot path as "not yet decided" — accompanies this decision as a separate change; until it lands, this plan and those documents disagree, and this plan is authoritative. **Not yet done:** no image has been built, no machine has been booted, and no Secure Boot state has been measured. The first qualified hardware entry carries that measurement; until then this frame is a target, not a capability.
