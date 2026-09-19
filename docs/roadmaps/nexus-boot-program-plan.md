@@ -497,6 +497,8 @@ Consumers test a Fabric release candidate in CI, then pin the stable tag. Develo
 
 Initial release gates use measurable targets. A later change may revise a target only with benchmark evidence and an updated compatibility entry.
 
+Each row below is assigned an owning repository, a product configuration, a start and end event, a clock, a sample rule, a pass rule, a class (software / virtual-lab / hardware-only), and an evidence path in [`service-objective-assignments.md`](service-objective-assignments.md). Until that assignment existed, no repository measured any row and none referenced one, which made this table a release gate nobody could enforce. The assignment changes no target value here; where a target proved unmeasurable as written it is recorded in §15 (OF-05, OF-06).
+
 | Objective | Initial target |
 | --- | --- |
 | Core ready after encrypted-volume unlock | within 120 seconds |
@@ -512,6 +514,8 @@ Initial release gates use measurable targets. A later change may revise a target
 | Hostile load | Core audit, lease expiry, and health SLOs remain within bounds at each declared ingress quota |
 
 Resource and performance targets are recorded separately for 8, 16, 32, and 64 GB classes. A faster model or larger cache cannot consume the Core reserve.
+
+Five of the eleven rows are hardware-only in their release form (Core-ready-after-unlock, Deception isolation drift, Boot host storage, observation-interface silence, and the power-cut half of audit ordering). No green CI run satisfies a hardware-only row. The remaining rows have software or virtual-lab forms, and three of them — P0 alert queueing, lease-expiry rollback start, and the process-kill half of audit ordering — can be measured today.
 
 ## 9. Review and correction workflow
 
@@ -788,3 +792,37 @@ The second is access: on managed clinic, municipal and corporate laptops a firmw
 **Owner:** Azazel (the frame). Per-machine Secure Boot state belongs to each product's compatibility evidence.
 
 **Verification.** The frame is stated once here. Propagation into the Nexus and Boot support matrices and into `Azazel-Boot/docs/compatibility.md` §2 — which still records the boot path as "not yet decided" — accompanies this decision as a separate change; until it lands, this plan and those documents disagree, and this plan is authoritative. **Not yet done:** no image has been built, no machine has been booted, and no Secure Boot state has been measured. The first qualified hardware entry carries that measurement; until then this frame is a target, not a capability.
+
+### OF-04 — recorded in Azazel-Nexus
+
+OF-04 (composition modes such as `KNOWLEDGE-EXTENDED` / `DECEPTION-EXTENDED` are composition modes only, never capability states) is recorded in `Azazel-Nexus/docs/capability-model.md` §1.1, where the composition axis it concerns is defined. The number is reserved here so this register is continuous and the gap is not read as an omission.
+
+### OF-05 — §8's lease-expiry completion bound is action-specific, and no action declares one
+
+**Finding.** §8 bounds the *start* of lease-expiry rollback at 5 seconds and says the completion bound "is action-specific". No action type declares a completion bound in any repository. Searching the seven repositories on 2026-09-19 finds no per-action rollback completion target anywhere.
+
+The start half is measurable and is assigned (SO-04). The completion half is **unmeasurable as written**: a bound that defers to a per-action value which does not exist cannot pass or fail. A release gate that reads it would be reading nothing.
+
+§4.3 does define a *state* for the incomplete case — an adapter reports `ROLLBACK_INCOMPLETE` until observed state matches — so the program can say when rollback has not finished. It cannot say when that is too late, which is what a release gate needs.
+
+**Why this is not repaired here.** Inventing completion bounds would be revising a target without the benchmark evidence §8 requires, and the bounds belong to whoever owns each action type, not to the program document.
+
+**Affected requirements:** §8 lease-expiry row; §5 R3 exit gate; `service-objective-assignments.md` SO-04.
+
+**Owner:** Azazel-Edge, which owns the enforcement lease and the action types. The program plan holds the finding until Edge declares the per-action bounds and the §8 row can name where they live.
+
+**Verification.** Resolved when every declared enforcement action type has a stated rollback completion bound in its owning repository, SO-04 cites them, and a measurement record exists. **Not yet done:** no bound is declared and nothing has been measured.
+
+### OF-06 — §8's hostile-load row presumes declared ingress quotas that do not exist
+
+**Finding.** §8's hostile-load row requires that "Core audit, lease expiry, and health SLOs remain within bounds at each declared ingress quota", and §5 R5's exit gate repeats it as staying "within per-peer quotas and Core service objectives". **No repository declares an ingress quota.** Searching the seven repositories on 2026-09-19 finds no declared per-peer or ingress quota value.
+
+The row is therefore **unmeasurable as written**: "at each declared quota" ranges over an empty set, which makes the condition vacuously satisfiable. A gate that passes because there is nothing to check is worse than no gate, because it reports a pass.
+
+**Why this is not repaired here.** Choosing quota values is a product decision with hardware-class consequences, and §8 forbids revising a target without benchmark evidence. The quotas must be declared, then measured, then recorded.
+
+**Affected requirements:** §8 hostile-load row; §5 R5 exit gate; `service-objective-assignments.md` SO-11.
+
+**Owner:** Azazel-Edge for the Core ingress quota; Azazel-Nexus for the per-peer module quotas its module manager admits.
+
+**Verification.** Resolved when each owning repository declares its quota values with the hardware class they apply to, SO-11 cites them, and a measurement record exists for each — including the 120%-of-highest run that proves the quota sheds rather than merely being written down. **Not yet done:** no quota is declared and nothing has been measured.
