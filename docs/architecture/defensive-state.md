@@ -75,6 +75,17 @@ activation anywhere in AZ-06 — which is why a stale or replayed one cannot
 prolong an environment. Not because it is filtered, but because there is
 nothing to filter.
 
+**Both consume Fabric as a validator, never as a source of posture.**
+`coerce_defensive_state` reports two things: a fail-safe value and whether the
+input was recognised. A consumer *deciding what to do* may use the value —
+landing an unknown state on the weakest one is how it fails safe. A product
+*reporting what a producer said* must discard it, because substituting turns
+"said something we do not know" into "said `OBSERVE`" — one product asserting
+another's posture, which is the failure this whole boundary exists to prevent.
+Knowledge and Deception are both in the second category, and both keep the
+unrecognised word verbatim beside a computed `is_canonical` flag that a
+producer cannot assert for itself.
+
 ## 4. Legacy names: migration and deprecation
 
 `portal`, `shield` and `scapegoat` predate this vocabulary.
@@ -119,8 +130,9 @@ of Knowledge, Deception, remote cognition, or any network at all.
 
 | Acceptance criterion (Azazel#62) | State |
 | --- | --- |
-| One canonical definition of Defensive State | **met** — `azazel_fabric.schema.defensive_state`. **Not in any released tag yet**; Fabric's latest tag is `v0.9.0rc1` and the vocabulary landed after it |
-| Edge exposes the five values as its primary vocabulary | **open** — Azazel-Edge#379, waiting on a Fabric tag that carries the vocabulary |
+| One canonical definition of Defensive State | **met** — `azazel_fabric.schema.defensive_state`, shipped in Fabric `v0.9.0rc2` (2026-09-20). A release candidate: pinnable, promising no stability, and classified as a prerelease so it cannot appear where a consumer looks for the latest stable release |
+| Consumers actually consume it | **met for the two advisory products** — Knowledge pins `v0.9.0rc2` and classifies a reported state at its ingest boundary (Knowledge#65, closed); Deception pins the same tag and records a producer-reported state beside its own lifecycle without merging the two (Deception#28, closed). Edge and Gadget are separate rows below |
+| Edge exposes the five values as its primary vocabulary | **open** — Azazel-Edge#379. Not blocked by the tag: it is a terminology migration across Edge's runtime, API, UI, config and docs, and the work is Edge's own |
 | Gadget specified as deterministic Edge-derived architecture | **not verified.** Azazel-Gadget was outside the scope this document was written from; nothing here should be read as a claim about it |
 | Threat Level / Policy Profile / AI Runtime Tier / Engagement State / Presentation State distinguished | **met for this document** (§2). Per-product doc alignment is partial |
 | Fabric semantics preserve the distinction without creating authority | **met** — `authority` pinned `descriptive_only`, registered in the shared gate |
@@ -128,8 +140,9 @@ of Knowledge, Deception, remote cognition, or any network at all.
 | Legacy terminology has an explicit migration/deprecation plan | **met** — §4 |
 | Cross-repo docs and diagrams aligned | **partial** — Fabric, Knowledge and Deception carry the boundary in their own docs; Edge and Gadget do not yet |
 
-Three of the eight wait on work outside this repository, and one of those
-three waits only on a Fabric release tag.
+Three of the nine wait on work outside this repository. None of them waits on
+a Fabric release any more: the tag that the earlier version of this row called
+missing was cut on 2026-09-20, and what remains is each product's own work.
 
 ## 7. What this document does not do
 
