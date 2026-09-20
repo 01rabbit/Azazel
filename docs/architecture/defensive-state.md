@@ -131,7 +131,7 @@ of Knowledge, Deception, remote cognition, or any network at all.
 | Acceptance criterion (Azazel#62) | State |
 | --- | --- |
 | One canonical definition of Defensive State | **met** — `azazel_fabric.schema.defensive_state`, shipped in Fabric `v0.9.0rc2` (2026-09-20). A release candidate: pinnable, promising no stability, and classified as a prerelease so it cannot appear where a consumer looks for the latest stable release |
-| Consumers actually consume it | **partial** — Knowledge pins `v0.9.0rc2` and classifies a reported state at its ingest boundary (Knowledge#65 AC-6, merged). Deception's adoption is in review ([Azazel-Deception#44](https://github.com/01rabbit/Azazel-Deception/pull/44)) |
+| Consumers actually consume it | **met for the two advisory products** — Knowledge pins `v0.9.0rc2` and classifies a reported state at its ingest boundary (Knowledge#65, closed); Deception pins the same tag and records a producer-reported state beside its own lifecycle without merging the two (Deception#28, closed). Edge and Gadget are separate rows below |
 | Edge exposes the five values as its primary vocabulary | **open** — Azazel-Edge#379. Not blocked by the tag: it is a terminology migration across Edge's runtime, API, UI, config and docs, and the work is Edge's own |
 | Gadget specified as deterministic Edge-derived architecture | **not verified.** Azazel-Gadget was outside the scope this document was written from; nothing here should be read as a claim about it |
 | Threat Level / Policy Profile / AI Runtime Tier / Engagement State / Presentation State distinguished | **met for this document** (§2). Per-product doc alignment is partial |
