@@ -826,3 +826,36 @@ The row is therefore **unmeasurable as written**: "at each declared quota" range
 **Owner:** Azazel-Edge for the Core ingress quota; Azazel-Nexus for the per-peer module quotas its module manager admits.
 
 **Verification.** Resolved when each owning repository declares its quota values with the hardware class they apply to, SO-11 cites them, and a measurement record exists for each — including the 120%-of-highest run that proves the quota sheds rather than merely being written down. **Not yet done:** no quota is declared and nothing has been measured.
+
+### OF-07 — the platform baseline is undeclared, and two products are about to guess it independently
+
+- **Raised:** 2026-09-22, while aligning the Nexus installer preflight and the Boot media description.
+- **Severity:** proposed `P2`. It blocks no completed work, because neither product has produced media or measured a host, but it constrains the Nexus HIL campaign (§5 R2, R8), the Boot media build (§5 R7), and the builder decision that remains open in Boot ADR-0002.
+- **Decision issue:** none. Recorded directly by owner decision, 2026-09-22.
+- **Status:** **resolved 2026-09-22 by owner decision.** The frame below is decided; which machine runs it is measured, not declared.
+
+**Evidence.** The string `Debian` appears in no document of this program, and `Azazel-Nexus/docs/IMPLEMENTATION_SPEC.md` §2 says only "a supported long-term-support Linux distribution with systemd, nftables, `tc`, cgroup v2, TPM 2.0 tools, LUKS2, and a current kernel". `Azazel-Nexus/docs/support-matrix.md` §7 records "OS distribution and release" and "Kernel series" as **undeclared**, to be resolved "by an owner decision or a measurement, not by a contributor choosing a plausible value". Boot has no image and names no distribution.
+
+Two products were therefore about to answer the same question separately — the failure `Azazel-Boot/docs/compatibility.md` §2.1 already records once, where a Boot assumption was laundered into an inherited decision by a citation to a plan that did not say it.
+
+**Resolution — one baseline for v1.**
+
+1. **The initial platform baseline is Debian 13 / amd64, for both products.** Nexus installs Debian 13 minimal; Boot builds Debian 13 Live. No other distribution is a co-equal v1 support target.
+2. **Creation method.** Nexus: a signed netinst, or a verified offline install bundle. Boot: a reproducible USB SSD image built with Debian `live-build`.
+3. **Firmware.** `main` plus `non-free-firmware`. Any firmware added beyond that is recorded in the release manifest and in the SBOM.
+4. **Boot path.** UEFI, under the OF-03 frame. Nexus: Secure Boot enabled is the default on machines that support it. Boot: **UEFI with Secure Boot enabled is required**.
+5. **Persistence.** Nexus: LUKS2 is required; a TPM2 key protector is optional and a recovery passphrase is required. Boot: the host's internal disk is **quarantined**; persistence exists only on the USB side, and its LUKS2 is optional. This restates Boot's existing property and **does not withdraw** the operator-approved export target that `Azazel-Boot/README.md` and its threat model §3 already describe: the default is that nothing is written, and an explicit operator selection remains the only way past it (owner, 2026-09-22).
+6. **Updates.** Nexus: signed bundles against a pinned apt snapshot; no automatic updates. Boot: a media rewrite or a new signed medium; **no host-side update path exists**.
+7. **Interface roles.** Read-only inventory plus explicit operator confirmation, per host, in both products. No automatic inference — unchanged from §5 R2, restated because it is a per-host rule that a media-based product might otherwise read as a build-time one.
+8. **A Nexus host that cannot provide LUKS2** stores no raw identity in a commissioning record, is refused for hardware-in-the-loop measurement and for operational deployment, and may be used for diagnostics only.
+9. **Ubuntu 26.04 LTS, Fedora and the RHEL family are a future evaluation profile.** They are not deleted and not implemented: no support claim, no compatibility-list entry, and no implementation work until the Debian 13 hardware-in-the-loop campaign has passed. They are recorded in one comparison document, [future platform profiles](future-platform-profiles.md).
+
+**What this does not decide.** It does not select Boot's image builder. Boot ADR-0002 D4 fixes what a selection requires — an actual two-builder reproduction of one payload digest, the Fabric provisioning contract, and a recorded supply-chain assessment — and **none of those conditions is met**. Item 2 above names the builder the baseline is written against; it is a constraint on the selection, in the shape OF-03 used for Secure Boot, and an image-building change still arrives with a selection ADR or not at all.
+
+It also decides nothing about a machine. No image has been built, no host has been installed, and no measurement exists on any hardware class.
+
+**Affected requirements:** §5 R2 installer and commissioning; §5 R7 Boot deliverables; §5 R8 clean-room build; Boot ADR-0002 (constrained, not resolved) and ADR-0005; the Nexus and Boot support matrices; `Azazel-Nexus/docs/IMPLEMENTATION_SPEC.md` §2 and §12; `Azazel-Boot/docs/compatibility.md` §2.
+
+**Owner:** Azazel (the frame). Per-machine results — which host boots it, what it measures — belong to each product's compatibility evidence.
+
+**Verification.** The frame is stated once here. Propagation into the Nexus support matrix and implementation specification, into `Azazel-Boot/docs/compatibility.md` §2 and a Boot adoption ADR, and into the Nexus installer preflight accompanies this decision; until each lands, this plan is authoritative. **Not yet done:** no Debian 13 image has been built, no host has been installed from one, and no hardware-in-the-loop result exists. Until then this baseline is a target, not a capability.
