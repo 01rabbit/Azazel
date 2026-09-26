@@ -1,3 +1,9 @@
+---
+title: Azazel-Edge
+parent: Products
+nav_order: 1
+---
+
 # Azazel-Edge
 
 Back to: [Products Index](README.md) | Related: [Deterministic Defense](../concepts/deterministic-defense.md)
@@ -10,7 +16,9 @@ Formerly known as `Azazel-Pi`.
 
 ## Role
 
-Field-deployable edge SOC/NOC gateway for constrained or temporary networks.
+Field-oriented edge SOC/NOC gateway for constrained or temporary networks.
+Raspberry Pi 5 is a design target; physical deployment and HIL evidence remain
+pending.
 
 ## Doctrine Implementation Focus
 

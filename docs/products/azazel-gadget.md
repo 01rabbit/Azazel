@@ -1,3 +1,9 @@
+---
+title: Azazel-Gadget
+parent: Products
+nav_order: 2
+---
+
 # Azazel-Gadget
 
 Back to: [Products Index](README.md) | Related: [Offline Edge Defense](../concepts/offline-edge-defense.md)
