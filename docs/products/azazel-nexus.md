@@ -13,6 +13,11 @@ Linux system. It integrates released components without creating a second
 decision or enforcement authority: Fabric describes, Knowledge advises, Edge
 decides and enforces, and Nexus commissions and presents the node.
 
+The target is a persistent standalone deployment on a rugged x86_64 Linux PC,
+with embedded Knowledge Lite, Deception Lite, local M.I.O., operator, and audit
+functions. Nexus must remain useful offline and keep optional capabilities
+behind separate resource, topology, trust, and health gates.
+
 ## Current status
 
 Current GitHub `main` at the audit baseline is
@@ -58,3 +63,7 @@ See the [Azazel series audit](../series-status-audit.md), the
 [Nexus repository](https://github.com/01rabbit/Azazel-Nexus), and its
 [support matrix](https://github.com/01rabbit/Azazel-Nexus/blob/main/docs/support-matrix.md)
 for the current evidence boundary.
+
+The [Nexus and Boot cross-repository plan](../roadmaps/nexus-boot-program-plan.md)
+defines target implementation and release gates. The current software snapshot
+does not claim deployment, provider execution, or hardware validation.

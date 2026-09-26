@@ -44,6 +44,8 @@ nav_exclude: false
       <li><code>01rabbit/Azazel-Gadget</code>: portable tactical defense on untrusted Wi-Fi</li>
       <li><code>01rabbit/Azazel-Knowledge</code> (AZ-04, formerly Azazel-CTI): advisory-only tactical CTI node, <code>Azazel-Knowledge Advisor</code>; never commands the edge</li>
       <li><code>01rabbit/Azazel-Fabric</code> (AZ-05, formerly Azazel-Common): shared contracts library for the series, <code>Azazel-Fabric Contract</code></li>
+      <li><code>01rabbit/Azazel-Boot</code> (AZ-03): civil emergency USB SSD environment, <code>Azazel-Boot Responder</code></li>
+      <li><code>01rabbit/Azazel-Nexus</code> (AZ-07): persistent rugged Linux integrated node, <code>Azazel-Nexus Gateway</code></li>
     </ul>
   </section>
   <section class="az-card">
@@ -62,6 +64,8 @@ nav_exclude: false
       <li><a href="https://github.com/01rabbit/Azazel-Gadget">Azazel-Gadget (form namespace)</a></li>
       <li><a href="https://github.com/01rabbit/Azazel-Knowledge">Azazel-Knowledge Advisor (AZ-04, formerly Azazel-CTI)</a></li>
       <li><a href="https://github.com/01rabbit/Azazel-Fabric">Azazel-Fabric Contract (AZ-05, shared contracts, formerly Azazel-Common)</a></li>
+      <li><a href="https://github.com/01rabbit/Azazel-Boot">Azazel-Boot Responder (AZ-03, civil emergency USB SSD)</a></li>
+      <li><a href="https://github.com/01rabbit/Azazel-Nexus">Azazel-Nexus Gateway (AZ-07, rugged integrated node)</a></li>
     </ul>
   </section>
   <section class="az-card">

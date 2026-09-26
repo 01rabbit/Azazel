@@ -13,6 +13,12 @@ contract keeps host storage quarantined and separates artifact building from
 media writing. Boot does not become an additional decision or enforcement
 authority; Edge remains the sole arbiter.
 
+The target is a civil-emergency startup environment on a declared compatible
+x86_64 laptop, with per-host commissioning before operational networking.
+RAM capacity and commissioned topology gate capabilities independently;
+optional model, Knowledge, Deception, external-module, and remote-cognition
+paths must not be prerequisites for deterministic Core operation.
+
 ## Current status
 
 The current hardware-unverified prototype evidence is recorded in the
@@ -46,3 +52,7 @@ See the [series audit](../series-status-audit.md), the
 [Boot repository](https://github.com/01rabbit/Azazel-Boot), and its
 [support matrix](https://github.com/01rabbit/Azazel-Boot/blob/main/docs/support-matrix.md)
 for the current evidence boundary.
+
+Development sequence and target gates are defined in the [Nexus and Boot
+cross-repository plan](../roadmaps/nexus-boot-program-plan.md). These target
+requirements do not upgrade prototype or QEMU evidence into hardware support.

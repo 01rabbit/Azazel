@@ -53,11 +53,11 @@ See also: [Deterministic Defense](docs/concepts/deterministic-defense.md) | [Off
 |---|---|---|---|---|---|
 | [Azazel-Edge Gateway](https://github.com/01rabbit/Azazel-Edge) | AZ-01 | `SENTINEL` | Azazel-Pi | Field-oriented edge SOC/NOC and scapegoat gateway; final deterministic engagement authority | Raspberry Pi 5 / edge networks (design target; HIL pending) |
 | [Azazel-Gadget Shield](https://github.com/01rabbit/Azazel-Gadget) | AZ-02 | `TACMOD` | Azazel-Zero | Portable tactical defense on untrusted Wi-Fi; fixed Engage-lite profiles only | Raspberry Pi Zero 2 W / personal use |
-| [Azazel-Boot Probe](https://github.com/01rabbit/Azazel-Boot) | AZ-03 | — | Azazel-USB | Bootable rapid-response class; builder and runtime work are tracked in its implementation repository | Portable USB boot |
+| [Azazel-Boot Responder](https://github.com/01rabbit/Azazel-Boot) | AZ-03 | — | Azazel-USB | Target civil-emergency environment for removable USB SSD media; implementation and hardware evidence remain in its repository | Compatible x86_64 laptops (support unverified) |
 | [Azazel-Knowledge Advisor](https://github.com/01rabbit/Azazel-Knowledge) | AZ-04 | `GRIMOIRE` | Azazel-CTI | Advisory-only tactical CTI / Behavioral CTI node; never commands | Raspberry Pi 4 / on-premises (design target; deployment evidence pending) |
 | [Azazel-Fabric Contract](https://github.com/01rabbit/Azazel-Fabric) | AZ-05 | `COVENANT` | Azazel-Common | Shared contracts library — the series' common language, never a decision core | Cross-repository |
 | [Azazel-Deception Host](https://github.com/01rabbit/Azazel-Deception) | AZ-06 | `THEATRE` | — | Container-first Engagement Environment Plane; materializes, transitions, records, and resets Edge-approved deception environments | Pi 5 / ARM64 / AMD64 / x86 are design targets; support/HIL unverified |
-| [Azazel-Nexus Integrated Node](https://github.com/01rabbit/Azazel-Nexus) | AZ-07 | — | — | Field-node integration and local-first control plane; integrates released components without creating another decision authority | Rugged x86_64 / Debian 13 |
+| [Azazel-Nexus Gateway](https://github.com/01rabbit/Azazel-Nexus) | AZ-07 | — | — | Target persistent self-contained integration of released components without creating another decision authority | Rugged x86_64 / Debian 13 (hardware support unverified) |
 | Azazel (this repository) | — | — | — | Doctrine, architecture, naming, and product-family entry point | Cross-repository |
 
 Edge, Gadget, Boot, and Nexus are defensive deployment classes. Deception is the attacker-facing engagement-environment execution class. Fabric and Knowledge are support classes.
@@ -80,6 +80,7 @@ Naming rule summary: formal names use `Azazel-<Form> <Role>`. `Azazel-Deception 
 - Read [Azazel-Fabric](https://github.com/01rabbit/Azazel-Fabric) for shared series contracts and interoperability.
 - Read [Azazel-Deception](https://github.com/01rabbit/Azazel-Deception) for the container-first deception-environment runtime, reference packages, host capability model, lifecycle, evidence, and reset implementation.
 - Read [Azazel-Nexus](https://github.com/01rabbit/Azazel-Nexus) for the integrated field-node control plane, commissioning, local-first runtime, and HIL boundary.
+- Read [Azazel-Boot](https://github.com/01rabbit/Azazel-Boot) for the civil emergency USB SSD environment.
 
 ## AZ-06: Engagement Environment Plane
 
@@ -109,6 +110,9 @@ Detailed design: [AZ-06 Container-First Architecture](docs/concepts/azazel-decep
 - [AZ-06 Container-First Architecture](docs/concepts/azazel-deception-host-container-first.md)
 - [Products](docs/products/README.md)
 - [Product Map](docs/products/product-map.md)
+- [Nexus and Boot Cross-Repository Development Plan](docs/roadmaps/nexus-boot-program-plan.md)
+- [Nexus and Boot R0 Product and Compatibility Baseline](docs/roadmaps/nexus-boot-r0-baseline.md)
+- [Third-Party Development Handoff](docs/roadmaps/third-party-development-handoff.md)
 - [Naming and Terminology](docs/specs/naming.md)
 - [Existing Architecture Docs](docs/architecture/overview.md)
 - [Contributing](CONTRIBUTING.md)
@@ -131,6 +135,7 @@ Detailed design: [AZ-06 Container-First Architecture](docs/concepts/azazel-decep
 - `01rabbit/Azazel-Fabric`: shared contracts and interoperability foundation, AZ-05
 - `01rabbit/Azazel-Deception`: container-first Engagement Environment Plane, AZ-06
 - `01rabbit/Azazel-Nexus`: integrated field-node control plane and local-first runtime, AZ-07
+- `01rabbit/Azazel-Boot`: civil emergency removable-media Responder environment, AZ-03
 
 ## License Matrix
 
