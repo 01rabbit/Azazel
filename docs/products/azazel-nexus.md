@@ -1,15 +1,69 @@
-# Azazel-Nexus Gateway
+---
+title: Azazel-Nexus Integrated Node
+parent: Products
+nav_order: 7
+---
 
-Repository: [01rabbit/Azazel-Nexus](https://github.com/01rabbit/Azazel-Nexus)
+# Azazel-Nexus Integrated Node
 
-Series designation: **AZ-07**
+Back to: [Products Index](README.md) | Related: [Product Map](product-map.md)
 
-Status: **Target product contract; implementation and release evidence pending.**
+Azazel-Nexus (AZ-07) is the integrated field-node control plane for a rugged
+Linux system. It integrates released components without creating a second
+decision or enforcement authority: Fabric describes, Knowledge advises, Edge
+decides and enforces, and Nexus commissions and presents the node.
 
-Azazel-Nexus Gateway is the target persistent self-contained Azazel deployment for a generic rugged x86_64 Linux PC. It MUST integrate Azazel-Edge, embedded Knowledge Lite, embedded Deception Lite, local M.I.O. cognition, operator functions, voice alerts, audit, and topology-gated network enforcement.
+The target is a persistent standalone deployment on a rugged x86_64 Linux PC,
+with embedded Knowledge Lite, Deception Lite, local M.I.O., operator, and audit
+functions. Nexus must remain useful offline and keep optional capabilities
+behind separate resource, topology, trust, and health gates.
 
-Nexus MUST remain operational without cloud connectivity or external nodes. AZ-04 Knowledge and AZ-06 Deception add depth and capacity; loss of either MUST return the affected capability to its embedded form. Resource, topology, verified assets, and current trust/health MUST be evaluated independently before a capability is enabled.
+## Current status
 
-Azazel-Edge MUST remain the only deterministic decision and enforcement authority. Nexus owns installation, commissioning, service isolation, configuration rendering, local trust, storage, updates, recovery, and capability-state presentation.
+Current GitHub `main` at the audit baseline is
+`375695a39ed52a53dc6dcaccfb6eacfad08cb96c`.
 
-Development sequence and release gates are defined in the [Nexus and Boot cross-repository plan](../roadmaps/nexus-boot-program-plan.md).
+Software boundaries implemented and locally checked include:
+
+- read-only inventory, resource profiling, commissioning and status CLI;
+- activation controller, systemd unit policy, audit/watchdog boundaries and
+  M.I.O. routing policy;
+- offline Knowledge Lite import/quarantine/read-only serving;
+- loopback-only Deception Lite lifecycle and state display;
+- HIL preflight and refusal paths for unsupported or unmeasured targets.
+
+These are software claims about the checked code and tests. They are not a
+release, deployment, or hardware-support claim.
+
+## Hardware-unverified boundary
+
+No target rugged x86_64 Debian 13 node, 8 GiB measurement campaign, LUKS/TPM
+state, NIC commissioning session, provider execution, or runtime HIL result is
+available in this audit. The following therefore remain unverified:
+
+- systemd enforcement and privilege boundaries on the target;
+- Core reserve and local model-provider execution;
+- commissioning against real interfaces and composite identities;
+- storage, reboot, watchdog, power-loss and recovery behavior;
+- external Knowledge/Deception deployment and any real endpoint or credential.
+
+The repository contains no commissioned production endpoint, credential, real
+model, or hardware identity. Those values must be supplied by an authorized
+operator during a separately evidenced deployment; they are not inferred from
+CI or fixtures.
+
+## Authority boundary
+
+Nexus must not become an alternate arbiter. It may display advisory context,
+commissioned state, and verified evidence, but it cannot turn Knowledge,
+Deception, a model provider, a package, or local capacity into an enforcement
+decision. Provider admission and activation remain separate gates.
+
+See the [Azazel series audit](../series-status-audit.md), the
+[Nexus repository](https://github.com/01rabbit/Azazel-Nexus), and its
+[support matrix](https://github.com/01rabbit/Azazel-Nexus/blob/main/docs/support-matrix.md)
+for the current evidence boundary.
+
+The [Nexus and Boot cross-repository plan](../roadmaps/nexus-boot-program-plan.md)
+defines target implementation and release gates. The current software snapshot
+does not claim deployment, provider execution, or hardware validation.

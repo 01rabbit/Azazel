@@ -1,17 +1,58 @@
+---
+title: Azazel-Boot Responder
+parent: Products
+nav_order: 3
+---
+
 # Azazel-Boot Responder
 
-Repository: [01rabbit/Azazel-Boot](https://github.com/01rabbit/Azazel-Boot)
+Back to: [Products Index](README.md) | Related: [Product Map](product-map.md)
 
-Series designation: **AZ-03**
+Azazel-Boot (AZ-03) is the removable-media responder workstream. Its safety
+contract keeps host storage quarantined and separates artifact building from
+media writing. Boot does not become an additional decision or enforcement
+authority; Edge remains the sole arbiter.
 
-Status: **Target product contract; implementation and release evidence pending.**
+The target is a civil-emergency startup environment on a declared compatible
+x86_64 laptop, with per-host commissioning before operational networking.
+RAM capacity and commissioned topology gate capabilities independently;
+optional model, Knowledge, Deception, external-module, and remote-cognition
+paths must not be prerequisites for deterministic Core operation.
 
-Azazel-Boot Responder is the target civil emergency environment for removable USB SSD media on a declared set of compatible x86_64 laptops. It MUST support rapid assessment, topology-gated bounded local response, evidence handling, and recovery support when a permanent appliance is unavailable.
+## Current status
 
-Boot MUST inventory the current laptop and require per-host commissioning before operational networking begins. RAM determines resource capacity; the commissioned topology separately determines whether observation, enforcement, or isolated Deception is eligible. Internal host storage MUST remain unwritten unless an operator explicitly chooses an approved export target.
+The current hardware-unverified prototype evidence is recorded in the
+[Boot repository's R11 report](https://github.com/01rabbit/Azazel-Boot/blob/work/prototype-runtime-20260926/docs/prototype-evidence-boot-runtime-r11.md).
+It covers an unsigned Debian 13 amd64 ISO, initramfs/C5 inspection, and a QEMU
+cold-boot/userspace handoff with a regular-file block-device fixture. It is
+prototype evidence only; the ISO is not a release image and the QEMU result is
+not a hardware result. The Boot implementation and report are being reconciled
+on the `work/prototype-runtime-20260926` branch; the default branch may not yet
+contain them.
 
-The minimum useful state MUST be deterministic Core operation. Local models, Knowledge Lite, Deception Lite, external modules, and remote cognition may extend capability only when their resource, topology, trust, and health gates pass.
+## Hardware-unverified boundary
 
-Authority MUST remain with the embedded Azazel-Edge deterministic arbiter. Fabric supplies descriptive contracts, Knowledge and M.I.O. supply advice, and Deception materializes only a bounded Edge-approved environment.
+No removable medium has been written and no laptop has booted. Real-device
+hotplug behavior, physical host-storage quarantine, LUKS/TPM, firmware,
+power-loss, recovery, and no-host-write HIL remain unverified. The compatibility
+list remains empty; QEMU must not be interpreted as platform support.
 
-Development sequence and release gates are defined in the [Nexus and Boot cross-repository plan](../roadmaps/nexus-boot-program-plan.md).
+The GitHub `main` Docs workflow currently fails before any step with runner
+infrastructure evidence (`runner_id: 0`); it is not a package or hardware test
+result. The configured default branch discrepancy is recorded in the series
+audit and has not been changed.
+
+## Decision boundary
+
+Production builder selection remains open; `live-build` was used only for
+prototype construction. No host disk or physical media was written, and no
+storage was unlocked. Edge remains the sole decision/enforcement authority.
+
+See the [series audit](../series-status-audit.md), the
+[Boot repository](https://github.com/01rabbit/Azazel-Boot), and its
+[support matrix](https://github.com/01rabbit/Azazel-Boot/blob/main/docs/support-matrix.md)
+for the current evidence boundary.
+
+Development sequence and target gates are defined in the [Nexus and Boot
+cross-repository plan](../roadmaps/nexus-boot-program-plan.md). These target
+requirements do not upgrade prototype or QEMU evidence into hardware support.

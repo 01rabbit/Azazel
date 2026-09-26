@@ -5,10 +5,11 @@ Back to: [Products Index](README.md) | Related: [Naming Convention](../specs/nam
 ## Doctrine to Implementation
 
 - **Doctrine layer:** Azazel naming and doctrine hub ([README](../../README.md))
-- **Defensive implementation layer:** [Azazel-Edge Gateway](https://github.com/01rabbit/Azazel-Edge) (AZ-01), [Azazel-Gadget Shield](https://github.com/01rabbit/Azazel-Gadget) (AZ-02), [Azazel-Boot Responder](https://github.com/01rabbit/Azazel-Boot) (AZ-03), and [Azazel-Nexus Gateway](https://github.com/01rabbit/Azazel-Nexus) (AZ-07)
+- **Defensive implementation layer:** [Azazel-Edge Gateway](https://github.com/01rabbit/Azazel-Edge) (AZ-01), [Azazel-Gadget Shield](https://github.com/01rabbit/Azazel-Gadget) (AZ-02), [Azazel-Boot Responder](azazel-boot.md) (AZ-03), and [Azazel-Nexus Gateway](https://github.com/01rabbit/Azazel-Nexus) (AZ-07)
 - **Knowledge / advisory plane:** [Azazel-Knowledge Advisor](https://github.com/01rabbit/Azazel-Knowledge) (AZ-04, formerly Azazel-CTI) — optional advisory-only CTI and Behavioral CTI node
 - **Contracts layer:** [Azazel-Fabric Contract](https://github.com/01rabbit/Azazel-Fabric) (AZ-05, formerly Azazel-Common) — shared contracts and interoperability; no product decision logic
-- **Engagement-environment plane:** [Azazel-Deception Host](https://github.com/01rabbit/Azazel-Deception) (AZ-06, codename `THEATRE`) — portable, capability-aware, container-first runtime for materializing Edge-approved deception environments
+- **Engagement-environment plane:** [Azazel-Deception Host](azazel-deception.md) (AZ-06, codename `THEATRE`) — portable, capability-aware, container-first runtime for materializing Edge-approved deception environments
+- **Integrated-node plane:** [Azazel-Nexus](azazel-nexus.md) (AZ-07) — local-first field-node control plane that integrates released components without creating another decision authority
 
 ## Positioning
 
@@ -28,7 +29,7 @@ Formal naming follows `Azazel-<Form> <Role>`. `Deception` and `Host`, the `AZ-06
 
 AZ-06 is a software/runtime class, not a Raspberry Pi-specific hardware product.
 
-- **Minimum reference host:** Raspberry Pi 5 or equivalent ARM64 SBC for lightweight Linux container profiles.
+- **Design reference host:** Raspberry Pi 5 or equivalent ARM64 SBC for lightweight Linux container profiles; platform support remains unverified.
 - **Standard host:** N100/N305-class x86 mini PC with NVMe for multiple containers and richer deterministic environments.
 - **Heavy host:** x86/KVM platform for later VM-capable and multi-segment profiles.
 - **Future cluster profile:** multiple AZ-06 nodes with distinct capability classes; Edge remains decision authority and never becomes a general-purpose scheduler.
@@ -43,9 +44,9 @@ Detailed design: [AZ-06 Container-First Deception Host](../concepts/azazel-decep
 
 - Choose **Azazel-Edge Gateway** for edge SOC/NOC and field gateway operations, deterministic action selection, routing, and engagement authority.
 - Choose **Azazel-Gadget Shield** for personal tactical defense on untrusted Wi-Fi and fixed Engage-lite deception profiles.
-- **Azazel-Boot Responder** is the target for civil emergency startup from a USB SSD on a declared compatible laptop. Its release gate requires per-host commissioning before operational networking and Core usability without optional services.
-- **Azazel-Nexus Gateway** is the target for sustained operation on a rugged Linux PC with embedded Knowledge Lite and Deception Lite, local M.I.O., audit, and optional full Knowledge/Deception nodes. Its release gate requires standalone Core behavior and topology-gated enforcement.
+- Choose **Azazel-Boot Responder** for the target civil-emergency USB SSD workflow; read the [current status page](azazel-boot.md) for prototype evidence and hardware gates. Its release gate requires per-host commissioning before operational networking and Core usability without optional services.
 - Add **Azazel-Knowledge Advisor** when you want optional advisory-only threat context and Behavioral CTI. Edge stays functional if Knowledge is absent, slow, malformed, or wrong.
 - Use **Azazel-Fabric Contract** when you need the shared cross-product schemas and invariant vocabulary. Fabric describes; it never decides.
-- Deploy **Azazel-Deception Host** when you need coherent service, artifact, credential, persona, or staged deception environments. Pi 5 is a minimum reference host, not a product constraint.
+- Deploy **Azazel-Deception Host** when you need coherent service, artifact, credential, persona, or staged deception environments. Read the [current status page](azazel-deception.md) first; Pi 5 is a minimum reference host, not a product constraint.
+- Read **Azazel-Nexus Gateway** for the target persistent rugged-node deployment, embedded Knowledge Lite/Deception Lite, local M.I.O., audit, and optional full Knowledge/Deception nodes. See the [Nexus status page](azazel-nexus.md); hardware support and provider execution remain evidence-gated.
 - Read this repository when you need naming, doctrine, architecture framing, responsibility boundaries, and cross-product sequencing.

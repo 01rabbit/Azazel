@@ -1,3 +1,9 @@
+---
+title: Azazel-Fabric Contract
+parent: Products
+nav_order: 5
+---
+
 # Azazel-Fabric Contract
 
 Back to: [Products Index](README.md) | Related: [Naming Convention](../specs/naming.md)
@@ -30,13 +36,23 @@ The shared contracts library for the Azazel series — the common language spoke
 
 ## Consumer Status
 
-- **Azazel-Gadget**: consuming it in production, pinned to v0.2.0 (emits and reads `StatusView`).
-- **Azazel-Edge**: design-stage adapter plan only.
-- **Azazel-Knowledge Advisor**: adoption not yet decided.
+- **Azazel-Gadget**: current GitHub `main` (`7aeb923`) declares the stable
+  Fabric pin `v0.8.0` in `requirements.txt` and uses the `StatusView` boundary.
+  This source declaration is not a production-deployment certification.
+- **Azazel-Edge**: current GitHub `main` declares the optional candidate pin
+  `v0.9.0rc4`; the arbiter remains usable without Fabric.
+- **Azazel-Knowledge Advisor**: current GitHub `main` declares optional
+  `v0.9.0rc2` for its API boundary; the core remains dependency-minimal.
+- **Azazel-Deception**: current GitHub `main` declares candidate `v0.9.0rc4`.
+- **Azazel-Nexus / Azazel-Boot**: current GitHub `main` declares optional
+  pins `v0.9.0rc2` and `v0.9.0rc1`, respectively.
 
 ## Package and License
 
-- Distribution name `azazel-fabric`, import as `azazel_fabric` (from v0.3.0; the v0.1.0/v0.2.0 tags keep the former `azazel-common` / `azazel_common` identifiers). Latest tagged release: v0.3.0.
+- Distribution name `azazel-fabric`, import as `azazel_fabric` (from v0.3.0;
+  the v0.1.0/v0.2.0 tags keep the former `azazel-common` /
+  `azazel_common` identifiers). The latest stable tag observed is `v0.8.0`;
+  `v0.9.0rc5` is a candidate, not a stable release.
 - License: MIT.
 
 See also: [Product Map](product-map.md) | [Naming Convention](../specs/naming.md)

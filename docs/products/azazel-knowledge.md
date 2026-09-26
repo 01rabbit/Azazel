@@ -1,3 +1,9 @@
+---
+title: Azazel-Knowledge Advisor
+parent: Products
+nav_order: 4
+---
+
 # Azazel-Knowledge Advisor
 
 Back to: [Products Index](README.md) | Related: [Deterministic Defense](../concepts/deterministic-defense.md)
@@ -32,6 +38,7 @@ Advisory-only, deterministic, on-premises tactical CTI node that supplies threat
 
 ## Target
 
-Raspberry Pi 4, on-premises. MIT license.
+Raspberry Pi 4 is a design target for on-premises use; deployment and latency
+evidence remain pending. MIT license.
 
 See also: [Product Map](product-map.md) | [Deterministic Defense](../concepts/deterministic-defense.md)
