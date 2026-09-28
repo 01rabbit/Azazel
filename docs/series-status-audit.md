@@ -19,6 +19,15 @@ No real device, removable medium, TPM, LUKS volume, remote endpoint, credential,
 or model was supplied. No hardware or network claim in this document is based
 on a simulation or a unit test.
 
+**Boot scope addendum (2026-09-28).** The inventory and Boot classifications
+below are a 2026-09-24 snapshot, not current issue state. Since that snapshot,
+the owner retired Boot OS-building, media-writing, quarantine, and
+Boot-managed-persistence work, then reopened only Boot #61 for user-managed
+Live/Nexus persistence guidance and #63 for a user-run separate-PC observation.
+Neither issue authorizes Boot to write media or claims host-storage quarantine.
+See the current [program plan](roadmaps/nexus-boot-program-plan.md) and Boot
+[issue map](https://github.com/01rabbit/Azazel-Boot/blob/main/docs/issue-map.md).
+
 ## Live GitHub inventory (2026-09-24)
 
 | Repository | Open issues | Open PRs | Current-main checks at inspected SHA |
