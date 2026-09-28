@@ -8,45 +8,34 @@ nav_order: 3
 
 Back to: [Products Index](README.md) | Related: [Product Map](product-map.md)
 
-Azazel-Boot (AZ-03) is the removable-media responder workstream. Its safety
-contract keeps host storage quarantined and separates artifact building from
-media writing. Boot does not become an additional decision or enforcement
-authority; Edge remains the sole arbiter.
-
-The target is a civil-emergency startup environment on a declared compatible
-x86_64 laptop, with per-host commissioning before operational networking.
-RAM capacity and commissioned topology gate capabilities independently;
-optional model, Knowledge, Deception, external-module, and remote-cognition
-paths must not be prerequisites for deterministic Core operation.
+Azazel-Boot (AZ-03) is a user-assistance companion. The current intended flow
+is for the user to prepare and start a Debian Live SSD, configure persistence,
+use the existing Nexus tools installer, then check boot on a separate PC.
+Boot does not install Debian, build/remaster LiveOS, write media, manage
+persistence, or replace the Nexus installer. It creates no decision or
+enforcement authority; Edge remains the sole arbiter.
 
 ## Current status
 
-The current hardware-unverified prototype evidence is recorded in the
-[Boot repository's R11 report](https://github.com/01rabbit/Azazel-Boot/blob/work/prototype-runtime-20260926/docs/prototype-evidence-boot-runtime-r11.md).
-It covers an unsigned Debian 13 amd64 ISO, initramfs/C5 inspection, and a QEMU
-cold-boot/userspace handoff with a regular-file block-device fixture. It is
-prototype evidence only; the ISO is not a release image and the QEMU result is
-not a hardware result. The Boot implementation and report are being reconciled
-on the `work/prototype-runtime-20260926` branch; the default branch may not yet
-contain them.
+No exact Live image/SSD/PC combination has been qualified for the current
+user-managed workflow. Former R10/R11 builder, initramfs, and QEMU records are
+historical only; they do not verify this flow or satisfy its acceptance. See
+the [user-prepared Live and Nexus guide](https://github.com/01rabbit/Azazel-Boot/blob/main/docs/user-prepared-live.md).
 
 ## Hardware-unverified boundary
 
-No removable medium has been written and no laptop has booted. Real-device
-hotplug behavior, physical host-storage quarantine, LUKS/TPM, firmware,
-power-loss, recovery, and no-host-write HIL remain unverified. The compatibility
-list remains empty; QEMU must not be interpreted as platform support.
-
-The GitHub `main` Docs workflow currently fails before any step with runner
-infrastructure evidence (`runner_id: 0`); it is not a package or hardware test
-result. The configured default branch discrepancy is recorded in the series
-audit and has not been changed.
+No separate-PC boot result is recorded for the current workflow. Boot does not
+claim host-storage quarantine or no-host-write behavior; Debian Live may probe
+local storage for persistence. A future successful run applies only to the
+exact user-supplied image, persistence configuration, Nexus release, SSD, and
+PC tested. QEMU is not a substitute for that observation or a general support
+claim.
 
 ## Decision boundary
 
-Production builder selection remains open; `live-build` was used only for
-prototype construction. No host disk or physical media was written, and no
-storage was unlocked. Edge remains the sole decision/enforcement authority.
+No Boot image builder or media writer is in scope. The user supplies and
+prepares the SSD; Boot's guide is non-mutating. Edge remains the sole
+decision/enforcement authority.
 
 See the [series audit](../series-status-audit.md), the
 [Boot repository](https://github.com/01rabbit/Azazel-Boot), and its
@@ -54,5 +43,5 @@ See the [series audit](../series-status-audit.md), the
 for the current evidence boundary.
 
 Development sequence and target gates are defined in the [Nexus and Boot
-cross-repository plan](../roadmaps/nexus-boot-program-plan.md). These target
-requirements do not upgrade prototype or QEMU evidence into hardware support.
+cross-repository plan](../roadmaps/nexus-boot-program-plan.md). A successful
+single-PC observation does not establish general hardware support.

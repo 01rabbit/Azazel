@@ -8,16 +8,24 @@ Scope: Azazel, Azazel-Fabric, Azazel-Edge, Azazel-Knowledge, Azazel-Deception, A
 This plan coordinates the Nexus deployment product and defines cross-repository doctrine. Boot is a user-assistance companion rather than a bootable deployment product:
 
 - **Azazel-Nexus** is a persistent installation on a rugged Linux PC for sustained field operation. It contains Edge, local cognition, Knowledge Lite, Deception Lite, operator functions, audit, and network enforcement. External Knowledge and Deception nodes expand capacity.
-- **Azazel-Boot** is a user-assistance/tooling companion used inside an operating environment already supplied and started by the user. It does not create/remaster an OS, build or write boot media, or provide Boot-owned OS persistence. Its concrete tool set and host-side effects remain to be specified.
+- **Azazel-Boot** assists a user with a user-prepared Debian Live SSD, user-configured persistence, the existing Nexus tools installer, and a separate-PC boot check. It does not install/build/remaster an OS, write media, or manage persistence. General helper-tool inventory and host-side effects remain to be specified.
 
 ### Owner scope correction — Azazel-Boot (2026-09-28)
 
-The owner has decided that Boot will **not** create Debian Live or another OS,
-select an image builder, write/partition/format removable media, or own the
-bootable-SSD/initramfs/persistence/HIL product path described elsewhere in
-this historical proposal. Those Boot-specific requirements are retired, not
-pending implementation. The corresponding Boot issues have been closed as
-not planned, not as engineering acceptance.
+The owner has decided that Boot will **not** install Debian, create/remaster
+Debian Live or another OS, select an image builder, write/partition/format
+removable media, own an initramfs or persistence lifecycle, or provide its own
+Nexus installer. The old Boot builder/writer/quarantine/persistence-manager
+requirements are retired, not pending implementation; their issue closures
+are scope retirement, not engineering acceptance.
+
+The current user-managed flow remains in scope: the user prepares the Live SSD
+and its persistence, uses the existing Nexus tools installer, then verifies
+boot on a separate PC. Boot documentation must explain prerequisites and
+evidence without claiming storage quarantine or general hardware support.
+Boot issues #61 (persistence/Nexus path guidance) and #63 (separate-PC result)
+are open for these narrower requirements; the old #63 P1/P2/P3, writer, and
+QEMU acceptance criteria are retired.
 
 Boot may later provide a small helper installer and user-assistance tools for
 a responder workflow distinct from Nexus. The tool inventory, supported host
@@ -27,11 +35,13 @@ is reviewed. Nexus remains the persistent appliance installer. This correction
 does not authorize provider admission, network fetch, model acquisition or
 Edge activation, and does not relax Edge's sole decision/enforcement authority.
 
-For current work, this decision supersedes Boot-specific deployment, runtime,
-resource-tier, commissioning, persistence, firmware, and hardware acceptance
-criteria throughout §§3–8 and the Boot service-objective assignments. Any
-remaining reference to the former USB/Linux-Live product is historical context,
-not a current Boot requirement.
+For current work, this decision supersedes Boot-specific OS deployment,
+runtime/resource-tier selection, commissioning, firmware, Boot-owned
+persistence, writer, initramfs quarantine, and builder acceptance criteria
+throughout §§3–8 and the Boot service-objective assignments. It does not
+supersede user-managed persistence guidance or the separate-PC boot observation
+tracked by #61/#63. References to a Boot-created USB/Linux-Live product remain
+historical context.
 
 Nexus reuses existing product implementations through released packages and signed assets. A future Boot helper may consume a released contract only when a concrete proposal requires it. The program does not copy source trees into either repository.
 
@@ -346,14 +356,21 @@ Nexus deliverables:
 
 Boot deliverables:
 
-- maintain the non-operational user-assistance/tooling scaffold; no runtime installer or deployment artifact is required in this release;
-- if a concrete helper is later approved, define its narrow host/tool effects and tests before implementation.
+- document the user-prepared Debian Live → user-configured persistence →
+  existing Nexus installer flow and its exact release-specific prerequisites
+  (#61);
+- record a user-run separate-PC boot/persistence/Nexus-status check without
+  changing firmware or claiming broad compatibility (#63);
+- keep Boot's own helper-installer direction proposal-gated; no Boot runtime
+  installer, OS image, or media writer is required.
 
 Exit gate:
 
 - a failed update returns to the prior verified generation without losing the last valid audit checkpoint;
 - Nexus passes a sustained field workload for its resource tier;
-- no Boot implementation or hardware claim is made without a separately approved helper proposal.
+- Boot's guide matches the exact Live/Nexus versions used, and #63 evidence is
+  limited to the tested SSD/PC combination; the hardware result is not inferred
+  from QEMU or documentation.
 - Nexus recovery procedures are executable from offline instructions by an operator who did not build the system.
 
 ### R8 — Cross-product release candidate
@@ -478,23 +495,26 @@ Completion evidence: reproducible installation image, signed profile, standalone
 
 ### 6.7 Azazel-Boot
 
-Purpose: user assistance and optional responder-tool installation within an
-operating environment supplied and started by the user. Boot does not create
-Debian Live or another OS, build/write media, or provide Boot-owned persistence.
+Purpose: assist the user with a user-prepared Debian Live SSD, user-configured
+persistence, the existing Nexus tools installer, and a separate-PC boot check.
+Boot does not install Debian, create/remaster an OS, build/write media, manage
+persistence, or replace the Nexus installer.
 
 Next procedure:
 
-1. Identify one concrete user problem and explain why the helper belongs in
-   Boot rather than Nexus.
-2. Declare supported host environments, authenticated inputs, privileges,
-   exact host changes, network behavior, user approval, and rollback/uninstall.
+1. Complete #61's exact-image and Nexus-release path/prerequisite review without
+   prescribing a Boot-owned disk or persistence layout.
+2. Complete #63 only from the user's real separate-PC observation; record
+   failures and the tested SSD/PC combination without generalizing support.
 3. Keep provider admission, model fetch, Edge activation and all new authority
    outside scope unless separately approved by their owners.
-4. Implement only the reviewed helper and test it in synthetic or disposable
-   software environments; make no hardware or OS-image claim.
+4. For any later helper, explain why it belongs in Boot rather than Nexus and
+   declare authenticated inputs, privileges, host changes, network behavior,
+   approval, rollback/uninstall, and synthetic/software tests before code.
 
-No image builder, media writer, initramfs quarantine, USB-persistence, or
-physical Boot HIL backlog remains. See Boot
+No Boot-owned image builder, media writer, initramfs quarantine, or
+persistence manager remains in scope. User-managed persistence guidance and
+separate-PC verification remain tracked by Boot #61/#63. See Boot
 [ADR-0012](https://github.com/01rabbit/Azazel-Boot/blob/main/docs/adr/0012-existing-environment-tooling.md).
 
 ## 7. Parallel execution model
@@ -845,8 +865,8 @@ The row is therefore **unmeasurable as written**: "at each declared quota" range
 
 The baseline does not imply that Nexus installation, Secure Boot behavior, or hardware compatibility has been proven on a particular machine. Hardware measurements remain owned by Nexus.
 
-**Affected requirements:** Nexus installer preflight, `Azazel-Nexus/docs/IMPLEMENTATION_SPEC.md` §§2 and 12, and the Nexus support matrix. No Boot builder, image, media, persistence, firmware, or hardware gate follows from this finding.
+**Affected requirements:** Nexus installer preflight, `Azazel-Nexus/docs/IMPLEMENTATION_SPEC.md` §§2 and 12, and the Nexus support matrix. No Boot builder, image, writer, or Boot-managed-persistence gate follows from this finding. Boot's user-run separate-PC observation is tracked independently in issue #63 and does not qualify a general hardware class or modify Nexus evidence.
 
 **Owner:** Azazel for the cross-repository frame; Azazel-Nexus for implementation and per-machine evidence.
 
-**Verification:** maintain the Nexus baseline and record per-machine installation and compatibility evidence in the Nexus repository. Boot scope is defined by ADR-0012 in Azazel-Boot; no Boot image-building verification applies.
+**Verification:** maintain the Nexus baseline and record per-machine installation and compatibility evidence in the Nexus repository. Boot scope is defined by ADR-0012 in Azazel-Boot; no Boot image-building verification applies. The separate-PC boot observation remains a distinct, pending Boot #63 item.

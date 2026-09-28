@@ -6,7 +6,7 @@ nav_exclude: true
 # Azazel Series: Third-Party Development Handoff
 
 Status: active development handoff baseline  
-Last reviewed: 2026-09-19  
+Last reviewed: 2026-09-28
 Audience: an external engineering team taking responsibility for one or more Azazel repositories.
 
 This is the entry point for continuing the series without relying on private
@@ -54,7 +54,7 @@ roadmap, or a demonstration artifact as current product authority.
 | [Azazel-Fabric](https://github.com/01rabbit/Azazel-Fabric) | versioned shared contracts, fixtures, release truth | product policy, privileged execution, topology control |
 | [Azazel-Deception](https://github.com/01rabbit/Azazel-Deception) | bounded environment materialization, evidence, reset | engagement choice, routing, final approval |
 | [Azazel-Nexus](https://github.com/01rabbit/Azazel-Nexus) | persistent rugged x86_64 integration, commissioning, M.I.O. provider lifecycle, embedded Lite components, recovery, integrated HIL | a replacement decision authority or device-specific Edge defaults |
-| [Azazel-Boot](https://github.com/01rabbit/Azazel-Boot) | user assistance and a possible bounded tool installer in a user-provided environment | building/writing OS media, duplicating the Nexus base installer, or creating another authority |
+| [Azazel-Boot](https://github.com/01rabbit/Azazel-Boot) | guidance for user-prepared Debian Live, user-configured persistence, the existing Nexus tools installer, and separate-PC verification; possible future bounded helper | installing/building/writing OS media, managing persistence, duplicating Nexus installer behavior, or creating another authority |
 
 ## 4. Edge and Nexus succession rule
 
@@ -105,6 +105,7 @@ The detailed successor rule and the required inheritance ledger are tracked in
 - [Knowledge #73](https://github.com/01rabbit/Azazel-Knowledge/issues/73): bounded signed Knowledge Lite artifact.
 - [Deception #35](https://github.com/01rabbit/Azazel-Deception/issues/35): assurance truth and bounded Lite profiles.
 - [Boot ADR-0012](https://github.com/01rabbit/Azazel-Boot/blob/main/docs/adr/0012-existing-environment-tooling.md): Boot scope and proposal gate for future user-assistance tools.
+- [Boot #61](https://github.com/01rabbit/Azazel-Boot/issues/61): current-image persistence guidance against Nexus paths; [Boot #63](https://github.com/01rabbit/Azazel-Boot/issues/63): user-run separate-PC boot and persistence observation. The earlier Boot builder/writer/P1-P2-P3 scope is retired; these issues do not authorize media writes or imply quarantine.
 
 ## 6. Delivery rules for an external team
 

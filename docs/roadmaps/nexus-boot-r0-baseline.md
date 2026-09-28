@@ -19,9 +19,11 @@ This document freezes the product meanings and records the observed dependency s
 For Azazel-Boot, the 2026-09-19 removable-media deployment description below
 is historical and superseded. Boot does not build or remaster Debian Live or
 another OS, create/write boot media, or provide Boot-owned persistence. Its
-current direction is user assistance and a possible bounded tool installer
-within a user-provided environment; concrete tools and host effects remain
-undecided. See [Boot ADR-0012](https://github.com/01rabbit/Azazel-Boot/blob/main/docs/adr/0012-existing-environment-tooling.md)
+current assistance flow is user-prepared Debian Live, user-configured
+persistence, the existing Nexus tools installer, and a separate-PC boot check.
+Boot owns guidance and evidence collection only, not image/media or persistence
+lifecycle tooling. Issues #61 and #63 track the guidance and the still-pending
+hardware observation. See [Boot ADR-0012](https://github.com/01rabbit/Azazel-Boot/blob/main/docs/adr/0012-existing-environment-tooling.md)
 and the program plan's owner scope correction. This does not change Nexus's
 persistent appliance role or Edge's sole authority.
 
@@ -29,7 +31,7 @@ persistent appliance role or Edge's sole authority.
 
 | Designation | Product | Deployment | Minimum independent behavior |
 |---|---|---|---|
-| AZ-03 | Azazel-Boot Responder | User-assistance/tooling companion in a user-provided existing environment; no OS/image creation or media writing | Tool-specific assistance to be defined; no operational installer or capability is currently claimed |
+| AZ-03 | Azazel-Boot Responder | Guidance for user-prepared Debian Live, user-managed persistence, existing Nexus tools installer, and separate-PC check; no OS/image creation or media writing | #61 guidance and #63 hardware observation remain open; no operational Boot installer or capability is claimed |
 | AZ-07 | Azazel-Nexus Gateway | Persistent, self-contained installation on a generic rugged x86_64 Linux PC | Deterministic observation, evaluation, decision, operator control, audit, graceful degradation, and topology-gated bounded enforcement without external nodes |
 
 Nexus is the deployment product; Boot is a user-assistance/tooling companion. Azazel-Fabric owns shared descriptive contracts; Azazel-Edge remains the sole deterministic decision and enforcement authority. M.I.O., Knowledge, Deception, installers, user interfaces, and external nodes cannot override that authority.

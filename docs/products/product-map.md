@@ -15,7 +15,7 @@ Back to: [Products Index](README.md) | Related: [Naming Convention](../specs/nam
 
 Azazel is the doctrine.
 
-Azazel-Edge and Azazel-Gadget are defensive implementations optimized for different operational contexts. Azazel-Boot provides a removable civil emergency environment. Azazel-Nexus assembles a persistent self-contained node for rugged Linux PCs. Azazel-Deception is the attacker-facing execution plane used when a deployment needs coherent deception environments beyond Edge's bounded redirect and pre-positioned decoys.
+Azazel-Edge and Azazel-Gadget are defensive implementations optimized for different operational contexts. Azazel-Boot guides a user through a user-prepared Debian Live SSD, user-configured persistence, the existing Nexus tools installer, and a separate-PC boot check; it does not create an operating system or write media. Azazel-Nexus assembles a persistent self-contained node for rugged Linux PCs. Azazel-Deception is the attacker-facing execution plane used when a deployment needs coherent deception environments beyond Edge's bounded redirect and pre-positioned decoys.
 
 Fabric and Knowledge remain support planes: Fabric supplies the shared language; Knowledge supplies evidence-backed advisory context. Deception executes only within an Edge-approved boundary.
 
@@ -44,7 +44,7 @@ Detailed design: [AZ-06 Container-First Deception Host](../concepts/azazel-decep
 
 - Choose **Azazel-Edge Gateway** for edge SOC/NOC and field gateway operations, deterministic action selection, routing, and engagement authority.
 - Choose **Azazel-Gadget Shield** for personal tactical defense on untrusted Wi-Fi and fixed Engage-lite deception profiles.
-- Choose **Azazel-Boot Responder** for the target civil-emergency USB SSD workflow; read the [current status page](azazel-boot.md) for prototype evidence and hardware gates. Its release gate requires per-host commissioning before operational networking and Core usability without optional services.
+- Choose **Azazel-Boot Responder** for guidance on a user-prepared Debian Live SSD and existing Nexus tools; read the [current status page](azazel-boot.md). Boot does not provide an OS image, writer, or persistence manager. Separate-PC verification is still pending.
 - Add **Azazel-Knowledge Advisor** when you want optional advisory-only threat context and Behavioral CTI. Edge stays functional if Knowledge is absent, slow, malformed, or wrong.
 - Use **Azazel-Fabric Contract** when you need the shared cross-product schemas and invariant vocabulary. Fabric describes; it never decides.
 - Deploy **Azazel-Deception Host** when you need coherent service, artifact, credential, persona, or staged deception environments. Read the [current status page](azazel-deception.md) first; Pi 5 is a minimum reference host, not a product constraint.
