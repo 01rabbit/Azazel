@@ -24,7 +24,7 @@ Recommended external format:
 
 - `Gadget`: USB gadget direct-connect class (smallest and most portable form).
 - `Edge`: resident edge class for boundary operation on SBC/miniPC hardware.
-- `Boot`: bootable rapid-response class (portable USB boot operation).
+- `Boot`: responder user-assistance/tooling companion used inside a user-provided operating environment; not a bootable-OS or media-construction class.
 - `Nexus`: persistent integrated rugged Linux deployment class.
 - `Fabric`: cross-product interoperability and shared-contract class.
 - `Knowledge`: resident threat-knowledge and intelligence-support class.
@@ -100,18 +100,19 @@ Use legacy names only when migration context is required.
 
 ### 2026-09-18
 
-- Civil emergency removable-media environment: repository
+- Responder user-assistance/tooling companion: repository
   `01rabbit/Azazel-Boot`, formal name **`Azazel-Boot Responder`**, series
-  number **`AZ-03`**. This activates the prior AZ-03 reservation for the
-  bootable Azazel-Boot class; the prior reserved `Probe` role understated its
-  bounded response and evidence-handling responsibilities.
+  number **`AZ-03`**. The formal designation remains; its earlier bootable
+  removable-media deployment scope was superseded by the owner decision of
+  2026-09-28 recorded in Boot ADR-0012. Boot does not create or write an OS
+  image. The concrete helper-tool scope remains to be specified.
 - Persistent integrated node: repository `01rabbit/Azazel-Nexus`, formal name
   **`Azazel-Nexus Gateway`**, series number **`AZ-07`**.
 - `Nexus` and `Responder` are ratified into the Form and Role vocabularies.
-- Boot is for civil emergency use from removable USB SSD media on declared
-  compatible laptops. Nexus is for sustained deployment on a rugged x86_64
-  Linux PC. Both preserve Azazel-Edge as the sole deterministic enforcement
-  authority.
+- Boot assists responder workflows in a user-provided existing environment;
+  Nexus is the persistent appliance integration on a rugged x86_64 Linux PC.
+  Boot does not create bootable media. Both preserve Azazel-Edge as the sole
+  deterministic enforcement authority.
 
 ## Codenames
 

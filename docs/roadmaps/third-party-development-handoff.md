@@ -37,7 +37,7 @@ roadmap, or a demonstration artifact as current product authority.
 | Advisory planes | M.I.O., Knowledge, local/remote models, and user interfaces provide bounded advice, explanations, or presentation; they cannot execute an action. |
 | Deception plane | Deception materializes only an approved bounded environment; it does not select, authorize, or extend an engagement. |
 | Fabric | Fabric owns reusable descriptive contracts and fixtures, never a decision core or deployment authority. |
-| Standalone operation | Nexus and Boot remain useful in Core without external Knowledge, Deception, remote cognition, or cloud connectivity. |
+| Standalone operation | Nexus remains useful in Core without external Knowledge, Deception, remote cognition, or cloud connectivity. Boot is a helper-tool scaffold, not a Core runtime. |
 | Capability gating | Effective capability is the intersection of resource, topology, verified assets, trust, and health. RAM alone never enables capture, enforcement, or deception. |
 | Commissioning | Interface roles are based on inventory plus explicit operator confirmation. Never infer internal/external roles from names, link state, or a default route alone. |
 | Failure behavior | Optional-component failure degrades `FULL -> LITE -> CORE`; it never grants a new authority or blocks the deterministic control path. |
@@ -54,7 +54,7 @@ roadmap, or a demonstration artifact as current product authority.
 | [Azazel-Fabric](https://github.com/01rabbit/Azazel-Fabric) | versioned shared contracts, fixtures, release truth | product policy, privileged execution, topology control |
 | [Azazel-Deception](https://github.com/01rabbit/Azazel-Deception) | bounded environment materialization, evidence, reset | engagement choice, routing, final approval |
 | [Azazel-Nexus](https://github.com/01rabbit/Azazel-Nexus) | persistent rugged x86_64 integration, commissioning, M.I.O. provider lifecycle, embedded Lite components, recovery, integrated HIL | a replacement decision authority or device-specific Edge defaults |
-| [Azazel-Boot](https://github.com/01rabbit/Azazel-Boot) | civil emergency removable-media environment, per-host commissioning, portable encrypted evidence | writes to internal host storage by default or a promise to support unqualified hardware |
+| [Azazel-Boot](https://github.com/01rabbit/Azazel-Boot) | user assistance and a possible bounded tool installer in a user-provided environment | building/writing OS media, duplicating the Nexus base installer, or creating another authority |
 
 ## 4. Edge and Nexus succession rule
 
@@ -104,7 +104,7 @@ The detailed successor rule and the required inheritance ledger are tracked in
 - [Fabric release compatibility](https://github.com/01rabbit/Azazel-Fabric/blob/main/docs/release-compatibility.md): current release truth and observed consumer pins. The R0 truth-reconciliation issue is closed; do not reopen it for new integration work.
 - [Knowledge #73](https://github.com/01rabbit/Azazel-Knowledge/issues/73): bounded signed Knowledge Lite artifact.
 - [Deception #35](https://github.com/01rabbit/Azazel-Deception/issues/35): assurance truth and bounded Lite profiles.
-- [Boot #1](https://github.com/01rabbit/Azazel-Boot/issues/1): safe removable-media product bootstrap.
+- [Boot ADR-0012](https://github.com/01rabbit/Azazel-Boot/blob/main/docs/adr/0012-existing-environment-tooling.md): Boot scope and proposal gate for future user-assistance tools.
 
 ## 6. Delivery rules for an external team
 
