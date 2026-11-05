@@ -42,10 +42,11 @@ Recommended external format:
 
 Do not introduce extra Form or Role words without updating this specification first.
 
-Edge, Gadget, Boot, and Nexus are defensive deployment classes. Deception is the
+Edge, Gadget, and Nexus are defensive deployment classes. Boot is a user
+support and tooling companion, not a deployment class. Deception is the
 attacker-facing engagement-environment execution class. Fabric and Knowledge
 are support classes that make the Azazel System work as a series. Every
-product follows the uniform `Azazel-<Form> <Role>` grammar.
+formally named product follows the uniform `Azazel-<Form> <Role>` grammar.
 
 ## AZ Numbering
 
@@ -69,7 +70,7 @@ Current assignments:
 
 - `Azazel-Pi` -> `Azazel-Edge` (formerly)
 - `Azazel-Zero` -> `Azazel-Gadget` (formerly)
-- `Azazel-USB` -> `Azazel-Boot` (same meaning)
+- `Azazel-USB` is a legacy name; do not treat it as equivalent to current `Azazel-Boot`.
 - `Azazel-CTI` -> `Azazel-Knowledge` (formerly, working name)
 - `Azazel-Common` -> `Azazel-Fabric` (formerly)
 
