@@ -67,7 +67,7 @@ The responsibility rule is:
 
 > Engage expresses intent. Knowledge advises. Fabric describes. Edge decides and enforces. Deception Host materializes, transitions, records, and resets.
 
-MIO organizes hypotheses, limitations, explanations, and next safe checks from the information its product adapters provide. Its advice does not authorize an Edge action or a Deception transition. A shared library or a passing isolated test does not establish that every product integration is complete.
+MIO's intended role is to organize hypotheses, limitations, explanations, and next safe checks from information supplied by product adapters. Any MIO output remains advisory; it does not authorize an Edge action or a Deception transition. A shared library or a passing isolated test does not establish that every product integration is complete.
 
 Legacy alias mapping: `Azazel-Pi -> Azazel-Edge (formerly)`, `Azazel-Zero -> Azazel-Gadget (formerly)`, `Azazel-USB -> old alias only; not the same meaning as current Azazel-Boot`, `Azazel-CTI -> Azazel-Knowledge (formerly, working name)`, `Azazel-Common -> Azazel-Fabric (formerly)`.
 
