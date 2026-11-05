@@ -35,7 +35,7 @@ Recommended external format:
 - `Gateway`: boundary gateway for multiple endpoints or small networks.
 - `Shield`: forward defensive layer for a single user or endpoint.
 - `Probe`: observation and measurement focused role with minimal control.
-- `Responder`: civil emergency role for rapid assessment, bounded local response, evidence handling, and recovery support.
+- `Responder`: user-assistance role for response workflows, evidence handling, and recovery support; the name alone does not imply a deployment class, autonomous response, or enforcement authority.
 - `Advisor`: advisory knowledge provider without enforcement authority.
 - `Contract`: shared schemas, interfaces, and interoperability definitions.
 - `Host`: execution host that materializes approved isolated environments and owns their local lifecycle, evidence export, and reset.
