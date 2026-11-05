@@ -106,7 +106,9 @@ Use legacy names only when migration context is required.
   number **`AZ-03`**. The formal designation remains; its earlier bootable
   removable-media deployment scope was superseded by the owner decision of
   2026-09-28 recorded in Boot ADR-0012. Boot does not create or write an OS
-  image. The concrete helper-tool scope remains to be specified.
+  image. The current helper scope is guidance for user-prepared Debian Live
+  persistence and use of the existing Nexus tools installer; separate-PC
+  verification remains unverified.
 - Persistent integrated node: repository `01rabbit/Azazel-Nexus`, formal name
   **`Azazel-Nexus Gateway`**, series number **`AZ-07`**.
 - `Nexus` and `Responder` are ratified into the Form and Role vocabularies.
