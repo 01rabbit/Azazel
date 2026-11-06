@@ -53,20 +53,23 @@ See also: [Deterministic Defense](docs/concepts/deterministic-defense.md) | [Off
 |---|---|---|---|---|---|
 | [Azazel-Edge Gateway](https://github.com/01rabbit/Azazel-Edge) | AZ-01 | `SENTINEL` | Azazel-Pi | Field-oriented edge SOC/NOC and scapegoat gateway; final deterministic engagement authority | Raspberry Pi 5 / edge networks (design target; HIL pending) |
 | [Azazel-Gadget Shield](https://github.com/01rabbit/Azazel-Gadget) | AZ-02 | `TACMOD` | Azazel-Zero | Portable tactical defense on untrusted Wi-Fi; fixed Engage-lite profiles only | Raspberry Pi Zero 2 W / personal use |
-| [Azazel-Boot Responder](https://github.com/01rabbit/Azazel-Boot) | AZ-03 | — | Azazel-USB | Target civil-emergency environment for removable USB SSD media; implementation and hardware evidence remain in its repository | Compatible x86_64 laptops (support unverified) |
+| [Azazel-Boot Responder](https://github.com/01rabbit/Azazel-Boot) | AZ-03 | — | Azazel-USB (old alias; not the same meaning as current Boot) | Guidance for user-prepared Debian Live persistence and the existing Nexus tools installer; no Boot-owned OS image or media writer | Separate-PC boot verification remains unverified |
 | [Azazel-Knowledge Advisor](https://github.com/01rabbit/Azazel-Knowledge) | AZ-04 | `GRIMOIRE` | Azazel-CTI | Advisory-only tactical CTI / Behavioral CTI node; never commands | Raspberry Pi 4 / on-premises (design target; deployment evidence pending) |
 | [Azazel-Fabric Contract](https://github.com/01rabbit/Azazel-Fabric) | AZ-05 | `COVENANT` | Azazel-Common | Shared contracts library — the series' common language, never a decision core | Cross-repository |
 | [Azazel-Deception Host](https://github.com/01rabbit/Azazel-Deception) | AZ-06 | `THEATRE` | — | Container-first Engagement Environment Plane; materializes, transitions, records, and resets Edge-approved deception environments | Pi 5 / ARM64 / AMD64 / x86 are design targets; support/HIL unverified |
 | [Azazel-Nexus Gateway](https://github.com/01rabbit/Azazel-Nexus) | AZ-07 | — | — | Target persistent self-contained integration of released components without creating another decision authority | Rugged x86_64 / Debian 13 (hardware support unverified) |
+| [Azazel-MIO](https://github.com/01rabbit/Azazel-MIO) | — | — | — | Shared bounded assessment, reasoning, explanation, and advisory core (foundation under construction); products retain transport, admission, lifecycle, and execution authority | Python library used through product-specific adapters; its existence does not mean series-wide integration is complete; integration status belongs to each product |
 | Azazel (this repository) | — | — | — | Doctrine, architecture, naming, and product-family entry point | Cross-repository |
 
-Edge, Gadget, Boot, and Nexus are defensive deployment classes. Deception is the attacker-facing engagement-environment execution class. Fabric and Knowledge are support classes.
+Edge, Gadget, and Nexus are defensive deployment classes. Boot is not a deployment class: it provides user-assistance guidance for user-prepared Debian Live persistence and the existing Nexus tools installer, and builds no OS image or media. Deception is the attacker-facing engagement-environment execution class. Fabric and Knowledge are support classes; MIO supplies shared advisory computation and is not another deployment class or decision authority. No AZ designation or separate formal Role suffix is assigned to MIO by this table.
 
 The responsibility rule is:
 
 > Engage expresses intent. Knowledge advises. Fabric describes. Edge decides and enforces. Deception Host materializes, transitions, records, and resets.
 
-Legacy alias mapping: `Azazel-Pi -> Azazel-Edge (formerly)`, `Azazel-Zero -> Azazel-Gadget (formerly)`, `Azazel-USB -> Azazel-Boot (same meaning)`, `Azazel-CTI -> Azazel-Knowledge (formerly, working name)`, `Azazel-Common -> Azazel-Fabric (formerly)`.
+MIO's intended role is to organize hypotheses, limitations, explanations, and next safe checks from information supplied by product adapters. Any MIO output remains advisory; it does not authorize an Edge action or a Deception transition. A shared library or a passing isolated test does not establish that every product integration is complete.
+
+Legacy alias mapping: `Azazel-Pi -> Azazel-Edge (formerly)`, `Azazel-Zero -> Azazel-Gadget (formerly)`, `Azazel-USB -> old alias only; not the same meaning as current Azazel-Boot`, `Azazel-CTI -> Azazel-Knowledge (formerly, working name)`, `Azazel-Common -> Azazel-Fabric (formerly)`.
 
 Naming rule summary: formal names use `Azazel-<Form> <Role>`. `Azazel-Deception Host` / AZ-06 / `THEATRE` were ratified on 2026-08-13 after creation of the implementation repository.
 
@@ -75,12 +78,12 @@ Naming rule summary: formal names use `Azazel-<Form> <Role>`. `Azazel-Deception 
 - Start here for doctrine, terminology, naming, responsibility boundaries, and architecture framing.
 - Read [Azazel-Edge](https://github.com/01rabbit/Azazel-Edge) for edge SOC/NOC gateway implementation and deterministic engagement authority.
 - Read [Azazel-Gadget](https://github.com/01rabbit/Azazel-Gadget) for portable personal tactical defense.
-- Read [Azazel-Boot](https://github.com/01rabbit/Azazel-Boot) for the AZ-03 boot-media builder, runtime, and hardware-validation boundary.
+- Read [Azazel-Boot](https://github.com/01rabbit/Azazel-Boot) for guidance on user-prepared Debian Live persistence, use of the existing Nexus tools installer, and separate-PC boot verification. Boot does not build or write the OS image or media.
 - Read [Azazel-Knowledge](https://github.com/01rabbit/Azazel-Knowledge) for advisory-only Tactical/Behavioral CTI.
 - Read [Azazel-Fabric](https://github.com/01rabbit/Azazel-Fabric) for shared series contracts and interoperability.
 - Read [Azazel-Deception](https://github.com/01rabbit/Azazel-Deception) for the container-first deception-environment runtime, reference packages, host capability model, lifecycle, evidence, and reset implementation.
 - Read [Azazel-Nexus](https://github.com/01rabbit/Azazel-Nexus) for the integrated field-node control plane, commissioning, local-first runtime, and HIL boundary.
-- Read [Azazel-Boot](https://github.com/01rabbit/Azazel-Boot) for the civil emergency USB SSD environment.
+- Read [Azazel-MIO](https://github.com/01rabbit/Azazel-MIO) for the shared Python advisory core (still under construction; not a claim of series-wide integration), its internal assessment and reasoning interfaces (not public APIs), and product-adapter boundaries.
 
 ## AZ-06: Engagement Environment Plane
 
@@ -102,7 +105,7 @@ Detailed design: [AZ-06 Container-First Architecture](docs/concepts/azazel-decep
 ## Documentation Map
 
 - [Series Status Audit](docs/series-status-audit.md) — implementation and hardware-evidence boundary
-- [AZ-03 Boot status](docs/products/azazel-boot.md) — builder, quarantine, and hardware-evidence boundary
+- [AZ-03 Boot status](docs/products/azazel-boot.md) — current user-prepared Debian Live and Nexus installer guidance scope; separate-PC boot verification remains unverified
 - [AZ-06 Deception status](docs/products/azazel-deception.md) — package/runtime and isolation-evidence boundary
 - [AZ-07 Nexus status](docs/products/azazel-nexus.md) — integrated-node software and hardware-evidence boundary
 - [Philosophy](docs/philosophy/README.md)
@@ -130,12 +133,12 @@ Detailed design: [AZ-06 Container-First Architecture](docs/concepts/azazel-decep
 - `01rabbit/Azazel`: doctrine, philosophy, naming, and shared architecture
 - `01rabbit/Azazel-Edge`: field-deployable edge SOC/NOC gateway and deterministic decision authority
 - `01rabbit/Azazel-Gadget`: portable personal tactical defense implementation
-- `01rabbit/Azazel-Boot`: AZ-03 boot-media builder and boot-runtime implementation
+- `01rabbit/Azazel-Boot`: AZ-03 guidance for user-prepared Debian Live persistence and the Nexus tools installer
 - `01rabbit/Azazel-Knowledge`: advisory-only on-premises Tactical/Behavioral CTI node, AZ-04
 - `01rabbit/Azazel-Fabric`: shared contracts and interoperability foundation, AZ-05
 - `01rabbit/Azazel-Deception`: container-first Engagement Environment Plane, AZ-06
 - `01rabbit/Azazel-Nexus`: integrated field-node control plane and local-first runtime, AZ-07
-- `01rabbit/Azazel-Boot`: civil emergency removable-media Responder environment, AZ-03
+- `01rabbit/Azazel-MIO`: shared bounded advisory assessment, reasoning, explanation, and evaluation
 
 ## License Matrix
 
@@ -145,3 +148,4 @@ Detailed design: [AZ-06 Container-First Architecture](docs/concepts/azazel-decep
 - `01rabbit/Azazel-Knowledge`: MIT
 - `01rabbit/Azazel-Fabric`: MIT
 - `01rabbit/Azazel-Deception`: MIT
+- `01rabbit/Azazel-MIO`: MIT

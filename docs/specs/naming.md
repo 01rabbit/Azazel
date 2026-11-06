@@ -35,17 +35,18 @@ Recommended external format:
 - `Gateway`: boundary gateway for multiple endpoints or small networks.
 - `Shield`: forward defensive layer for a single user or endpoint.
 - `Probe`: observation and measurement focused role with minimal control.
-- `Responder`: civil emergency role for rapid assessment, bounded local response, evidence handling, and recovery support.
+- `Responder`: user-assistance role for response workflows, evidence handling, and recovery support; the name alone does not imply a deployment class, autonomous response, or enforcement authority.
 - `Advisor`: advisory knowledge provider without enforcement authority.
 - `Contract`: shared schemas, interfaces, and interoperability definitions.
 - `Host`: execution host that materializes approved isolated environments and owns their local lifecycle, evidence export, and reset.
 
 Do not introduce extra Form or Role words without updating this specification first.
 
-Edge, Gadget, Boot, and Nexus are defensive deployment classes. Deception is the
+Edge, Gadget, and Nexus are defensive deployment classes. Boot is a user
+support and tooling companion, not a deployment class. Deception is the
 attacker-facing engagement-environment execution class. Fabric and Knowledge
 are support classes that make the Azazel System work as a series. Every
-product follows the uniform `Azazel-<Form> <Role>` grammar.
+formally named product follows the uniform `Azazel-<Form> <Role>` grammar.
 
 ## AZ Numbering
 
@@ -69,7 +70,7 @@ Current assignments:
 
 - `Azazel-Pi` -> `Azazel-Edge` (formerly)
 - `Azazel-Zero` -> `Azazel-Gadget` (formerly)
-- `Azazel-USB` -> `Azazel-Boot` (same meaning)
+- `Azazel-USB` is a legacy name; do not treat it as equivalent to current `Azazel-Boot`.
 - `Azazel-CTI` -> `Azazel-Knowledge` (formerly, working name)
 - `Azazel-Common` -> `Azazel-Fabric` (formerly)
 
@@ -105,7 +106,9 @@ Use legacy names only when migration context is required.
   number **`AZ-03`**. The formal designation remains; its earlier bootable
   removable-media deployment scope was superseded by the owner decision of
   2026-09-28 recorded in Boot ADR-0012. Boot does not create or write an OS
-  image. The concrete helper-tool scope remains to be specified.
+  image. The current helper scope is guidance for user-prepared Debian Live
+  persistence and use of the existing Nexus tools installer; separate-PC
+  verification remains unverified.
 - Persistent integrated node: repository `01rabbit/Azazel-Nexus`, formal name
   **`Azazel-Nexus Gateway`**, series number **`AZ-07`**.
 - `Nexus` and `Responder` are ratified into the Form and Role vocabularies.
