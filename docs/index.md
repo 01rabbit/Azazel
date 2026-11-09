@@ -55,6 +55,7 @@ nav_exclude: false
       <li><a href="{{ site.baseurl }}/concepts/system-overview">System Overview</a></li>
       <li><a href="{{ site.baseurl }}/products/README">Products Index</a></li>
       <li><a href="{{ site.baseurl }}/specs/naming">Naming Convention</a></li>
+      <li><a href="{{ site.baseurl }}/specs/comparative-benefit-v1">Comparative Benefit Evaluation</a></li>
     </ul>
   </section>
   <section class="az-card">
